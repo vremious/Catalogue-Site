@@ -1,0 +1,246 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+Модемы
+{% endblock %}
+
+{% block content %}
+<div class="container-md">
+
+
+
+
+
+{% regroup good by model as list %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      {% for i in list %}
+        {% if forloop.first %}
+          {% for d in i.list %}
+            <th>{{d.service}}</th>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in list %}
+      <tr scope = "row">
+        <th>{{i.grouper}}</th>
+        {% for d in i.list %}
+          <th>{{d.available}}</th>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h1>Список модемов</h1>
+    </div>
+    <div class="container-md">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      {% for i in good %}
+      <th scope="col">{{i.service.group_by}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+
+  <tbody class="table-group-divider">
+
+    <tr>
+      <th scope="row">Наличие тестировщика</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>Mark</td>
+      <td>Otto</td>
+    </tr>
+    <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">ADSL Модемы</th>
+    </tr>
+    <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">Annex A Wi-Fi</th>
+      {% for i in routers_all %}
+        {% if i.device_model == 'Annex A Wi-Fi' and i.SC == i  %}
+            {% if i.available == 'YES' %}
+                <td> <img src="{% static "plus.svg" %}"  width="20" height="20"></td>
+            {% else %}
+                <td> <img src="{% static "minus.svg" %}"  width="20" height="20" ></td>
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tr>
+
+    <tr>
+      <th scope="row">Annex A без Wi-Fi</th>
+       {% for i in routers_all %}
+        {% if i.device_model == 'Annex A без Wi-Fi' and i.service_centre  %}
+            {% if i.available == 'YES' %}
+                <td> <img src="{% static "plus.svg" %}"  width="20" height="20"></td>
+            {% else %}
+                <td> <img src="{% static "minus.svg" %}"  width="20" height="20" ></td>
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tr>
+    <tr>
+      <th scope="row">Annex B Wi-Fi</th>
+      {% for i in routers_all %}
+        {% if i.device_model == 'Annex B Wi-Fi' %}
+            {% if i.available == 'YES' %}
+                <td> <img src="{% static "plus.svg" %}"  width="20" height="20"></td>
+            {% else %}
+                <td> <img src="{% static "minus.svg" %}"  width="20" height="20" ></td>
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tr>
+    <tr>
+      <th scope="row">Annex B без Wi-Fi</th>
+      {% for i in routers_all %}
+        {% if i.device_model == 'Annex B без Wi-Fi' %}
+            {% if i.available == 'YES' %}
+                <td> <img src="{% static "plus.svg" %}"  width="20" height="20"></td>
+            {% else %}
+                <td> <img src="{% static "minus.svg" %}"  width="20" height="20" ></td>
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tr>
+    <tr>
+      <th scope="row">Voip ID Annex A</th>
+      {% for i in routers_all %}
+        {% if i.device_model == 'Voip ID Annex A' %}
+            {% if i.available == 'YES' %}
+                <td> <img src="{% static "plus.svg" %}"  width="20" height="20"></td>
+            {% else %}
+                <td> <img src="{% static "minus.svg" %}"  width="20" height="20" ></td>
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tr>
+    <tr>
+      <th scope="row">Voip ID Annex B</th>
+      {% for i in routers_all %}
+        {% if i.device_model == 'Voip ID Annex B' %}
+            {% if i.available == 'YES' %}
+                <td> <img src="{% static "plus.svg" %}"  width="20" height="20"></td>
+            {% else %}
+                <td> <img src="{% static "minus.svg" %}"  width="20" height="20" ></td>
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tr>
+  </tbody>
+<tbody class="table-group-divider">
+    <tr>
+      <th scope="row">PON Модемы</th>
+    </tr>
+  <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">ZTE AT2</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>Mark</td>
+      <td>Otto</td>
+    </tr>
+
+    <tr>
+      <th scope="row">ZTE AT3 без Wi-Fi</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">ZTE AT4 Wi-Fi</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">ZTE 670L 2,4/5 GHz</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">Huawei 8245 с Wi-Fi</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">Huawei HG8145v5c</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+  </tbody>
+<tbody class="table-group-divider">
+    <tr>
+      <th scope="row">Модемы на продажу</th>
+    </tr>
+  <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">TP-Link Archer AX23 AX1800</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>Mark</td>
+      <td>Otto</td>
+    </tr>
+
+    <tr>
+      <th scope="row">TP-Link Archer A8 AC1900</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">D-Link DIR-842/RU/R7A</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">D-Link DIR-X1530/RU/A1A</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+
+  </tbody>
+
+</table>
+    </div>
+
+
+{% endblock %}

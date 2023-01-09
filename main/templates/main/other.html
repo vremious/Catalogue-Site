@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <link rel = 'stylesheet' href = '{% static 'test.css' %}'>
+ <!--
+	Visit https://picsum.photos for generating the dummy images -->
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+        <p>I push my fingers into my...</p>
+        <h3>Eyeeeeeessss</h3>
+    </div>
+    <div class="flip-card-back">
+      <h1>John Doe</h1>
+      <p>Architect & Engineer</p>
+      <p>We love that guy</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

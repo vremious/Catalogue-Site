@@ -1,0 +1,108 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+Zala
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'myfirst1.css' %}">
+<div class="col-lg-12 mx-auto p-3 py-md-6">
+    <main>
+        <div class="container-md">
+            <h1>Zala</h1>
+            <p class="fs-5 col-md-10">На этой странице отображается наличие комплектов Zala IPTV и Zala для эфирного ТВ во всех сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
+            <button class="btn btn-dark" type="button" data-bs-toggle='collapse' data-bs-target="#iptv" aria-expanded="false" role='button' aria-controls="iptv">
+            Zala IPTV
+            </button>
+            <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#cast" aria-expanded="false" aria-controls="cast">
+            Zala Эфирная
+            </button>
+            <div class="collapse multi-collapse" id="iptv">
+                <div class="album py-5 bg-light">
+                    <div class="card-group">
+                      <div class="row">
+                       {% for i in zala %}
+                           {% if i.type == 'IPTV' %}
+                            <div class="col-md d-flex mb-3">
+                              <div class="card row-cols-5">
+                                <img src="{% static "zala.svg" %}" alt="My image">
+                                <div class="card-body" style="width: auto">
+                                    <p class="card-text" ><h3>{{i.model}}</h3>
+                                    {%for d in available%}
+                                        {% if i.model == d.model %}
+                                            {% if d.quantity > 0 %}
+                                                <div>{{ d.service }}: <img src="{% static 'plus.svg' %}" height="15"></div>
+                                                <h6>{{ d.date }}</h6>
+                                                <hr>
+                                            {% else %}
+                                                <div>{{ d.service }}: <img src='{% static 'minus.svg' %}' height="15"></div>
+                                                <h6> {{ d.date }}</h6>
+                                                <hr>
+                                            {% endif %}
+                                        {% endif %}
+                                    {%endfor%}
+                                </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    </div>
+                              </div>
+                            </div>
+                           {% endif %}
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapse multi-collapse" id="cast">
+                <div class="album py-5 bg-light">
+                    <div class="card-group">
+                      <div class="row">
+                       {% for i in zala %}
+                           {% if i.type == 'Эфирная' %}
+                            <div class="col-md d-flex mb-3">
+                              <div class="card row-cols-5">
+                                <img src="{% static "zala.svg" %}" alt="My image">
+                                <div class="card-body" style="width: auto">
+                                    <p class="card-text" ><h3>{{i.model}}</h3>
+                                    {%for d in available%}
+                                        {% if i.model == d.model %}
+                                            {% if d.quantity > 0 %}
+                                                <div>{{ d.service }}: <img src="{% static 'plus.svg' %}" height="15"></div>
+                                                <h6>{{ d.date }}</h6>
+                                                <hr>
+                                            {% else %}
+                                                <div>{{ d.service }}: <img src='{% static 'minus.svg' %}' height="15"></div>
+                                                <h6> {{ d.date }}</h6>
+                                                <hr>
+                                            {% endif %}
+                                        {% endif %}
+                                    {%endfor%}
+                                </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    </div>
+                              </div>
+                            </div>
+                           {% endif %}
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+

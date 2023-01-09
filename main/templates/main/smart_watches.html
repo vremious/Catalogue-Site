@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Умные часы и браслеты
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'test.css' %}">
+<script src = {% static 'js/bootstrap.bundle.js'%}></script>
+    <div class="col-lg-12 mx-auto p-3 py-md-6">
+        <main>
+            <div class="container-md">
+                <h1>Умные часы и браслеты</h1>
+                <p class="fs-5 col-md-10">На этой странице отображается наличие Умных часов и браслетов для продажи во всех сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
+                <div class="album py-5 bg-light">
+                    <div class="card-group">
+                      <div class="row">
+                          {% for i in watches %}
+                              <div class="col-md d-flex mb-3">
+                                <div class="card-body" style="width:18rem">
+                                    <div class="flip-card" >
+                                        <div class="flip-card-inner">
+                                            <div class="flip-card-front">
+                                                {% if i.image%}
+                                                    <img src="{{ i.image.url }}" class="card-img">
+                                                {%  else %}
+                                                    <img src="{% static 'routers.svg'%}" class="card-img-top">
+                                                {% endif %}
+                                                    <p class="card-text" ><h3>{{i.company}}</h3> <p>{{ i.model }}</p>
+                                                    <hr> <p><b>Диагональ экрана:</b> {{i.size }}"</p>
+                                                    <p><b>Операционная система:</b> {{ i.os }}</p>
+                                                    <p><b>Поддержка систем:</b>  {{ i.support }}</p>
+                                            </div>
+                                            <div class='flip-card-back'>
+                                                <h5>Наличие в сервисных центрах:</h5>
+                                                <p class="card-text">
+                                                {% for d in available %}
+                                                    {% if i.model == d.model %}
+                                                            {% if d.quantity > 0 %}
+                                                                <div>{{ d.service }}, количество: <mark>{{ d.quantity }}</mark> </div>
+                                                                <h6>{{ d.date }}</h6>
+                                                            {% else %}
+                                                                <div>{{ d.service }}: <img src='{% static 'minus.svg' %}', height="15"></div>
+                                                                <h6> {{ d.date }}</h6>
+                                                            {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                          {% endfor %}
+                      </div>
+                    </div>
+                </div>
+             </div>
+        </main>
+    </div>
+
+{% endblock %}
+
+

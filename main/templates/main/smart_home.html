@@ -1,0 +1,104 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+Умный дом
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container-md">
+    {% for el in routers_all %}
+    {{ routers_all.device_name }}
+    {% endfor %}
+    <h1>Оборудование Умного дома</h1>
+    </div>
+    <div class="container-md">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Старовиленская 87 (УПУ 1)</th>
+      <th scope="col">Гебелева 7 (УПУ 2)</th>
+      <th scope="col">Матусевича 13 (УПУ 3)</th>
+      <th scope="col">Искалиева 12 (УПУ 4)</th>
+      <th scope="col">Энегльса 6 (УПУ 5)</th>
+    </tr>
+  </thead>
+
+  <tbody class="table-group-divider">
+
+    <tr>
+      <th scope="row">Наличие тестировщика</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>Mark</td>
+      <td>Otto</td>
+    </tr>
+    <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">Умный Дом</th>
+    </tr>
+    <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">Комплект УД</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>Mark</td>
+      <td>Otto</td>
+    </tr>
+
+    <tr>
+      <th scope="row">Датичик движения</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">Датчик дыма</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">Сигнализация</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">Датчик открытия</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">Датчик затопления</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">Датчик температуры</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">SIP-камера</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">Упарвляемая розетка</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+  </tbody>
+
+  </tbody>
+</table>
+    </div>
+{% endblock %}
+

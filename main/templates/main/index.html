@@ -1,0 +1,164 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+Главная
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'myfirst1.css' %}">
+<div class="col-lg-12 mx-auto p-3 py-md-6">
+
+  <main>
+<div class="container-md">
+    <h1>Список доступного оборудования</h1>
+    <p class="fs-5 col-md-10">На этой странице отображается наличие оборудования во всех сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
+<div class="album py-5 bg-light">
+    <div class="card-group">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-2">
+{#       <div class="card">#}
+        <div class="col-sm d-flex">
+          <div class="card " style="width: 18rem;">
+            <img src="{% static "routers.svg" %}" alt="My image">
+            <div class="card-body">
+              <p class="card-text">Модемы PON, ADSL, а также роутеры на продажу.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                  <a href="routers" class="stretched-link"></a>
+              </div>
+            </div>
+{#          </div>#}
+          </div>
+        </div>
+        <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "zala.svg" %}" alt="My image">
+            <div class="card-body">
+              <p class="card-text">Приставки и CAM-модули для IPTV, эфирной и SMART-Zala.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                  <a href="zala" class="stretched-link"></a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "smart_home.svg" %}" alt="My image" >
+
+            <div class="card-body">
+                <p class="card-text">Комплекты и элементы "Умного Дома" <br> </br></p>
+              <div class="d-flex justify-content-between align-items-center">
+                  <a href="smart_home" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "tv.svg" %}" alt="My image" >
+            <div class="card-body">
+                <p class="card-text">Телевизоры<br> </br></p>
+              <div class="d-flex justify-content-between align-items-center">
+                  <a href="tv" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "notebook.svg" %}" alt="My image" >
+            <div class="card-body">
+                <p class="card-text">Ноутбуки</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="notebooks" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "pads.svg" %}" alt="My image">
+            <div class="card-body">
+              <p class="card-text">Планшеты</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="pads" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "smart_watches.svg" %}" alt="My image" >
+            <div class="card-body">
+              <p class="card-text">Умные часы и браслеты</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="smart_watches" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "scooters.svg" %}" alt="My image" >
+            <div class="card-body">
+              <p class="card-text">Электросамокаты</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="scooters" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "robovacum.svg" %}" alt="My image" >
+            <div class="card-body">
+              <p class="card-text">Роботы-пылесосы</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="robovacum" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "coffee.svg" %}" alt="My image" >
+            <div class="card-body">
+              <p class="card-text">Кофе-машины</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="coffee" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+            <img src="{% static "conditioner.svg" %}" alt="My image" >
+
+            <div class="card-body">
+              <p class="card-text">Кондиционеры</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="conditioners" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-sm d-flex">
+          <div class="card shadow-sm" style="width: 18rem;">
+              <img src="{% static "other.svg" %}" alt="My image" >
+            <div class="card-body">
+                 <p class="card-text">Прочее оборудование<br></br></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="other" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+    </div>
+</div>
+</main>
+</div>
+{% endblock %}
+
+
