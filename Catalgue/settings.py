@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'django_filters',
+    'crispy_forms',
+    'crispy_bootstrap5'
 
 
 ]
@@ -127,3 +130,8 @@ MEDIA_ROOT = ''
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+FILTERS_EMPTY_CHOICE_LABEL = 'Отображать все'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

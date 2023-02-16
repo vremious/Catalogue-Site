@@ -4,15 +4,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+
     path('home', views.index),
     path('', views.index),
+    path('smartphones', views.smartphones),
+    path('smart_watches', views.smart_watches_def),
+    path('smart_speaker', views.smart_speaker),
     path('routers', views.routers),
     path('zala', views.zala),
     path('smart_home', views.smart_home),
     path('tv', views.tv),
     path('notebooks', views.notebooks),
     path('pads', views.pads),
-    path('smart_watches', views.smart_watches),
     path('scooters', views.scooters),
     path('robovacum', views.robovacum),
     path('coffee', views.coffee),

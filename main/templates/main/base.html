@@ -1,103 +1,191 @@
 <!doctype html>
 <html lang="ru">
+{% load static %}
+<link rel="stylesheet" href="{% static 'test.css' %}">
+<link rel="stylesheet" href= "{% static 'css/bootstrap.css' %}">
+
+
+
 <head>
-    {% load static %}
+    <link rel="icon" href="{% static 'favicon.svg' %}">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href= "{% static 'css/bootstrap.css' %}">
-    <script src = {% static 'js/bootstrap.bundle.js'%}></script>
-    <script src = {% static 'js/bootstrap.esm.js'%}></script>
-    <script src = {% static 'js/bootstrap.js'%}></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script>
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-</script>
+    <style>
+        /* Center the loader */
+        #loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            width: 120px;
+            height: 120px;
+            margin: -76px 0 0 -76px;
+            border: 16px solid black;
+            border-radius: 50%;
+            border-top: 16px solid white;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Add animation to "page content" */
+        .animate-bottom {
+            position: relative;
+            -webkit-animation-name: animatebottom;
+            -webkit-animation-duration: 1s;
+            animation-name: animatebottom;
+            animation-duration: 1s
+        }
+
+        @-webkit-keyframes animatebottom {
+            from { bottom:-100px; opacity:0 }
+            to { bottom:0px; opacity:1 }
+        }
+
+        @keyframes animatebottom {
+            from{ bottom:-100px; opacity:0 }
+            to{ bottom:0; opacity:1 }
+        }
+
+        #myDiv {
+            display: none;
+            text-align: center;
+        }
+    </style>
+
+    {#    <script src = {% static 'js/bootstrap.bundle.js'%}></script>#}
+    {#    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>#}
 
 </head>
-<body>
-<link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<body onload="myFunction()" style="margin:0;">
+
 
 <header>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container d-flex flex-wrap justify-content-center">
-    <a class="navbar-brand" href="home">Главная</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Абонентское оборудование
-          </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href= "routers_rent">Модемы</a></li>
-                <li><a class="dropdown-item" href= "zala">Zala</a></li>
-                <li><a class="dropdown-item" href= "smart_home">Умный Дом</a></li>
-                <li><a class="dropdown-item" href= "other">Прочее оборудование</a></li>
-              </ul>
-        </li>
-
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Оборудование для продажи
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-            <li><a class="dropdown-item" href='routers'>Модемы</a>
-            </li>
-
-            <li><a class="dropdown-item" href='tv'>Телевизоры</a>
-            </li>
-
-            <li><a class="dropdown-item" href='notebooks'>Ноутбуки</a>
-            </li>
-
-            <li><a class="dropdown-item" href='pads'>Планшеты</a>
-            </li>
-
-            <li><a class="dropdown-item" href='smart_watches'>Умные часы и браслеты</a>
-            </li>
-
-            <li><a class="dropdown-item" href='scooters'>Электросамокаты</a>
-            </li>
-
-            <li><a class="dropdown-item" href='robovacum'>Роботы-пылесосы</a>
-            </li>
-
-            <li><a class="dropdown-item" href='coffee'>Кофе-машины</a>
-            </li>
-
-            <li><a class="dropdown-item" href='conditioners'>Кондиционеры</a>
-            </li>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+        <div class="container d-flex flex-wrap justify-content-center">
+            <a class="navbar-brand" href="home">Главная</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Абонентское оборудование
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href= "routers_rent">Модемы</a></li>
+                            <li><a class="dropdown-item" href= "zala">Zala</a></li>
+                            <li><a class="dropdown-item" href= "smart_home">Умный Дом</a></li>
+                            <li><a class="dropdown-item" href= "other">Прочее оборудование</a></li>
+                        </ul>
+                    </li>
 
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Оборудование для продажи
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-        </ul>
+                            <li><a class="dropdown-item" href='routers'>Роутеры</a>
+                            </li>
 
-    </ul>
-    </li>
+                            <li><a class="dropdown-item" href='tv'>Телевизоры</a>
+                            </li>
 
-    </div>
-  </div>
-</nav>
+                            <li><a class="dropdown-item" href='smartphones'>Смартфоны</a>
+                            </li>
+
+                            <li><a class="dropdown-item" href='notebooks'>Ноутбуки</a>
+                            </li>
+
+                            <li><a class="dropdown-item" href='pads'>Планшеты</a>
+                            </li>
+
+                            <li><a class="dropdown-item" href='smart_watches'>Умные часы и браслеты</a>
+                            </li>
+
+                            <li><a class="dropdown-item" href='smart_speaker'>Умные колонки</a>
+                            </li>
+
+                            <li><a class="dropdown-item" href='scooters'>Электросамокаты</a>
+                            </li>
+
+                            <li><a class="dropdown-item" href='robovacum'>Роботы-пылесосы</a>
+                            </li>
+
+                            <li><a class="dropdown-item" href='coffee'>Кофе-машины</a>
+                            </li>
+
+                            <li><a class="dropdown-item" href='conditioners'>Кондиционеры</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul>
+                <a class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas" role="button">График работы тестировщиков</a>
+                <a class="btn btn-outline-light ms-2" href="admin/" role="button">Администрирование</a>
+
+
+            </div>
+        </div>
+    </nav>
 </header>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h6 class="lead" id="offcanvasLabel">График работы тестировщиков</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div>
+            {% for i in testertime %}
+                <li class ='lead'> {{ i.service }}: {{ i.worktime }}</li>
+                {% if i.onduty == True%}
+                    <div class="alert alert-success d-flex align-items-center" role="alert"> Тестировщик присутствует </div>
+                {% else %}
+                    <div class="alert alert-danger d-flex align-items-center" role="alert"> Тестировщик отсутствует </div>
+                {% endif %}
+                <small>{{i.date}}</small>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% block content %}
 {% endblock %}
-<footer class="text-muted py-5 bg-dark">
-    <div class="container">
-        <p class="float-end mb-1">
-          <a href="#" class="btn btn-light">В начало страницы</a>
-        </p>
-        <p class="mb-1">Album example is © Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.0/getting-started/introduction/">getting started guide</a>.</p>
-      </div>
+<footer class="py-5 bg-transparent sticky-bottom">
+    <div class="position-absolute bottom-50 end-0 translate-middle-x " id="up">
+        <a href="#"><img src='{% static 'up.svg' %}'></a>
+    </div>
+
 </footer>
+<script>
+    var myVar;
+
+    function myFunction() {
+        myVar = setTimeout(showPage, 1000);
+    }
+
+    function showPage() {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("myDiv").style.display = "block";
+    }
+
+</script>
 </body>
+<script src = {% static 'js/hover-dropdown.js'%}></script>
+<script src = {% static 'js/bootstrap.bundle.js'%}></script>
 </html>

@@ -1,104 +1,85 @@
 {% extends 'main/base.html' %}
+{% load crispy_forms_filters %}
 {% load static %}
+
 {% block title %}
-Умный дом
+    Умный Дом
 {% endblock %}
+<link rel="stylesheet" href="{% static 'test.css' %}" xmlns="http://www.w3.org/1999/html">
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 
 {% block content %}
-
-
-    <div class="container-md">
-    {% for el in routers_all %}
-    {{ routers_all.device_name }}
-    {% endfor %}
-    <h1>Оборудование Умного дома</h1>
-    </div>
-    <div class="container-md">
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">Старовиленская 87 (УПУ 1)</th>
-      <th scope="col">Гебелева 7 (УПУ 2)</th>
-      <th scope="col">Матусевича 13 (УПУ 3)</th>
-      <th scope="col">Искалиева 12 (УПУ 4)</th>
-      <th scope="col">Энегльса 6 (УПУ 5)</th>
-    </tr>
-  </thead>
-
-  <tbody class="table-group-divider">
-
-    <tr>
-      <th scope="row">Наличие тестировщика</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Mark</td>
-      <td>Otto</td>
-    </tr>
-    <tbody class="table-group-divider">
-    <tr>
-      <th scope="row">Умный Дом</th>
-    </tr>
-    <tbody class="table-group-divider">
-    <tr>
-      <th scope="row">Комплект УД</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Mark</td>
-      <td>Otto</td>
-    </tr>
-
-    <tr>
-      <th scope="row">Датичик движения</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">Датчик дыма</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-    <tr>
-      <th scope="row">Сигнализация</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">Датчик открытия</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">Датчик затопления</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-    <tr>
-      <th scope="row">Датчик температуры</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">SIP-камера</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-    <tr>
-      <th scope="row">Упарвляемая розетка</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-  </tbody>
-
-  </tbody>
-</table>
+    {% load crispy_forms_tags %}
+    <div class="container-md bg-white">
+        <div class="row">
+            <div class="col-12">
+                <h1>Умный Дом</h1>
+                <p class="fs-5">На этой странице отображается наличие комплектов Умного Дома для аренды во всех сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
+            </div>
+            <!-- ---------------------------------------------------------------------- Раздел с фильтрацией на странице. -->
+            <div class="col-2">
+                <div class = "container bg-white shadow-lg rounded-4">
+                    <form  method="get">
+                        {{ smart_home_filter.form|crispy}}
+                        {{ available_filter.form|crispy }}
+                        <div class="p-sm-3">
+                            <button type="submit" style= 'width: 100%' class="btn btn-secondary">Применить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- ------------------------------------------------------------------------------Конец фильра, ниже шаблон страницы с товаром, генерируемым из админки-->
+            <div class="col-10">
+                <div id="loader"></div>
+                <div style="display:none;" id="myDiv" class="animate-bottom">
+                    <div class="card-group">
+                        <div class = 'row row-cols-auto'>
+                            <!-- --------------------------------------------------------------------------------Генерация товара из базы админки на карточках-->
+                            {% for i in smart_home_filter.qs%}
+                                {% regroup  available_filter.qs by model as available_model %}
+                                {% for j in available_model %}
+                                    {% if i.model == j.grouper %}
+                                        <div class="col mb-3 d-flex align-items-stretch">
+                                            <div class="flip-card" style="width:15rem; height:auto">
+                                                <div class="flip-card-inner" >
+                                                    <div class="flip-card-front" >
+                                                        {% if i.image%}
+                                                            <img src="{{ i.image.url }}" class="card-img-top">
+                                                        {%  else %}
+                                                            <img src="{% static 'smart_home.svg'%}" class="card-img-top">
+                                                        {% endif %}
+                                                        <h3  style="height:96px">{{i.model.model}}</h3>
+                                                        <hr> <p><b>Назначение:</b> {{i.type }}</p>
+                                                    </div>
+                                                    <div class='flip-card-back'>
+                                                        <h5>Наличие:</h5>
+                                                        {% for d in available %}
+                                                            {% if i.model == d.model %}
+                                                                {% if d.quantity > 0 %}
+                                                                    <div>{{ d.service }}: <mark>{{ d.quantity }}</mark> </div>
+                                                                    <h6>{{ d.date }}</h6>
+                                                                    <hr>
+                                                                {% else %}
+                                                                    <div>{{ d.service }}: <img src='{% static 'minus.svg' %}' height="15"></div>
+                                                                    <h6> {{ d.date }}</h6>
+                                                                    <hr>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% empty %}
+                                <h4 class="display-4">По вашему запросу нет результатов</h4>
+                                <p class="lead">Проверьте настройки фильтров и повторите поиск</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
-
