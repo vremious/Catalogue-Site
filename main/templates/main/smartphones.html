@@ -52,7 +52,6 @@
                                                         <hr> <p><b>Процессор:</b> {{i.processor }}</p>
                                                         <p><b>Память:</b>  {{ i.ddr }}/{{ i.memory }} Гб</p>
                                                         <p><b>Экран:</b> {{ i.size }}"</p>
-
                                                     </div>
                                                     <div class='flip-card-back'>
                                                         <h5>Наличие:</h5>
@@ -75,11 +74,12 @@
                                         </div>
                                     {% endif %}
                                 {% endfor %}
-                            {% empty %}
-                                <h4 class="display-4">По вашему запросу нет результатов</h4>
-                                <p class="lead">Проверьте настройки фильтров и повторите поиск</p>
-                                </div>
                             {% endfor %}
+                            {% if final == True%}
+                                 <h4 class="display-4">По вашему запросу нет результатов</h4>
+                                 <p class="lead"> Проверьте настройки фильтра и повторите поиск</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -35,10 +35,11 @@
                     <div class="card-group">
                         <div class = 'row row-cols-auto'>
                             <!-- --------------------------------------------------------------------------------Генерация товара из базы админки на карточках-->
+
                             {% for i in coffee_filter.qs%}
                                 {% regroup  available_filter.qs by model as available_model %}
                                 {% for j in available_model %}
-                                    {% if i.model == j.grouper %}
+                                    {% if i.model == j.grouper%}
                                         <div class="col mb-3 d-flex align-items-stretch">
                                             <div class="flip-card" style="width:15rem; height:auto">
                                                 <div class="flip-card-inner" >
@@ -73,12 +74,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    {% else %}
                                     {% endif %}
                                 {% endfor %}
-                            {% empty %}
-                                <h4 class="display-4">По вашему запросу нет результатов</h4>
-                                <p class="lead">Проверьте настройки фильтров и повторите поиск</p>
                             {% endfor %}
+                            {% if final == True%}
+                                 <h4 class="display-4">По вашему запросу нет результатов</h4>
+                                 <p class="lead"> Проверьте настройки фильтра и повторите поиск</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

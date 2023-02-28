@@ -54,10 +54,6 @@ class SmartHomeFilter(django_filters.FilterSet):
     ))
 
 
-    class Meta:
-        model = SmartHome
-        fields = {'type',"model"}
-
 class OtherFilter(django_filters.FilterSet):
     model = CharFilter(field_name='model__model', label='Прочее оборудование', lookup_expr='icontains',
                        widget=TextInput(
@@ -67,6 +63,7 @@ class OtherFilter(django_filters.FilterSet):
     class Meta:
         model = Other
         fields = {'type',"model"}
+
 
 class WatchFilter(django_filters.FilterSet):
     company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Умные часы').distinct(), empty_label=('Все'))
@@ -139,6 +136,9 @@ class ConditionerFilter(django_filters.FilterSet):
 
 
 class AvailableFilter(django_filters.FilterSet):
+    available = ChoiceFilter(label='Наличие', choices=(('+','Есть' ),('-','Нет')), empty_label='Все')
+
+
     class Meta:
         model = Available
         fields = {'service', 'available'}

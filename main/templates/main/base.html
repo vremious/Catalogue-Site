@@ -26,8 +26,8 @@
             border: 16px solid black;
             border-radius: 50%;
             border-top: 16px solid white;
-            -webkit-animation: spin 1s linear infinite;
-            animation: spin 1s linear infinite;
+            -webkit-animation: spin 0.5s linear infinite;
+            animation: spin 0.5s linear infinite;
         }
 
         @-webkit-keyframes spin {
@@ -44,9 +44,9 @@
         .animate-bottom {
             position: relative;
             -webkit-animation-name: animatebottom;
-            -webkit-animation-duration: 1s;
+            -webkit-animation-duration: 0.5s;
             animation-name: animatebottom;
-            animation-duration: 1s
+            animation-duration: 0.5s
         }
 
         @-webkit-keyframes animatebottom {
@@ -176,7 +176,7 @@
     var myVar;
 
     function myFunction() {
-        myVar = setTimeout(showPage, 1000);
+        myVar = setTimeout(showPage, 450);
     }
 
     function showPage() {

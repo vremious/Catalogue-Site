@@ -38,6 +38,7 @@ class Models(models.Model):
     model = models.CharField(max_length=50, verbose_name='Модель оборудования')
     type = models.CharField(max_length=50, verbose_name='Вид оборудования', choices=(
         ("Модемы", "Модемы"),
+        ("Роутеры", "Роутеры"),
         ("Zala", "Zala"),
         ("Умный Дом", "Умный Дом"),
         ("Смартфоны", "Смартфоны"),
@@ -58,7 +59,7 @@ class Models(models.Model):
         verbose_name_plural = 'Оборудование'
 
     def __str__(self):
-        return str(f'{self.type} -- {self.company} -- {self.model}')
+        return str(f'{self.model}')
 
 
 class Router(models.Model):
@@ -116,7 +117,7 @@ class SmartHome(models.Model):
         verbose_name_plural = 'Умный Дом'
 
     def __str__(self):
-        return str(f'{self.type} {self.model}')
+        return str(f'{self.model}')
 class Tv(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
