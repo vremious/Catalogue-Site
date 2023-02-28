@@ -6,7 +6,7 @@ from .models import *
 
 
 class RouterFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Модем').exclude(models__router__purpose='2').distinct(), empty_label=('Все'))
+    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Роутер').exclude(models__router__purpose='2').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
