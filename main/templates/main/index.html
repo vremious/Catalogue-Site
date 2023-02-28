@@ -6,12 +6,15 @@
 {% block content %}
     <div class="container-md bg-white">
         <div class="row">
-            <div class="col-12">
-                <h1>Список доступного оборудования</h1>
-                <p class="fs-5 col-md-10">На этой странице отображается наличие оборудования во всех сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
-                <div class="album py-5 bg-white">
+            <div class="col-10">
+                <div class="album py-3 bg-white">
+                    <h1>Список доступного оборудования</h1>
+                    <p class="fs-5 col-md-12">На этой странице отображается наличие оборудования во всех сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
+                </div>
+                <h1>Арендное оборудование</h1>
+                <div class="album py-3 bg-white">
                     <div class="card-group">
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-2">
+                        <div class="row row-cols-md-6 g-2">
                             <div class="col-sm d-flex">
                                 <div class="card rounded-5 " style="width: 18rem;">
                                     <img src="{% static "routers.svg" %}" alt="My image">
@@ -30,7 +33,6 @@
                                         <p class="card-text text-center">Приставки и CAM-модули для IPTV, эфирной и SMART-Zala</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <a href="zala" class="stretched-link"></a>
-
                                         </div>
                                     </div>
                                 </div>
@@ -38,7 +40,6 @@
                             <div class="col-sm d-flex">
                                 <div class="card rounded-5 " style="width: 18rem;">
                                     <img src="{% static "smart_home.svg" %}" alt="My image" >
-
                                     <div class="card-body">
                                         <p class="card-text text-center">Комплекты и элементы "Умного Дома" <br> </br></p>
                                         <div class="d-flex justify-content-between align-items-center">
@@ -47,6 +48,26 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-sm d-flex">
+                                <div class="card rounded-5 " style="width: 18rem;">
+                                    <img src="{% static "other.svg" %}" alt="My image" >
+                                    <div class="card-body">
+                                        <p class="card-text text-center">Прочее оборудование<br></br></p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <a href="other" class="stretched-link"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10">
+                <h1>Оборудование на продажу</h1>
+                <div class="album py-3 bg-white">
+                    <div class="card-group">
+                        <div class="row row-cols-md-6 g-2">
                             <div class="col-sm d-flex">
                                 <div class="card rounded-5 " style="width: 18rem;">
                                     <img src="{% static "router-sale.svg" %}" alt="My image">
@@ -109,7 +130,7 @@
                                 <div class="card rounded-5 " style="width: 18rem;">
                                     <img src="{% static "smart_watches.svg" %}" alt="My image" >
                                     <div class="card-body">
-                                        <p class="card-text text-center">Умные часы и браслеты</p>
+                                        <p class="card-text text-center">Умные часы</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <a href="smart_watches" class="stretched-link"></a>
                                         </div>
@@ -168,17 +189,6 @@
                                         <p class="card-text text-center">Кондиционеры</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <a href="conditioners" class="stretched-link"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
-                                    <img src="{% static "other.svg" %}" alt="My image" >
-                                    <div class="card-body">
-                                        <p class="card-text text-center">Прочее оборудование<br></br></p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <a href="other" class="stretched-link"></a>
                                         </div>
                                     </div>
                                 </div>
