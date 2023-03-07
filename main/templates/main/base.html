@@ -73,10 +73,11 @@
 
 
 <header>
-  <div class="header finisher-header" style="width: 100%; height: 200px;">
-      <div class="d-flex" style="height: 70px;">
-          <div class="vr"></div>
-      </div>
+  <div class="header finisher-header" style="width: 100%; height: 100px;">
+{#      <div class="d-flex" style="height: 70px;">#}
+{#          <div class="vr"></div>#}
+{#      </div>#}
+  </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-black " >
         <div class="container d-flex flex-wrap justify-content-center">
             <a class="navbar-brand" href="home">Главная</a>
@@ -99,7 +100,7 @@
 
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Оборудование для продажи
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -145,7 +146,6 @@
             </div>
         </div>
     </nav>
-  </div>
 </header>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
     <div class="offcanvas-header">
@@ -165,6 +165,7 @@
                 <hr>
             {% endfor %}
         </div>
+
     </div>
 </div>
 {% block content %}
@@ -229,5 +230,79 @@ new FinisherHeader({
     "c"
   ]
 });
+
+let cards = document.getElementsByClassName("flip-card");
+    if(cards !== 0){
+      let card_array = [];
+      for(let i = 0; i < cards.length; i++){
+        card_array.push(i);
+      }
+
+      for(let i = 0; i < cards.length; i++){
+        let j = Math.floor(Math.random() * card_array.length);
+        let card = cards.item(card_array[j]);
+        card.parentNode.appendChild(card);
+        card_array.splice(j, 1);
+      }
+    }
+
+        let hasFlippedCard = false;
+        let lockBoard = false;
+        let firstCard, secondCard;
+
+        function flipCard() {
+          if (lockBoard) return;
+          if (this === firstCard) return;
+
+          this.classList.add('flip');
+
+          if (!hasFlippedCard) {
+            hasFlippedCard = true;
+            firstCard = this;
+
+            return;
+          }
+
+          secondCard = this;
+          checkForMatch();
+        }
+
+        function checkForMatch() {
+          let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
+
+          isMatch ? disableCards() : unflipCards();
+        }
+
+        function disableCards() {
+          firstCard.removeEventListener('click', flipCard);
+          secondCard.removeEventListener('click', flipCard);
+          resetBoard();
+        }
+
+        function unflipCards() {
+          lockBoard = true;
+
+          setTimeout(() => {
+            firstCard.classList.remove('flip');
+            secondCard.classList.remove('flip');
+
+            resetBoard();
+          }, 1500);
+        }
+
+        function resetBoard() {
+          [hasFlippedCard, lockBoard] = [false, false];
+          [firstCard, secondCard] = [null, null];
+        }
+
+
+var flip = function() {
+   this.classList.toggle("flip")
+};
+
+for (var i = 0; i < cards.length; i++) {
+    cards[i].addEventListener('click', flip, false);
+}
+
 </script>
 </html>

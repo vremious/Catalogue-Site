@@ -123,9 +123,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 import os
-
-STATIC_URL = 'static/'
-STATIC_ROOT = '/var/www/django/main/static/'
+STATICFILES_DIRS = [
+    '/var/www/django/main/static',
+    '/var/www/django/venv/Lib/site-packages/django/contrib/admin/static/admin',
+]
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = ''
 MEDIA_ROOT = ''
 
@@ -138,3 +141,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 FILTERS_EMPTY_CHOICE_LABEL = 'Отображать все'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+

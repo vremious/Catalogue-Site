@@ -6,17 +6,14 @@
 {% block content %}
     <div class="container-md bg-white">
         <div class="row">
-            <div class="col-10">
-                <div class="album py-3 bg-white">
-                    <h1>Список доступного оборудования</h1>
-                    <p class="fs-5 col-md-12">На этой странице отображается наличие оборудования во всех сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
-                </div>
-                <h1>Арендное оборудование</h1>
-                <div class="album py-3 bg-white">
+            <div class="col-xl-12">
+                    <h1 class="mb-lg-3 mt-lg-3" >Главная страница</h1>
+                    <p class="fs-5 col-md-12">Выберите тип оборудования из представленных ниже для получения информации о его наличии в сервисных центрах города Минска.</p>
+                    <h1 class="mb-lg-5 mt-lg-5" >Арендное оборудование</h1>
                     <div class="card-group">
-                        <div class="row row-cols-md-5 g-2">
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                        <div class="row row-cols-xl-12 g-2">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "routers.svg" %}" alt="My image">
                                     <div class="card-body">
                                         <p class="card-text text-center">Модемы PON, ADSL, и VDSL</p>
@@ -26,8 +23,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "zala.svg" %}" alt="My image">
                                     <div class="card-body">
                                         <p class="card-text text-center">Приставки и CAM-модули для IPTV, эфирной и SMART-Zala</p>
@@ -37,8 +34,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "smart_home.svg" %}" alt="My image" >
                                     <div class="card-body">
                                         <p class="card-text text-center">Комплекты и элементы "Умного Дома" <br> </br></p>
@@ -48,8 +45,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "other.svg" %}" alt="My image" >
                                     <div class="card-body">
                                         <p class="card-text text-center">Прочее оборудование<br></br></p>
@@ -61,15 +58,15 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
-            <div class="col-10">
-                <h1>Оборудование на продажу</h1>
-                <div class="album py-3 bg-white">
+        </div>
+        <div class="row">
+            <div class="col-xl-8">
+                <h1 class="mb-lg-5 mt-lg-5">Оборудование для продажи</h1>
                     <div class="card-group">
-                        <div class="row row-cols-md-5 g-2">
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                        <div class="row row-cols-lg-auto g-2">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "router-sale.svg" %}" alt="My image">
                                     <div class="card-body">
                                         <p class="card-text text-center">Роутеры на продажу</p>
@@ -77,13 +74,11 @@
                                             <a href="routers" class="stretched-link"></a>
                                         </div>
                                     </div>
-                                    {#          </div>#}
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "smartphone.svg" %}" alt="My image" >
-
                                     <div class="card-body">
                                         <p class="card-text text-center">Смартфоны <br> </br></p>
                                         <div class="d-flex justify-content-between align-items-center">
@@ -92,8 +87,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "tv.svg" %}" alt="My image" >
                                     <div class="card-body">
                                         <p class="card-text text-center">Телевизоры<br> </br></p>
@@ -103,9 +98,8 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "notebook.svg" %}" alt="My image" >
                                     <div class="card-body">
                                         <p class="card-text text-center">Ноутбуки</p>
@@ -115,8 +109,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "pads.svg" %}" alt="My image">
                                     <div class="card-body">
                                         <p class="card-text text-center">Планшеты</p>
@@ -126,8 +120,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "smart_watches.svg" %}" alt="My image" >
                                     <div class="card-body">
                                         <p class="card-text text-center">Умные часы</p>
@@ -137,8 +131,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "smart_speaker.svg" %}" alt="My image" >
                                     <div class="card-body">
                                         <p class="card-text text-center">Умные колонки</p>
@@ -148,8 +142,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "scooters.svg" %}" alt="My image" >
                                     <div class="card-body">
                                         <p class="card-text text-center">Электросамокаты</p>
@@ -159,8 +153,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "robovacum.svg" %}" alt="My image" >
                                     <div class="card-body">
                                         <p class="card-text text-center">Роботы-пылесосы</p>
@@ -170,8 +164,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "coffee.svg" %}" alt="My image" >
                                     <div class="card-body">
                                         <p class="card-text text-center">Кофе-машины</p>
@@ -181,10 +175,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm d-flex">
-                                <div class="card rounded-5 " style="width: 18rem;">
+                            <div class="col-auto">
+                                <div class="card rounded-5 " style="width: 13rem; height: 100%">
                                     <img src="{% static "conditioner.svg" %}" alt="My image" >
-
                                     <div class="card-body">
                                         <p class="card-text text-center">Кондиционеры</p>
                                         <div class="d-flex justify-content-between align-items-center">
@@ -192,13 +185,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
+                       </div>
                     </div>
-                </div>
             </div>
         </div>
-
         </main>
     </div>
 {% endblock %}

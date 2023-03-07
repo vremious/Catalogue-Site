@@ -328,10 +328,6 @@ class Available(models.Model):
             raise ValidationError({'available':['Исправьте значение на "-"']})
 
 
-
-
-
-
     class Meta:
         ordering = ['model']
         verbose_name = 'Наличие оборудования'

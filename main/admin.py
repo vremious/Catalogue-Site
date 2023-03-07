@@ -1,10 +1,23 @@
 
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from .models import *
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+from django.contrib.admin.models import LogEntry
 
-from .models import ( Company, Router, Zala, SmartHome, Tv, Notebook, Pad, Watch,
-                      Scooter, Vacuum, Coffee, Conditioner, Other, Purpose, Available, Models, SmartSpeaker, Smartphone, Service, TesterTime)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'action_time', 'user', 'content_type', 'object_repr')
+    list_filter = ('content_type','user__username')
+    search_fields = ['user__username']
+    date_hierarchy = 'action_time'
 
+admin.site.register(LogEntry, LogEntryAdmin)
+class CustomUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'last_login') # Added last_login
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 
 User = get_user_model()
 admin.site.site_header = "Администрирование оборудования Белтелеком"

@@ -18,13 +18,13 @@
 /* This container is needed to position the front and back side */
 .flip-card-inner {
   text-align: left;
-  transition: transform 0.8s;
+  transition: transform 0.4s;
   transform-origin: 30px 0 0;
   transform-style: preserve-3d;
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
+.flip  .flip-card-inner {
   transform: rotateY(180deg);
 
 

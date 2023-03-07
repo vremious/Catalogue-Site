@@ -55,14 +55,14 @@ class SmartHomeFilter(django_filters.FilterSet):
 
 
 class OtherFilter(django_filters.FilterSet):
-    model = CharFilter(field_name='model__model', label='Прочее оборудование', lookup_expr='icontains',
+    model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%', 'placeholder': 'Введите модель'}
                        )
                        )
     class Meta:
         model = Other
-        fields = {'type',"model"}
+        fields = {"model"}
 
 
 class WatchFilter(django_filters.FilterSet):
