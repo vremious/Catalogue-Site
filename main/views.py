@@ -61,6 +61,22 @@ def smart_speaker(request):
     context = {'testertime': testertime, 'available': available, 'smart_speakers': smart_speaker, "smart_speaker_filter": smart_speaker_filter, "available_filter": available_filter, 'result':result, 'result1':result1,'final':final}
     return render(request, 'main/smart_speaker.html', context)
 
+
+def speaker(request):
+    available = Available.objects.all().order_by('service')
+    speaker = Speaker.objects.all
+    testertime = TesterTime.objects.all().order_by('service')
+    speaker_filter = SpeakerFilter(request.GET, queryset=Speaker.objects.all().order_by('model__company__company','model__model'))
+    available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Аудиосистемы'))
+    result = available_filter.qs.values('model').distinct().order_by('model')
+    result1 = speaker_filter.qs.values('model').distinct().order_by('model')
+    final = True
+    for i in result1:
+        if i in result:
+            final = False
+    context = {'testertime': testertime, 'available': available, 'speakers': speaker, "speaker_filter": speaker_filter, "available_filter": available_filter, 'result':result, 'result1':result1,'final':final}
+    return render(request, 'main/speaker.html', context)
+
 def routers(request):
     available = Available.objects.all().order_by('service')
     routers = Router.objects.all

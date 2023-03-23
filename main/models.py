@@ -2,7 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError, FieldError
 
 class Company(models.Model):
-    company = models.CharField(max_length=50, verbose_name='Производитель')
+    company = models.CharField(max_length=50, verbose_name='Производитель', unique=True)
     class Meta:
         verbose_name = 'Производитель оборудования'
         verbose_name_plural = 'Производитель оборудования'
@@ -49,8 +49,10 @@ class Models(models.Model):
         ("Электросамокаты", "Электросамокаты"),
         ("Роботы пылесосы", "Роботы пылесосы"),
         ("Кофе-машины", "Кофе-машины"),
+        ("Кофеварки", "Кофеварки"),
         ("Кондиционеры", "Кондиционеры"),
         ("Умные колонки", "Умные колонки"),
+        ("Аудиосистемы", "Аудиосистемы"),
         ("Прочее оборудование", "Прочее оборудование")
     ))
 
@@ -59,7 +61,7 @@ class Models(models.Model):
         verbose_name_plural = 'Оборудование'
 
     def __str__(self):
-        return str(f'{self.model}')
+        return str(f'{self.company} {self.model}')
 
 
 class Router(models.Model):
@@ -70,7 +72,6 @@ class Router(models.Model):
         ('PON', 'PON'),
         ('На продажу', 'На продажу')
     ), verbose_name="Тип модема")
-    company = models.ForeignKey(Company, on_delete= models.CASCADE, verbose_name='Производитель')
     wifi = models.CharField(max_length=50, verbose_name='Наличие Wi-Fi', choices=(
         ('+', '+'),
         ('-', '-')
@@ -87,7 +88,7 @@ class Router(models.Model):
         verbose_name = 'Модем'
         verbose_name_plural = 'Модемы'
     def __str__(self):
-        return str(f'{self.type} {self.company} {self.model}')
+        return str(f'{self.type} {self.model}')
 
 
 class Zala(models.Model):
@@ -119,7 +120,6 @@ class SmartHome(models.Model):
     def __str__(self):
         return str(f'{self.model}')
 class Tv(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     size = models.FloatField(max_length=4, verbose_name="Диагональ экрана")
     resolution = models.CharField(max_length=20, verbose_name='Разрешение экрана')
@@ -132,10 +132,10 @@ class Tv(models.Model):
         verbose_name_plural = 'Телевизоры'
 
     def __str__(self):
-        return str(f'{self.size} {self.company} {self.model}')
+        return str(f'{self.size} {self.model}')
 
 class Smartphone(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
+
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     processor = models.CharField(max_length=30, verbose_name='Процессор')
     size = models.FloatField(max_length=4, verbose_name="Диагональ экрана")
@@ -149,10 +149,9 @@ class Smartphone(models.Model):
         verbose_name_plural = 'Смартфоны'
 
     def __str__(self):
-        return str(f' {self.company} {self.model}')
+        return str(f'{self.model}')
 
 class Notebook(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     size = models.FloatField(max_length=4, verbose_name="Диагональ экрана")
     cpu = models.CharField(max_length=20, verbose_name='Модель процессора')
@@ -168,10 +167,9 @@ class Notebook(models.Model):
         verbose_name_plural = 'Ноутбуки'
 
     def __str__(self):
-        return str(f'{self.company} {self.model}')
+        return str(f' {self.model}')
 
 class Pad(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     size = models.FloatField(max_length=4, verbose_name="Диагональ экрана")
     ddr = models.PositiveSmallIntegerField(verbose_name='Объём оперативной памяти')
@@ -184,10 +182,9 @@ class Pad(models.Model):
         verbose_name_plural = 'Планшеты'
 
     def __str__(self):
-        return str(f'{self.company} {self.model}')
+        return str(f' {self.model}')
 
 class Watch(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     size = models.CharField(max_length=4, verbose_name="Диагональ экрана")
     os = models.CharField(max_length=50, verbose_name='Операционная система')
@@ -199,10 +196,9 @@ class Watch(models.Model):
         verbose_name_plural = 'Умные часы'
 
     def __str__(self):
-        return str(f'{self.company} {self.model}')
+        return str(f'{self.model}')
 
 class Vacuum(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
@@ -212,11 +208,10 @@ class Vacuum(models.Model):
         verbose_name_plural = 'Роботы-пылесосы'
 
     def __str__(self):
-        return str(f'{self.company} {self.model}')
+        return str(f'{self.model}')
 
 
 class Scooter(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     maxspeed = models.CharField(max_length=50, verbose_name='Максимальная скорость и дистанция')
     power = models.CharField(max_length=50, verbose_name='Мощность мотора')
@@ -232,7 +227,7 @@ class Scooter(models.Model):
         verbose_name_plural = 'Электросамокаты'
 
     def __str__(self):
-        return str(f'{self.company} {self.model}')
+        return str(f'{self.model}')
 
 
 class Coffee(models.Model):
@@ -241,7 +236,6 @@ class Coffee(models.Model):
         ("Кофемашина", "Кофемашина")
     )
                            )
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     pressure = models.PositiveSmallIntegerField(verbose_name='Давление (Бар)')
     capucinator = models.CharField(max_length=50, verbose_name='Тип капучинатора', choices=(
@@ -263,10 +257,9 @@ class Coffee(models.Model):
         verbose_name_plural = 'Кофеварки'
 
     def __str__(self):
-        return str(f'{self.mod} {self.company} {self.model}')
+        return str(f'{self.mod}  {self.model}')
 
 class Conditioner(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     conditioner_type = models.CharField(max_length=50, verbose_name='Тип кондиционера')
     power = models.CharField(max_length=50, verbose_name='Мощность охлаждения/обогрева ')
@@ -278,10 +271,9 @@ class Conditioner(models.Model):
         verbose_name_plural = 'Кондиционеры'
 
     def __str__(self):
-        return str(f'{self.company} {self.model}')
+        return str(f' {self.model}')
 
 class SmartSpeaker(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     bluetooth = models.CharField(max_length=50, verbose_name='Версия Bluetooth')
     power = models.CharField(max_length=50, verbose_name='Номинальная мощность')
@@ -293,8 +285,22 @@ class SmartSpeaker(models.Model):
         verbose_name_plural = 'Умные колонки'
 
     def __str__(self):
-        return str(f'{self.company} {self.model}')
+        return str(f' {self.model}')
 
+
+class Speaker(models.Model):
+    model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
+    connection = models.CharField(max_length=50, verbose_name='Тип соединения', blank=True, null=True)
+    power = models.CharField(max_length=50, verbose_name='Выходная мощность', blank=True, null=True)
+    battery = models.CharField(max_length=80, verbose_name='Источник питания', blank=True, null=True)
+    image = models.ImageField(upload_to='main/media', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Аудиосистема'
+        verbose_name_plural = 'Аудиосистемы'
+
+    def __str__(self):
+        return str(f'{self.model}')
 
 class Other(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
@@ -310,14 +316,13 @@ class Other(models.Model):
         return str(f'{self.type} {self.model}')
 
 class Available(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name='Сервисный центр')
     available = models.CharField(max_length=20, verbose_name="Наличие", choices=(
         ('+', '+'),
         ('-', '-')
     ), default='-')
-    quantity = models.PositiveSmallIntegerField(verbose_name='Количество')
+    quantity = models.PositiveSmallIntegerField(verbose_name='Количество', default='0')
     date = models.DateTimeField("Дата обновления", auto_now=True)
 
     def clean(self):
@@ -332,6 +337,7 @@ class Available(models.Model):
         ordering = ['model']
         verbose_name = 'Наличие оборудования'
         verbose_name_plural = 'Наличие оборудования'
+        unique_together=('service', 'model')
 
     def __str__(self):
         return str(f'{self.service}-{self.model}-{self.available}-{self.quantity}')

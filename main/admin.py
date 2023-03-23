@@ -22,7 +22,8 @@ admin.site.register(User, CustomUserAdmin)
 User = get_user_model()
 admin.site.site_header = "Администрирование оборудования Белтелеком"
 admin.site.site_title = "Панель администрирования"
-admin.site.index_title = "Добро пожаловать"
+admin.site.index_title = "Добро пожаловать!"
+
 admin.site.register(Company)
 admin.site.register(Router)
 admin.site.register(Zala)
@@ -41,7 +42,7 @@ admin.site.register(SmartSpeaker)
 admin.site.register(Models)
 admin.site.register(Smartphone)
 admin.site.register(Service)
-
+admin.site.register(Speaker)
 
 # class OrderItemInline(admin.TabularInline):
 #     model = OrderItem
@@ -70,9 +71,24 @@ admin.site.register(Service)
 #
 
 class AvailableAdmin(admin.ModelAdmin):
+    list_per_page = 20
+    list_max_show_all = 1000
     save_as = True
-    def Тип(self, obj):
+
+
+    @admin.display(ordering='model__type', description='Тип')
+    def type(self, obj):
         return obj.model.type
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    class Media:
+        js = ['js/admin_filter.js']
+
 
     def get_queryset(self, request):
         if request.user.username == 'UPU1':
@@ -95,6 +111,10 @@ class AvailableAdmin(admin.ModelAdmin):
             return self.model.objects.filter(
                 service='5'
             )
+        if request.user.username == 'GSPP':
+            return self.model.objects.filter(
+                service='6'
+            )
         else:
             return self.model.objects.all()
 
@@ -105,14 +125,14 @@ class AvailableAdmin(admin.ModelAdmin):
         form = super(AvailableAdmin, self).get_form(request, obj, **kwargs)
         latest_object = Available.objects.latest('date')
         form.base_fields['model'].initial = latest_object.model
-        form.base_fields['company'].initial = latest_object.company
+        # form.base_fields['company'].initial = latest_object.company
         form.base_fields['quantity'].initial = latest_object.quantity
         form.base_fields['available'].initial = latest_object.available
 
         return form
 
-    list_display = ['service', 'Тип', 'company', 'model', 'date', 'available', 'quantity']
-    list_filter = ['model__type', 'company', 'available']
+    list_display = ['service', 'type', 'company', 'model', 'date', 'available', 'quantity']
+    list_filter = ['model__type', 'model__company', 'available']
     list_editable = ['available', 'quantity']
     search_fields = ['model__model']
 
@@ -146,6 +166,10 @@ class TesterTimeAdmin(admin.ModelAdmin):
             return self.model.objects.filter(
                 service='5'
             )
+        if request.user.username == 'GSPP':
+            return self.model.objects.filter(
+                service='6'
+            )
         else:
             return self.model.objects.all()
 
@@ -165,3 +189,22 @@ class TesterTimeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TesterTime, TesterTimeAdmin)
+
+from django.contrib import messages
+from django.contrib.auth.signals import user_logged_in
+
+# messages.add_message(request, messages.INFO, "Hello world.")
+def logged_in_message(sender, user, request, **kwargs):
+    """
+    Add a welcome message when the user logs in
+    """
+    messages.info(request, "Обновления от 23.03:"
+                  )
+    messages.info(request, "1) Добавлено недостающее оборудование в каталог, устранены мелкие неточности, удалены дубли некоторого оборудования"
+                  )
+    messages.info(request, "2) В администрировании в фильтрах теперь есть 'Кофеварки' и 'Кофемашины'"
+                  )
+    messages.info(request,   "Если есть предложения/вопросы/пожелания, их можно отправить на Emelyanov_da@mgts.by, также есть рабочий номер телефона 290-57-12"
+                  )
+
+user_logged_in.connect(logged_in_message)

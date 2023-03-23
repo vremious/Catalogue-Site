@@ -13,8 +13,9 @@ input[type="submit"], button {
     }
 
     td, th {
-        padding: 10px;
-        font-size: 0.875rem;
+        padding: 5px;
+        font-size: 0.8rem;
+        vertical-align: middle;
     }
 
     .small {

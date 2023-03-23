@@ -48,7 +48,7 @@
                                                         {%  else %}
                                                             <img src="{% static 'smartphone.svg'%}" class="card-img-top">
                                                         {% endif %}
-                                                        <p class="card-text"></p> <h3>{{i.company}}</h3> <p style="height:48px">{{ i.model.model }}</p>
+                                                        <p class="card-text"></p> <h3>{{i.model.company}}</h3> <p style="height:48px">{{ i.model.model }}</p>
                                                         <hr> <p><b>Процессор:</b> {{i.processor }}</p>
                                                         <p><b>Память:</b>  {{ i.ddr }}/{{ i.memory }} Гб</p>
                                                         <p><b>Экран:</b> {{ i.size }}"</p>

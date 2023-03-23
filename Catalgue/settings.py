@@ -123,10 +123,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 import os
-STATICFILES_DIRS = [
-    '/var/www/django/main/static',
-    '/var/www/django/venv/Lib/site-packages/django/contrib/admin/static/admin',
-]
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = ''
@@ -142,3 +138,5 @@ FILTERS_EMPTY_CHOICE_LABEL = 'Отображать все'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
+SESSION_COOKIE_AGE = 7200 #
+SESSION_SAVE_EVERY_REQUEST = True # "False" by default

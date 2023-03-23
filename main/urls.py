@@ -10,6 +10,7 @@ urlpatterns = [
     path('smartphones', views.smartphones),
     path('smart_watches', views.smart_watches_def),
     path('smart_speaker', views.smart_speaker),
+    path('speaker', views.speaker),
     path('routers', views.routers),
     path('zala', views.zala),
     path('smart_home', views.smart_home),

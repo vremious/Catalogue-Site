@@ -6,7 +6,7 @@ from .models import *
 
 
 class RouterFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Роутер').exclude(models__router__purpose='2').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Роутер').exclude(models__router__purpose='2').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -14,7 +14,7 @@ class RouterFilter(django_filters.FilterSet):
                        )
 
 class Router_RentFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Модем').exclude(models__router__purpose='1').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Модем').exclude(models__router__purpose='1').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -66,7 +66,7 @@ class OtherFilter(django_filters.FilterSet):
 
 
 class WatchFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Умные часы').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Умные часы').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -74,7 +74,7 @@ class WatchFilter(django_filters.FilterSet):
                        )
 
 class SmartphoneFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Смартфоны').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Смартфоны').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -82,7 +82,7 @@ class SmartphoneFilter(django_filters.FilterSet):
                        )
 
 class PadFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Планшеты').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Планшеты').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -92,7 +92,7 @@ class PadFilter(django_filters.FilterSet):
 
 
 class NotebookFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Ноутбуки').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Ноутбуки').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -100,15 +100,25 @@ class NotebookFilter(django_filters.FilterSet):
                        )
 
 class SmartSpeakerFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Умные колонки').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Умные колонки').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
                        )
                        )
 
+
+class SpeakerFilter(django_filters.FilterSet):
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Аудиосистемы').distinct(), empty_label=('Все'))
+    model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
+                       widget=TextInput(
+                           attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
+                       )
+                       )
+
+
 class VacuumFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Роботы').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Роботы').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -117,7 +127,7 @@ class VacuumFilter(django_filters.FilterSet):
 
 
 class ScooterFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Электросамокаты').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Электросамокаты').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -126,7 +136,7 @@ class ScooterFilter(django_filters.FilterSet):
 
 
 class ConditionerFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Кондиционеры').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Кондиционеры').distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -146,7 +156,7 @@ class AvailableFilter(django_filters.FilterSet):
 
 
 class TVFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(queryset=Company.objects.filter(models__type__contains='Телевизор').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(queryset=Company.objects.filter(models__type__contains='Телевизор').distinct(), empty_label=('Все'), label='Производитель')
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
@@ -158,7 +168,7 @@ class TVFilter(django_filters.FilterSet):
 
 
 class CoffeeFilter(django_filters.FilterSet):
-    company = ModelChoiceFilter(queryset=Company.objects.filter(models__type__contains='Кофе-машины').distinct(), empty_label=('Все'))
+    model__company = ModelChoiceFilter(queryset=Company.objects.filter(models__type__contains='Кофе-машины').distinct(), empty_label=('Все'), label='Производитель')
     mod = ChoiceFilter(empty_label=('Все'), choices=(
         ('Кофеварка', "Кофеварка"),
         ("Кофемашина", "Кофемашина")

@@ -48,7 +48,7 @@
                                                         {%  else %}
                                                             <img src="{% static 'tv.svg'%}" class="card-img-top">
                                                         {% endif %}
-                                                        <h3>{{i.company}}</h3> <p>{{ i.model.model }}</p>
+                                                        <h3>{{i.model.company}}</h3> <p>{{ i.model.model }}</p>
                                                         <hr> <p><b>Диагональ экрана:</b> {{i.size }}"</p>
                                                         <p><b style="height:48px">Разрешение экрана:</b> {{ i.resolution }}</p>
                                                         <p><b style="height:max-content">Поддержка Смарт ТВ:</b>  {{ i.smart }}</p>

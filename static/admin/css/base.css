@@ -261,7 +261,7 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
 }
 
 .nowrap {
-    white-space: nowrap;
+    white-space: break-spaces;
 }
 
 .hidden {
@@ -279,7 +279,7 @@ td, th {
     font-size: 0.8125rem;
     line-height: 16px;
     border-bottom: 1px solid var(--hairline-color);
-    vertical-align: top;
+    vertical-align: center;
     padding: 8px;
 }
 
@@ -292,7 +292,7 @@ thead th,
 tfoot td {
     color: var(--body-quiet-color);
     padding: 5px 10px;
-    font-size: 0.6875rem;
+    font-size: 0.6rem;
     background: var(--body-bg);
     border: none;
     border-top: 1px solid var(--hairline-color);
@@ -352,7 +352,8 @@ table thead th .text span {
 table thead th .text a {
     display: block;
     cursor: pointer;
-    padding: 8px 10px;
+    padding: 1px 1px;
+    text-align: center;
 }
 
 table thead th .text a:focus, table thead th .text a:hover {
