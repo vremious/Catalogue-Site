@@ -54,7 +54,8 @@
                                                         <p><b style="width:auto; height:100%">Источник питания:</b>  {{ i.battery }}</p>
                                                     </div>
                                                     <div class='flip-card-back'>
-                                                        <h5>Наличие:</h5>
+                                                        <h6>{{ i.model.company}} {{ i.model.model }}</h6>
+                                                        <hr>
                                                         {% for d in available %}
                                                             {% if i.model == d.model %}
                                                                 {% if d.quantity > 0 %}

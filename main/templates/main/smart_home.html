@@ -52,7 +52,9 @@
                                                                 <hr> <p><b>Назначение:</b> {{i.type }}</p>
                                                             </div>
                                                             <div class='flip-card-back' style="width:auto; height:auto">
-                                                                <h5>Наличие:</h5>
+                                                                <h6>{{ i.model.model }}</h6>
+                                                                <hr>
+
                                                                 {% for d in available %}
                                                                     {% if i.model == d.model %}
                                                                         {% if d.quantity > 0 %}

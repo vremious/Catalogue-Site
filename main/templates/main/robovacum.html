@@ -51,7 +51,9 @@
                                                         <h3>{{i.model.company}}</h3> <p>{{ i.model.model }}</p>
                                                     </div>
                                                     <div class='flip-card-back'>
-                                                        <h5>Наличие:</h5>
+                                                        <h6>{{ i.model.company}} {{ i.model.model }}</h6>
+                                                        <hr>
+{#                                                        <h5>Наличие:</h5>#}
                                                         {% for d in available %}
                                                             {% if i.model == d.model %}
                                                                 {% if d.quantity > 0 %}

@@ -132,7 +132,7 @@ class AvailableAdmin(admin.ModelAdmin):
         return form
 
     list_display = ['service', 'type', 'company', 'model', 'date', 'available', 'quantity']
-    list_filter = ['model__type', 'model__company', 'available']
+    list_filter = ['model__type', 'model__company', 'available', 'service']
     list_editable = ['available', 'quantity']
     search_fields = ['model__model']
 
@@ -194,17 +194,17 @@ from django.contrib import messages
 from django.contrib.auth.signals import user_logged_in
 
 # messages.add_message(request, messages.INFO, "Hello world.")
-def logged_in_message(sender, user, request, **kwargs):
-    """
-    Add a welcome message when the user logs in
-    """
-    messages.info(request, "Обновления от 23.03:"
-                  )
-    messages.info(request, "1) Добавлено недостающее оборудование в каталог, устранены мелкие неточности, удалены дубли некоторого оборудования"
-                  )
-    messages.info(request, "2) В администрировании в фильтрах теперь есть 'Кофеварки' и 'Кофемашины'"
-                  )
-    messages.info(request,   "Если есть предложения/вопросы/пожелания, их можно отправить на Emelyanov_da@mgts.by, также есть рабочий номер телефона 290-57-12"
-                  )
-
-user_logged_in.connect(logged_in_message)
+# def logged_in_message(sender, user, request, **kwargs):
+#     """
+#     Add a welcome message when the user logs in
+#     """
+#     messages.info(request, "Обновления от 30.03:"
+#                   )
+#     messages.info(request, "1) На обратной стороне карточек оборудования на "
+#                   )
+#     messages.info(request, "2) В администрировании в фильтрах теперь есть 'Кофеварки' и 'Кофемашины'"
+#                   )
+#     messages.info(request,   "Если есть предложения/вопросы/пожелания, их можно отправить на Emelyanov_da@mgts.by, также есть рабочий номер телефона 290-57-12"
+#                   )
+#
+# user_logged_in.connect(logged_in_message)
