@@ -69,16 +69,17 @@
     {#    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>#}
 
 </head>
-<body onload="myFunction()" style="margin:0;">
+
 
 
 <header>
-  <div class="header finisher-header" style="width: 100%; height: 100px;">
+
+  <div class="header finisher-header" style="width: 100%;height: 10rem">
 {#      <div class="d-flex" style="height: 70px;">#}
 {#          <div class="vr"></div>#}
 {#      </div>#}
   </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-black " >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black py-3" >
         <div class="container d-flex flex-wrap justify-content-center">
             <a class="navbar-brand" href="home">Главная</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,6 +151,7 @@
         </div>
     </nav>
 </header>
+<body onload="myFunction()" style="margin:0;">
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
     <div class="offcanvas-header">
         <h6 class="lead" id="offcanvasLabel">График работы тестировщиков</h6>
@@ -173,24 +175,53 @@
 </div>
 {% block content %}
 {% endblock %}
-<footer class="py-5 bg-transparent sticky-bottom">
-    <div class="position-absolute bottom-50 end-0 translate-middle-x " id="up">
+    <div class="bottomMenu hide" id="up">
         <a href="#"><img src='{% static 'up.svg' %}'></a>
     </div>
-
-</footer>
+{#<div class="container-md">#}
+{#  <footer class="d-flex justify-content-end  border-top py-2 my-2">#}
+{#      <span class=" text-muted">Нашли баг или ошибку?</span>#}
+{#      <span class=" text-muted">Телефон: (17)290-57-12</span>#}
+{#      <span class=" text-muted">Email: Emelyanov_da@mgts.by</span>#}
+{#  </footer>#}
+{#  <footer class="d-flex justify-content-center ">#}
+{#      <div class=" text-muted mb-3">© 2023 Разработано в ЦОВ СТО и СПО Белтелеком</div>#}
+{#  </footer>#}
+{##}
+{#    <ul class="nav col-md-3 justify-content-end list-unstyled d-flex">#}
+{#        <span class="mb-3 mb-md-0 text-muted">Нашли баг или ошибку?</span>#}
+{#        <span class="mb-3 mb-md-0 text-muted">Телефон: (17)290-57-12</span>#}
+{#        <span class="mb-3 mb-md-0 text-muted">Email: Emelyanov_da@mgts.by</span>#}
+{#    </ul>#}
+{##}
+{#</div>#}
 <div class="container">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <span class="mb-3 mb-md-0 text-muted">© 2023 Разработано в ЦОВ СТО и СПО Белтелеком</span>
+  <footer class="row py-4 my-4 border-top">
+    <div class="col mb-2 ">
+      <ul class="text-muted d-flex justify-content-start ">© 2023 Разработано в ЦОВ СТО и СПО Белтелеком</ul>
     </div>
 
-    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-        <span class="mb-3 mb-md-0 text-muted">Нашли баг или ошибку?</span>
-        <span class="mb-3 mb-md-0 text-muted">Телефон: (17)290-57-12 | Email: Emelyanov_da@mgts.by</span>
-    </ul>
+{#    <div class="col mb-3">#}
+{##}
+{#    </div>#}
+{##}
+{#    <div class="col">#}
+{#    </div>#}
+{##}
+{#    <div class="col">#}
+{#    </div>#}
+
+    <div class="col mb-2 align-items-end">
+{#      <ul>Нашли ошибку?</ul>#}
+      <ul class="nav flex-column d-flex">
+        <li class="d-flex justify-content-end  p-0 text-muted">Нашли баг/ошибку?</li>
+        <li class="d-flex justify-content-end  p-0 text-muted">(17)290-57-12</li>
+        <li class="d-flex justify-content-end  p-0 text-muted">Emelyanov_da@mgts.by</li>
+      </ul>
+    </div>
   </footer>
 </div>
+</body>
 <script>
     var myVar;
 
@@ -204,7 +235,21 @@
     }
 
 </script>
-</body>
+<script>
+const myID = document.getElementById("up");
+
+    var myScrollFunc = function () {
+    var y = window.scrollY;
+    if (y >= 250) {
+        myID.className = "bottomMenu show"
+    }
+    else {
+        myID.className = "bottomMenu hide"
+    }
+};
+
+window.addEventListener("scroll", myScrollFunc);</script>
+
 <script src= {%static "js/finisher-header.es5.min.js" %} type="text/javascript"></script>
 <script src = {% static 'js/hover-dropdown.js'%}></script>
 <script src = {% static 'js/bootstrap.bundle.js'%}></script>

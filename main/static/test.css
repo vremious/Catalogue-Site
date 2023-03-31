@@ -79,19 +79,38 @@
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
 }
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  60%{opacity: 0;}
-  100% { opacity: 1; }
+/*@keyframes fadeIn {*/
+/*  0% { opacity: 0; }*/
+/*  60%{opacity: 0;}*/
+/*  100% { opacity: 1; }*/
+/*}*/
+
+/*#up {*/
+/*    ;*/
+/*    animation: fadeIn 4s;*/
+/*    ;*/
+/*}*/
+
+.bottomMenu {
+    position: fixed;
+    bottom: 45px;
+    right: 40px;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-top: none;
+    background: transparent;
+    z-index: 1;
+    transition: all 1s;
 }
+.hide {
+    opacity:0;
 
-#up {
-    ;
-    animation: fadeIn 4s;
-    ;
 }
+.show {
+    opacity:1;
 
-
+}
 
 /*.card-img-top{*/
 /*   width: 100%!important;*/
