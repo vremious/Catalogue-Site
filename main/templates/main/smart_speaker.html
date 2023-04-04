@@ -18,14 +18,17 @@
             </div>
             <!-- ---------------------------------------------------------------------- Раздел с фильтрацией на странице. -->
             <div class="col-lg-2 mb-3">
-                <div class = "container  bg-white shadow-lg rounded-4">
+                <div class = "container  bg-white shadow-lg rounded-4 py-3">
                     <form  method="get">
                         {{ smart_speaker_filter.form|crispy}}
                         {{ available_filter.form|crispy }}
                         <div class="p-lg-2">
-                            <button type="submit" style= 'width: 100%' class="btn btn-secondary mb-3">Применить</button>
+                            <button type="submit" style= 'width: 100%; padding-left:0; padding-right:0;' class="btn btn-secondary">Применить</button>
                         </div>
                     </form>
+                        <div class="p-lg-2">
+                            <button style= 'width: 100%; padding-left:0; padding-right:0;' class="btn btn-outline-secondary" id="flipbtn" >Переворот</button>
+                        </div>
                 </div>
             </div>
             <!-- ------------------------------------------------------------------------------Конец фильра, ниже шаблон страницы с товаром, генерируемым из админки-->
