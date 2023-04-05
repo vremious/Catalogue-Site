@@ -25,25 +25,181 @@ admin.site.site_title = "Панель администрирования"
 admin.site.index_title = "Добро пожаловать!"
 
 admin.site.register(Company)
-admin.site.register(Router)
-admin.site.register(Zala)
-admin.site.register(SmartHome)
-admin.site.register(Tv)
-admin.site.register(Notebook)
-admin.site.register(Pad)
-admin.site.register(Watch)
-admin.site.register(Scooter)
-admin.site.register(Vacuum)
-admin.site.register(Coffee)
-admin.site.register(Conditioner)
 admin.site.register(Other)
 admin.site.register(Purpose)
-admin.site.register(SmartSpeaker)
 admin.site.register(Models)
-admin.site.register(Smartphone)
 admin.site.register(Service)
 admin.site.register(Speaker)
 
+class RouterAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Router,RouterAdmin)
+
+class ZalaAdmin(admin.ModelAdmin):
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Zala,ZalaAdmin)
+
+
+class SmartHomeAdmin(admin.ModelAdmin):
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(SmartHome, SmartHomeAdmin)
+
+class TVAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model','size']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Tv, TVAdmin)
+
+
+class NotebookAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Notebook, NotebookAdmin)
+
+class PadAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Pad, PadAdmin)
+
+class WatchAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Watch, WatchAdmin)
+
+class ScooterAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Scooter, ScooterAdmin)
+
+class VacuumAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Vacuum, VacuumAdmin)
+
+
+class ConditionerAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Conditioner, ConditionerAdmin)
+
+class CoffeeAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Coffee, CoffeeAdmin)
+
+
+class SmartphoneAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Smartphone, SmartphoneAdmin)
+
+class SmartSpeakerAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(SmartSpeaker, SmartSpeakerAdmin)
 # class OrderItemInline(admin.TabularInline):
 #     model = OrderItem
 #     extra = 0
@@ -193,18 +349,19 @@ admin.site.register(TesterTime, TesterTimeAdmin)
 from django.contrib import messages
 from django.contrib.auth.signals import user_logged_in
 
-# messages.add_message(request, messages.INFO, "Hello world.")
-# def logged_in_message(sender, user, request, **kwargs):
-#     """
-#     Add a welcome message when the user logs in
-#     """
-#     messages.info(request, "Обновления от 30.03:"
-#                   )
-#     messages.info(request, "1) На обратной стороне карточек оборудования на "
-#                   )
-#     messages.info(request, "2) В администрировании в фильтрах теперь есть 'Кофеварки' и 'Кофемашины'"
-#                   )
-#     messages.info(request,   "Если есть предложения/вопросы/пожелания, их можно отправить на Emelyanov_da@mgts.by, также есть рабочий номер телефона 290-57-12"
-#                   )
-#
-# user_logged_in.connect(logged_in_message)
+def logged_in_message(sender, user, request, **kwargs):
+    """
+    Add a welcome message when the user logs in
+    """
+    messages.info(request, "Важная информация:"
+                  )
+    messages.info(request, "В конце апреля планируется переход на эту версию портала, старая (в виде таблицы) будет отключена. "
+                  )
+    messages.info(request, "В связи с этим прошу всех администарторов СЦ вводить актуальную информацию по наличию оборудования, а также проверить рванее введённые данные."
+                  )
+    messages.info(request, "Также есть предложение создать рабочий чат (Телеграмм или Вайбер) для оперативного решения вопросов связанных с работой портала"
+                  )
+    messages.info(request, "Свои номера отправляйте на почту Emelyanov_da@mgts.by"
+                  )
+
+user_logged_in.connect(logged_in_message)
