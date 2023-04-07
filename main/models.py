@@ -59,6 +59,7 @@ class Models(models.Model):
     class Meta:
         verbose_name = 'Оборудование'
         verbose_name_plural = 'Оборудование'
+        unique_together = ('company', 'model',)
 
     def __str__(self):
         return str(f'{self.company} {self.model}')

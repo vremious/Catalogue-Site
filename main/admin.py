@@ -27,9 +27,18 @@ admin.site.index_title = "Добро пожаловать!"
 admin.site.register(Company)
 admin.site.register(Other)
 admin.site.register(Purpose)
-admin.site.register(Models)
 admin.site.register(Service)
 admin.site.register(Speaker)
+
+
+
+class ModelsAdmin(admin.ModelAdmin):
+
+    list_display = ['company', 'model']
+    list_filter = ['company']
+    search_fields = ['model__model']
+
+admin.site.register(Models, ModelsAdmin)
 
 class RouterAdmin(admin.ModelAdmin):
     @admin.display(ordering='model__company', description='Производитель')
