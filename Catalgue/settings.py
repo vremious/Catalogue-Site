@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'main',
     'django_filters',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'admin_totals'
 
 
 ]
@@ -117,6 +118,7 @@ TIME_ZONE = 'Europe/Minsk'
 USE_I18N = True
 
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)

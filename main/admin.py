@@ -1,6 +1,8 @@
-
+from admin_totals.admin import ModelAdminTotals
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
+
 from .models import *
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -233,9 +235,10 @@ admin.site.register(SmartSpeaker, SmartSpeakerAdmin)
 #
 #
 # admin.site.register(AllowedCombination, AllowedCombinationAdmin)
-#
 
-class AvailableAdmin(admin.ModelAdmin):
+
+@admin.register(Available)
+class AvailableAdmin(ModelAdminTotals):
     list_per_page = 20
     list_max_show_all = 1000
     save_as = True
@@ -296,14 +299,19 @@ class AvailableAdmin(admin.ModelAdmin):
 
         return form
 
-    list_display = ['service', 'type', 'company', 'model', 'date', 'available', 'quantity']
+
     list_filter = ['model__type', 'model__company', 'available', 'service']
     list_editable = ['available', 'quantity']
+    list_display = ['service', 'type', 'company', 'model', 'date', 'available', 'quantity']
+    list_totals = [('quantity', Sum)]
     search_fields = ['model__model']
 
 
 
-admin.site.register(Available, AvailableAdmin)
+# admin.site.register(Available, AvailableAdmin)
+
+
+
 
 
 
