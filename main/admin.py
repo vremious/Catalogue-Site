@@ -240,7 +240,7 @@ admin.site.register(SmartSpeaker, SmartSpeakerAdmin)
 @admin.register(Available)
 class AvailableAdmin(ModelAdminTotals):
     list_per_page = 20
-    list_max_show_all = 1000
+    list_max_show_all = 5000
     save_as = True
 
 
@@ -372,13 +372,13 @@ def logged_in_message(sender, user, request, **kwargs):
     """
     messages.info(request, "Важная информация:"
                   )
-    messages.info(request, "В конце апреля планируется переход на эту версию портала, старая (в виде таблицы) будет отключена. "
+    messages.info(request, "18.04.23 с 8-30 до 9-00 планируется переезд сайта на адрес 10.248.36.229 и введение его в полную эксплуатацию вместо старого сайта (таблицы) "
                   )
-    messages.info(request, "В связи с этим прошу всех администарторов СЦ вводить актуальную информацию по наличию оборудования, а также проверить рванее введённые данные."
-                  )
-    messages.info(request, "Также есть предложение создать рабочий чат (Телеграмм или Вайбер) для оперативного решения вопросов связанных с работой портала"
-                  )
-    messages.info(request, "Свои номера отправляйте на почту Emelyanov_da@mgts.by"
-                  )
-
+#    messages.info(request, "В связи с этим прошу всех администарторов СЦ вводить актуальную информацию по наличию оборудования, а также проверить рванее введённые данные."
+#                  )
+#    messages.info(request, "Также есть предложение создать рабочий чат (Телеграмм или Вайбер) для оперативного решения вопросов связанных с работой портала"
+#                  )
+#    messages.info(request, "Свои номера отправляйте на почту Emelyanov_da@mgts.by"
+#                  )
+#
 user_logged_in.connect(logged_in_message)

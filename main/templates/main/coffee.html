@@ -43,7 +43,7 @@
                             {% for i in page_obj%}
                                 {% regroup  available_filter.qs by model as available_model %}
                                 {% for j in available_model %}
-                                    {% if i.model == j.grouper%}
+                                    {% if i.model == j.grouper %}
                                         <div class="col-auto mb-3 d-flex">
                                             <div class="flip-card  d-flex" style="width:15rem; height:100%">
                                                 <div class="flip-card-inner" >

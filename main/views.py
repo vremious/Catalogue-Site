@@ -18,7 +18,7 @@ def index(request):
 def smart_watches_def(request):
     available = Available.objects.all().order_by('service')
     watches = Watch.objects.all
-    watches_filter = WatchFilter(request.GET, queryset=Watch.objects.all().order_by('model__company__company','model__model'))
+    watches_filter = WatchFilter(request.GET, queryset=Watch.objects.filter(actual='Да').order_by('model__company__company','model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Умные часы'))
     testertime = TesterTime.objects.all().order_by('service')
     paginator = Paginator(watches_filter.qs, 12) # Show 25 contacts per page.
@@ -37,7 +37,7 @@ def smartphones(request):
     available = Available.objects.all().order_by('service')
     smartphones = Smartphone.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    smartphones_filter = SmartphoneFilter(request.GET, queryset=Smartphone.objects.all().order_by('model__company__company','model__model'))
+    smartphones_filter = SmartphoneFilter(request.GET, queryset=Smartphone.objects.filter(actual='Да').order_by('model__company__company','model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Смартфоны'))
     paginator = Paginator(smartphones_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -57,7 +57,7 @@ def smart_speaker(request):
     available = Available.objects.all().order_by('service')
     smart_speaker = SmartSpeaker.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    smart_speaker_filter = SmartSpeakerFilter(request.GET, queryset=SmartSpeaker.objects.all().order_by('model__company__company','model__model'))
+    smart_speaker_filter = SmartSpeakerFilter(request.GET, queryset=SmartSpeaker.objects.filter(actual='Да').order_by('model__company__company','model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Умные колонки'))
     paginator = Paginator(smart_speaker_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -76,7 +76,7 @@ def speaker(request):
     available = Available.objects.all().order_by('service')
     speaker = Speaker.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    speaker_filter = SpeakerFilter(request.GET, queryset=Speaker.objects.all().order_by('model__company__company','model__model'))
+    speaker_filter = SpeakerFilter(request.GET, queryset=Speaker.objects.filter(actual='Да').order_by('model__company__company','model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Аудиосистемы'))
     paginator = Paginator(speaker_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -94,7 +94,7 @@ def routers(request):
     available = Available.objects.all().order_by('service')
     routers = Router.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    router_filter = RouterFilter(request.GET, queryset=Router.objects.filter(purpose='1').order_by('model__company__company', 'model__model'))
+    router_filter = RouterFilter(request.GET, queryset=Router.objects.filter(purpose='1', actual='Да').order_by('model__company__company', 'model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Роутеры'))
     paginator = Paginator(router_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -116,7 +116,7 @@ def routers_rent(request):
     routers = Router.objects.all
     testertime = TesterTime.objects.all().order_by('service')
     router_filter = Router_RentFilter(request.GET,
-                                 queryset=Router.objects.filter(purpose='2').order_by('model__company__company', 'model__model'))
+                                 queryset=Router.objects.filter(purpose='2', actual='Да').order_by('model__company__company', 'model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Модемы'))
     paginator = Paginator(router_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -136,7 +136,7 @@ def zala(request):
     available = Available.objects.all().order_by('service')
     zala = Zala.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    zala_filter = ZalaFilter(request.GET, queryset=Zala.objects.all().order_by('type', 'model__model'))
+    zala_filter = ZalaFilter(request.GET, queryset=Zala.objects.filter(actual='Да').order_by('type', 'model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Zala'))
     paginator = Paginator(zala_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -154,7 +154,7 @@ def smart_home(request):
     available = Available.objects.all().order_by('service')
     smart_home = SmartHome.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    smart_home_filter = SmartHomeFilter(request.GET, queryset=SmartHome.objects.filter(model__type='Умный Дом').order_by('type','model__model').distinct())
+    smart_home_filter = SmartHomeFilter(request.GET, queryset=SmartHome.objects.filter(model__type='Умный Дом', actual='Да').order_by('type','model__model').distinct())
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Умный Дом'))
     paginator = Paginator(smart_home_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -172,7 +172,7 @@ def tv(request):
     available = Available.objects.all().order_by('service')
     tv = Tv.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    tv_filter = TVFilter(request.GET, queryset=Tv.objects.all().order_by('model__company__company','size','model__model'))
+    tv_filter = TVFilter(request.GET, queryset=Tv.objects.filter(actual='Да').order_by('model__company__company','size','model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Телевизоры'))
     result = available_filter.qs.values('model').distinct().order_by('model')
     result1 = tv_filter.qs.values('model').distinct().order_by('model')
@@ -190,7 +190,7 @@ def notebooks(request):
     available = Available.objects.all().order_by('service')
     notebook = Notebook.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    notebook_filter = NotebookFilter(request.GET, queryset=Notebook.objects.all().order_by('model__company__company','model__model'))
+    notebook_filter = NotebookFilter(request.GET, queryset=Notebook.objects.filter(actual='Да').order_by('model__company__company','model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Ноутбуки'))
     paginator = Paginator(notebook_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -209,7 +209,7 @@ def pads(request):
     available = Available.objects.all().order_by('service')
     pads = Pad.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    pads_filter = PadFilter(request.GET, queryset=Pad.objects.all().order_by('model__company__company','model__model'))
+    pads_filter = PadFilter(request.GET, queryset=Pad.objects.filter(actual='Да').order_by('model__company__company','model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Планшеты'))
     paginator = Paginator(pads_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
@@ -226,7 +226,7 @@ def pads(request):
 def scooters(request):
     available = Available.objects.all().order_by('service')
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Электросамокаты'))
-    scooters_filter = ScooterFilter(request.GET, queryset=Scooter.objects.all().order_by('model__company__company','model__model'))
+    scooters_filter = ScooterFilter(request.GET, queryset=Scooter.objects.filter(actual='Да').order_by('model__company__company','model__model'))
     scooters = Scooter.objects.all
     testertime = TesterTime.objects.all().order_by('service')
     paginator = Paginator(scooters_filter.qs, 12) # Show 25 contacts per page.
@@ -247,7 +247,7 @@ def robovacum(request):
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Роботы пылесосы'))
     testertime = TesterTime.objects.all().order_by('service')
     vacuum = Vacuum.objects.all
-    vacuum_filter = VacuumFilter(request.GET, queryset=Vacuum.objects.all().order_by('model__company__company','model__model'))
+    vacuum_filter = VacuumFilter(request.GET, queryset=Vacuum.objects.filter(actual='Да').order_by('model__company__company','model__model'))
     paginator = Paginator(vacuum_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -265,8 +265,8 @@ def coffee(request):
     available = Available.objects.all().order_by('service')
     testertime = TesterTime.objects.all().order_by('service')
     coffee = Coffee.objects.all
-    coffee_filter = CoffeeFilter(request.GET, queryset=Coffee.objects.all().order_by('model__company__company','model__model'))
-    available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Кофе-машины'))
+    coffee_filter = CoffeeFilter(request.GET, queryset=Coffee.objects.filter(actual='Да').order_by('model__company__company','model__model'))
+    available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type__icontains='Кофе'))
     paginator = Paginator(coffee_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -286,7 +286,7 @@ def conditioners(request):
     testertime = TesterTime.objects.all().order_by('service')
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Кондиционеры'))
     conditioners = Conditioner.objects.all
-    conditioners_filter = ConditionerFilter(request.GET, queryset=Conditioner.objects.all().order_by('model__company__company','model__model'))
+    conditioners_filter = ConditionerFilter(request.GET, queryset=Conditioner.objects.filter(actual='Да').order_by('model__company__company','model__model'))
     paginator = Paginator(conditioners_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -305,7 +305,7 @@ def other(request):
     available = Available.objects.all().order_by('service')
     testertime = TesterTime.objects.all().order_by('service')
     other = Other.objects.all
-    other_filter = OtherFilter(request.GET, queryset=Other.objects.all().order_by('model__model'))
+    other_filter = OtherFilter(request.GET, queryset=Other.objects.filter(actual='Да').order_by('model__model'))
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Прочее оборудование'))
     paginator = Paginator(other_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')

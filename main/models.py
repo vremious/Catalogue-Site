@@ -84,7 +84,10 @@ class Router(models.Model):
     ))
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Модем'
         verbose_name_plural = 'Модемы'
@@ -100,7 +103,10 @@ class Zala(models.Model):
     ))
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Zala'
         verbose_name_plural = 'Zala'
@@ -113,7 +119,10 @@ class SmartHome(models.Model):
     type = models.CharField(max_length=50, verbose_name="Тип оборудования")
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Умный Дом'
         verbose_name_plural = 'Умный Дом'
@@ -127,7 +136,10 @@ class Tv(models.Model):
     smart = models.CharField(max_length=40, verbose_name="Наличие SmartTV")
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Телевизор'
         verbose_name_plural = 'Телевизоры'
@@ -144,7 +156,10 @@ class Smartphone(models.Model):
     memory = models.PositiveSmallIntegerField(verbose_name='Объём накопителя')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Смартфон'
         verbose_name_plural = 'Смартфоны'
@@ -160,7 +175,10 @@ class Notebook(models.Model):
     memory = models.CharField(max_length=20, verbose_name='Вид и объём накопителя')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
 
 
     class Meta:
@@ -177,7 +195,10 @@ class Pad(models.Model):
     memory = models.PositiveSmallIntegerField(verbose_name='Объём накопителя')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Планшет'
         verbose_name_plural = 'Планшеты'
@@ -192,6 +213,10 @@ class Watch(models.Model):
     support = models.CharField(max_length=70, verbose_name='Поддержка платформ')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Умные часы'
         verbose_name_plural = 'Умные часы'
@@ -203,7 +228,10 @@ class Vacuum(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Робот-пылесос'
         verbose_name_plural = 'Роботы-пылесосы'
@@ -222,7 +250,10 @@ class Scooter(models.Model):
     chargetime = models.CharField(max_length=50, verbose_name='Время заряда')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Электросамокат'
         verbose_name_plural = 'Электросамокаты'
@@ -252,6 +283,10 @@ class Coffee(models.Model):
                                )
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
+    actual = models.CharField(max_length=3, verbose_name = 'Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
 
     class Meta:
         verbose_name = 'Кофеварка'
@@ -266,7 +301,10 @@ class Conditioner(models.Model):
     power = models.CharField(max_length=50, verbose_name='Мощность охлаждения/обогрева ')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Кондиционер'
         verbose_name_plural = 'Кондиционеры'
@@ -280,7 +318,10 @@ class SmartSpeaker(models.Model):
     power = models.CharField(max_length=50, verbose_name='Номинальная мощность')
     control = models.CharField(max_length=50, verbose_name='Управление')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Умная колонка'
         verbose_name_plural = 'Умные колонки'
@@ -295,7 +336,10 @@ class Speaker(models.Model):
     power = models.CharField(max_length=50, verbose_name='Выходная мощность', blank=True, null=True)
     battery = models.CharField(max_length=80, verbose_name='Источник питания', blank=True, null=True)
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Аудиосистема'
         verbose_name_plural = 'Аудиосистемы'
@@ -308,7 +352,10 @@ class Other(models.Model):
     type = models.CharField(max_length=50, verbose_name="Тип оборудования")
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
-
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
     class Meta:
         verbose_name = 'Разное'
         verbose_name_plural = 'Разное'
