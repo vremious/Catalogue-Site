@@ -47,8 +47,9 @@ class Models(models.Model):
         ("Планшеты", "Планшеты"),
         ("Умные часы", "Умные часы"),
         ("Электросамокаты", "Электросамокаты"),
+        ("Электровелосипеды", "Электровелосипеды"),
         ("Роботы пылесосы", "Роботы пылесосы"),
-        ("Кофе-машины", "Кофе-машины"),
+        ("Кофемашины", "Кофемашины"),
         ("Кофеварки", "Кофеварки"),
         ("Кондиционеры", "Кондиционеры"),
         ("Умные колонки", "Умные колонки"),
@@ -329,6 +330,20 @@ class SmartSpeaker(models.Model):
     def __str__(self):
         return str(f' {self.model}')
 
+class Bikes(models.Model):
+    model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
+    size = models.PositiveSmallIntegerField(max_length=4, verbose_name="Размер колеса")
+    image = models.ImageField(upload_to='main/media', blank=True, null=True)
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
+    class Meta:
+        verbose_name = 'Электровелосипед'
+        verbose_name_plural = 'Электровелосипеды'
+
+    def __str__(self):
+        return str(f' {self.model}')
 
 class Speaker(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')

@@ -242,6 +242,25 @@ def scooters(request):
     return render(request, 'main/scooters.html', context )
 
 
+def bikes(request):
+    available = Available.objects.all().order_by('service')
+    available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Электровелосипеды'))
+    bike_filter = BikeFilter(request.GET, queryset=Bikes.objects.filter(actual='Да').order_by('model__company__company','model__model'))
+    bikes = Bikes.objects.all
+    testertime = TesterTime.objects.all().order_by('service')
+    paginator = Paginator(bike_filter.qs, 12) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    result = available_filter.qs.values('model').distinct().order_by('model')
+    result1 = bike_filter.qs.values('model').distinct().order_by('model')
+    final = True
+    for i in result1:
+        if i in result:
+            final = False
+    context = {'page_obj': page_obj, 'testertime': testertime, 'available': available, 'bikes': bikes, 'available_filter':available_filter, 'bike_filter':bike_filter, 'result':result, 'result1':result1,'final':final}
+    return render(request, 'main/electrobike.html', context )
+
+
 def robovacum(request):
     available = Available.objects.all().order_by('service')
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Роботы пылесосы'))

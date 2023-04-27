@@ -18,6 +18,7 @@ urlpatterns = [
     path('notebooks', views.notebooks),
     path('pads', views.pads),
     path('scooters', views.scooters),
+    path('bikes', views.bikes),
     path('robovacum', views.robovacum),
     path('coffee', views.coffee),
     path('conditioners', views.conditioners),

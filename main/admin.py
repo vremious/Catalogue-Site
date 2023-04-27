@@ -211,6 +211,22 @@ class SmartSpeakerAdmin(admin.ModelAdmin):
     search_fields = ['model__model']
 
 admin.site.register(SmartSpeaker, SmartSpeakerAdmin)
+
+
+class BikesAdmin(admin.ModelAdmin):
+    @admin.display(ordering='model__company', description='Производитель')
+    def company(self, obj):
+        return obj.model.company
+    @admin.display(ordering='model__model', description='Модель')
+    def model(self, obj):
+        return obj.model.model
+
+    list_display = ['company', 'model']
+    list_filter = ['model__company']
+    search_fields = ['model__model']
+
+admin.site.register(Bikes, BikesAdmin)
+
 # class OrderItemInline(admin.TabularInline):
 #     model = OrderItem
 #     extra = 0

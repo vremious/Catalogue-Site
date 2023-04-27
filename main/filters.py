@@ -134,6 +134,14 @@ class ScooterFilter(django_filters.FilterSet):
                        )
                        )
 
+class BikeFilter(django_filters.FilterSet):
+    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Электровелосипеды').distinct(), empty_label=('Все'))
+    model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
+                       widget=TextInput(
+                           attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
+                       )
+                       )
+
 
 class ConditionerFilter(django_filters.FilterSet):
     model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Кондиционеры').distinct(), empty_label=('Все'))
