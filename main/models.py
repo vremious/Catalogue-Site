@@ -48,7 +48,8 @@ class Models(models.Model):
         ("Умные часы", "Умные часы"),
         ("Электросамокаты", "Электросамокаты"),
         ("Электровелосипеды", "Электровелосипеды"),
-        ("Роботы пылесосы", "Роботы пылесосы"),
+        ("Пылесосы", "Пылесосы"),
+        ("Роботы-пылесосы", "Роботы-пылесосы"),
         ("Кофемашины", "Кофемашины"),
         ("Кофеварки", "Кофеварки"),
         ("Кондиционеры", "Кондиционеры"),
@@ -227,6 +228,10 @@ class Watch(models.Model):
 
 class Vacuum(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
+    type = models.CharField(max_length=15, verbose_name='Тип пылесоса', choices=(
+        ('Робот', 'Робот'),
+        ('Вертикальный', 'Вертикальный')
+    ), default='Робот')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
@@ -234,8 +239,8 @@ class Vacuum(models.Model):
         ('Нет', 'Нет')
     ), default='Да')
     class Meta:
-        verbose_name = 'Робот-пылесос'
-        verbose_name_plural = 'Роботы-пылесосы'
+        verbose_name = 'Пылесос'
+        verbose_name_plural = 'Пылесосы'
 
     def __str__(self):
         return str(f'{self.model}')
@@ -290,8 +295,8 @@ class Coffee(models.Model):
     ), default='Да')
 
     class Meta:
-        verbose_name = 'Кофеварка'
-        verbose_name_plural = 'Кофеварки'
+        verbose_name = 'Кофемашина'
+        verbose_name_plural = 'Кофемашины'
 
     def __str__(self):
         return str(f'{self.mod}  {self.model}')
@@ -332,7 +337,7 @@ class SmartSpeaker(models.Model):
 
 class Bikes(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
-    size = models.PositiveSmallIntegerField(max_length=4, verbose_name="Размер колеса")
+    size = models.PositiveSmallIntegerField(verbose_name="Размер колеса")
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
         ('Да', 'Да'),

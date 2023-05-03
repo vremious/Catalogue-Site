@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f)^b*pb0fyzdpb5ma&yq!di44*_3=us^frue_)ehyut10@w72y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'admin_totals'
+
 
 
 ]
@@ -120,11 +121,11 @@ USE_I18N = True
 USE_TZ = True
 
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 import os
+STATICFILES_DIRS = []
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = ''
@@ -140,5 +141,5 @@ FILTERS_EMPTY_CHOICE_LABEL = 'Отображать все'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
-SESSION_COOKIE_AGE = 7200 #
-SESSION_SAVE_EVERY_REQUEST = True # "False" by default
+SESSION_COOKIE_AGE = 7200
+SESSION_SAVE_EVERY_REQUEST = True

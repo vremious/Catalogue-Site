@@ -263,7 +263,7 @@ def bikes(request):
 
 def robovacum(request):
     available = Available.objects.all().order_by('service')
-    available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Роботы пылесосы'))
+    available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type__contains='ылесосы'))
     testertime = TesterTime.objects.all().order_by('service')
     vacuum = Vacuum.objects.all
     vacuum_filter = VacuumFilter(request.GET, queryset=Vacuum.objects.filter(actual='Да').order_by('model__company__company','model__model'))

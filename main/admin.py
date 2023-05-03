@@ -36,9 +36,10 @@ admin.site.register(Speaker)
 
 class ModelsAdmin(admin.ModelAdmin):
 
+
     list_display = ['company', 'model']
     list_filter = ['company']
-    search_fields = ['model__model']
+    search_fields = ['model']
 
 admin.site.register(Models, ModelsAdmin)
 
@@ -386,15 +387,15 @@ def logged_in_message(sender, user, request, **kwargs):
     """
     Add a welcome message when the user logs in
     """
-    messages.info(request, "Важная информация:"
+    messages.info(request, "Добро пожаловать!"
                   )
-    messages.info(request, "18.04.23 с 8-30 до 9-00 планируется переезд сайта на адрес 10.248.36.229 и введение его в полную эксплуатацию вместо старого сайта (таблицы) "
-                  )
-#    messages.info(request, "В связи с этим прошу всех администарторов СЦ вводить актуальную информацию по наличию оборудования, а также проверить рванее введённые данные."
-#                  )
-#    messages.info(request, "Также есть предложение создать рабочий чат (Телеграмм или Вайбер) для оперативного решения вопросов связанных с работой портала"
-#                  )
-#    messages.info(request, "Свои номера отправляйте на почту Emelyanov_da@mgts.by"
-#                  )
-#
+    # messages.info(request, "Категория 'Роботы-пылесосы' переименована в 'Пылесосы', т.к. в будущем планируется добавление вертикальных пылесосов"
+    #               )
+    # messages.info(request, "В связи с этим прошу всех администарторов СЦ вводить актуальную информацию по наличию оборудования, а также проверить рванее введённые данные."
+    #              )
+    # messages.info(request, "Также есть предложение создать рабочий чат (Телеграмм или Вайбер) для оперативного решения вопросов связанных с работой портала"
+    #              )
+    # messages.info(request, "Свои номера отправляйте на почту Emelyanov_da@mgts.by"
+    #              )
+
 user_logged_in.connect(logged_in_message)
