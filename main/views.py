@@ -263,7 +263,9 @@ def bikes(request):
 
 def robovacum(request):
     available = Available.objects.all().order_by('service')
-    available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type__contains='ылесосы'))
+    q1 = Available.objects.filter(model__type__contains='ылесос')
+    q2 = Available.objects.filter(model__type__contains='окон')
+    available_filter = AvailableFilter(request.GET, queryset=q1|q2)
     testertime = TesterTime.objects.all().order_by('service')
     vacuum = Vacuum.objects.all
     vacuum_filter = VacuumFilter(request.GET, queryset=Vacuum.objects.filter(actual='Да').order_by('model__company__company','model__model'))
@@ -338,7 +340,23 @@ def other(request):
     context = {'page_obj': page_obj, 'testertime': testertime, 'available': available, 'other': other, 'other_filter': other_filter, 'available_filter': available_filter, 'result':result, 'result1':result1,'final':final}
     return render(request, 'main/other.html', context)
 
-
+def console(request):
+    available = Available.objects.all().order_by('service')
+    available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type__contains='Игровые приставки'))
+    testertime = TesterTime.objects.all().order_by('service')
+    console = Console.objects.all
+    console_filter = ConsoleFilter(request.GET, queryset=Console.objects.filter(actual='Да').order_by('model__company__company','model__model'))
+    paginator = Paginator(console_filter.qs, 12) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    result = available_filter.qs.values('model').distinct().order_by('model')
+    result1 = console_filter.qs.values('model').distinct().order_by('model')
+    final = True
+    for i in result1:
+        if i in result:
+            final = False
+    context = {'page_obj': page_obj, 'testertime': testertime, 'available': available, 'console': console, 'available_filter': available_filter, 'console_filter':console_filter, 'result':result, 'result1':result1,'final':final}
+    return render(request, 'main/console.html', context)
 
 
 

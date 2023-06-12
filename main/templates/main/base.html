@@ -65,8 +65,6 @@
         }
     </style>
 
-    {#    <script src = {% static 'js/bootstrap.bundle.js'%}></script>#}
-    {#    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>#}
 
 </head>
 
@@ -75,9 +73,6 @@
 <header>
 
   <div class="header finisher-header pt-5" style="width: 100%;height: auto">
-{#      <div class="d-flex" style="height: 70px;">#}
-{#          <div class="vr"></div>#}
-{#      </div>#}
     <nav class="navbar navbar-expand-lg navbar-light bg-transparent pt-5 mt-5 mb-auto" >
         <div class="container d-flex flex-wrap justify-content-center">
             <a class="navbar-brand mb-1 " href="home">Главная</a>
@@ -111,6 +106,9 @@
                             <li><a class="dropdown-item" href='tv'>Телевизоры</a>
                             </li>
 
+                            <li><a class="dropdown-item" href='console'>Игровые приставки</a>
+                            </li>
+
                             <li><a class="dropdown-item" href='smartphones'>Смартфоны</a>
                             </li>
 
@@ -135,7 +133,7 @@
                              <li><a class="dropdown-item" href='bikes'>Электровелосипеды</a>
                             </li>
 
-                            <li><a class="dropdown-item" href='robovacum'>Пылесосы</a>
+                            <li><a class="dropdown-item" href='robovacum'>Устройства для уборки</a>
                             </li>
 
                             <li><a class="dropdown-item" href='coffee'>Кофемашины</a>
@@ -184,41 +182,13 @@
     <div class="bottomMenu hide" id="up">
         <a href="#"><img src='{% static 'up.svg' %}'></a>
     </div>
-{#<div class="container-md">#}
-{#  <footer class="d-flex justify-content-end  border-top py-2 my-2">#}
-{#      <span class=" text-muted">Нашли баг или ошибку?</span>#}
-{#      <span class=" text-muted">Телефон: (17)290-57-12</span>#}
-{#      <span class=" text-muted">Email: Emelyanov_da@mgts.by</span>#}
-{#  </footer>#}
-{#  <footer class="d-flex justify-content-center ">#}
-{#      <div class=" text-muted mb-3">© 2023 Разработано в ЦОВ СТО и СПО Белтелеком</div>#}
-{#  </footer>#}
-{##}
-{#    <ul class="nav col-md-3 justify-content-end list-unstyled d-flex">#}
-{#        <span class="mb-3 mb-md-0 text-muted">Нашли баг или ошибку?</span>#}
-{#        <span class="mb-3 mb-md-0 text-muted">Телефон: (17)290-57-12</span>#}
-{#        <span class="mb-3 mb-md-0 text-muted">Email: Emelyanov_da@mgts.by</span>#}
-{#    </ul>#}
-{##}
-{#</div>#}
+
 <div class="container">
   <footer class="row py-4 my-4 border-top">
     <div class="col mb-2 ">
       <ul class="text-muted d-flex justify-content-start ">© 2023 Разработано в ЦОВ СТО и СПО Белтелеком</ul>
     </div>
-
-{#    <div class="col mb-3">#}
-{##}
-{#    </div>#}
-{##}
-{#    <div class="col">#}
-{#    </div>#}
-{##}
-{#    <div class="col">#}
-{#    </div>#}
-
     <div class="col mb-2 align-items-end">
-{#      <ul>Нашли ошибку?</ul>#}
       <ul class="nav flex-column d-flex">
         <li class="d-flex justify-content-end  p-0 text-muted">Нашли баг/ошибку?</li>
         <li class="d-flex justify-content-end  p-0 text-muted">(17)290-57-12</li>
@@ -298,83 +268,6 @@ new FinisherHeader({
   ]
 });
 </script>
-{% comment %}
-
-let cards = document.getElementsByClassName("flip-card");
-    if(cards !== 0){
-      let card_array = [];
-      for(let i = 0; i < cards.length; i++){
-        card_array.push(i);
-      }
-
-      for(let i = 0; i < cards.length; i++){
-        let j = Math.floor(Math.random() * card_array.length);
-        let card = cards.item(card_array[j]);
-        card.parentNode.appendChild(card);
-        card_array.splice(j, 1);
-      }
-    }
-
-        let hasFlippedCard = false;
-        let lockBoard = false;
-        let firstCard, secondCard;
-
-        function flipCard() {
-          if (lockBoard) return;
-          if (this === firstCard) return;
-
-          this.classList.add('flip');
-
-          if (!hasFlippedCard) {
-            hasFlippedCard = true;
-            firstCard = this;
-
-            return;
-          }
-
-          secondCard = this;
-          checkForMatch();
-        }
-
-
-        {#function checkForMatch() {#}
-        {#  let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;#}
-        {##}
-        {#  isMatch ? disableCards() : unflipCards();#}
-        {#}#}
-        {##}
-        {#function disableCards() {#}
-        {#  firstCard.removeEventListener('click', flipCard);#}
-        {#  secondCard.removeEventListener('click', flipCard);#}
-        {#  resetBoard();#}
-        }
-        {##}
-        {#function unflipCards() {#}
-        {#  lockBoard = true;#}
-        {##}
-        {#  setTimeout(() => {#}
-        {#    firstCard.classList.remove('flip');#}
-        {#    secondCard.classList.remove('flip');#}
-        {##}
-        {#    resetBoard();#}
-        {#  }, 1500);#}
-        }
-
-        function resetBoard() {
-          [hasFlippedCard, lockBoard] = [false, false];
-          [firstCard, secondCard] = [null, null];
-
-        }
-
-
-let flip = function() {
-   this.classList.toggle("flip")
-};
-
-for (let i = 0; i < cards.length; i++) {
-    cards[i].addEventListener('click', flip, false)
-}
-{% endcomment %}
 
 <script>
 (function() {

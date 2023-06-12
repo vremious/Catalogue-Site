@@ -43,13 +43,15 @@ class Models(models.Model):
         ("Умный Дом", "Умный Дом"),
         ("Смартфоны", "Смартфоны"),
         ("Телевизоры", "Телевизоры"),
+        ("Игровые приставки","Игровые приставки"),
         ("Ноутбуки", "Ноутбуки"),
         ("Планшеты", "Планшеты"),
         ("Умные часы", "Умные часы"),
         ("Электросамокаты", "Электросамокаты"),
         ("Электровелосипеды", "Электровелосипеды"),
         ("Пылесосы", "Пылесосы"),
-        ("Роботы-пылесосы", "Роботы-пылесосы"),
+        ("Роботы-пылесосы", "Роботы пылесосы"),
+        ("Мойщики окон", "Мойщики окон"),
         ("Кофемашины", "Кофемашины"),
         ("Кофеварки", "Кофеварки"),
         ("Кондиционеры", "Кондиционеры"),
@@ -228,10 +230,11 @@ class Watch(models.Model):
 
 class Vacuum(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
-    type = models.CharField(max_length=15, verbose_name='Тип пылесоса', choices=(
-        ('Робот', 'Робот'),
-        ('Вертикальный', 'Вертикальный')
-    ), default='Робот')
+    type = models.CharField(max_length=25, verbose_name='Тип пылесоса', choices=(
+        ('Робот пылесос', 'Робот пылесос'),
+        ('Вертикальный пылесос', 'Вертикальный пылесос'),
+	    ('Мойщик окон', 'Мойщик окон')
+    ), default='Робот пылесос')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
@@ -239,8 +242,8 @@ class Vacuum(models.Model):
         ('Нет', 'Нет')
     ), default='Да')
     class Meta:
-        verbose_name = 'Пылесос'
-        verbose_name_plural = 'Пылесосы'
+        verbose_name = 'Устройство для уборки'
+        verbose_name_plural = 'Устройства для уборки'
 
     def __str__(self):
         return str(f'{self.model}')
@@ -424,80 +427,19 @@ class TesterTime(models.Model):
     def __str__(self):
         return str(f'{self.service}---------{self.worktime}----------{self.onduty}')
 
-# class Category_abon(models.Model):
-#     name_cat = models.CharField(max_length=250)
-#
-#     def __str__(self):
-#         return self.name_cat
-#
-#
-# class Subcategory(models.Model):
-#     cat = models.ForeignKey(Category_abon, on_delete=models.CASCADE,
-#                             verbose_name='')
-#     name_subcat = models.CharField(max_length=250)
-#
-#     def __str__(self):
-#         return f'{self.cat} - {self.name_subcat}'
-#
-#
-# class Good(models.Model):
-#     subcat = models.ForeignKey(Subcategory, on_delete=models.CASCADE,
-#                                verbose_name='subcategory')
-#     name_good = models.CharField(max_length=250)
-#
-#
-#     def __str__(self):
-#          return f'{self.subcat} - {self.name_good}'
-#
-#
-# class State(models.Model):
-#     service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name='service center')
-#     name_good = models.ForeignKey(Good, on_delete=models.CASCADE, verbose_name='good')
-#     date = models.DateTimeField("Дата обновления", auto_now=True)
-#     quantity = models.PositiveIntegerField(default=0)
-#     status = models.CharField(max_length=10, choices=(
-#          ('+', '+'),
-#          ('-', '-')
-#     ))
-#
-#     class Meta:
-#         ordering = ['name_good']
-#
-#     def __str__(self):
-#         return f'{self.service} - {self.name_good} - {self.status}- {self.quantity}'
-#
-#
-# class OrderItem(models.Model):
-#     order = models.ForeignKey("main.Order", on_delete=models.CASCADE, verbose_name="order")
-#     cat = models.ForeignKey(Category_abon, on_delete=models.CASCADE, verbose_name='cat')
-#     subcat = models.ForeignKey(Subcategory, on_delete=models.CASCADE, verbose_name='subcat')
-#     name_good = models.ForeignKey(Good, on_delete=models.CASCADE, verbose_name='good')
-#     quantity = models.PositiveIntegerField(default=0)
-#     amount = models.DecimalField(max_digits=9, decimal_places=2)
-#
-#     def __str__(self):
-#         return f'{self.name_good} + {self.quantity}'
-#
-#
-#
-#
-# class Order(models.Model):
-#     order_id = models.PositiveIntegerField(unique=True)
-#     order_date = models.DateTimeField(auto_now=True)
-#     total_quantity = models.PositiveIntegerField(default=0)
-#     total_amount = models.DecimalField(max_digits=9, decimal_places=2)
-#
-#     def __str__(self):
-#         return str(self.order_id)
-#
-#
-# class AllowedCombination(models.Model):
-#     cat = models.ForeignKey(Category_abon, on_delete=models.CASCADE)
-#     subcat = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
-#     good = models.ForeignKey(Good, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return f'{self.cat} {self.subcat} {self.good}'
-#
-#     class Meta:
-#         ordering = ['pk']
+
+class Console(models.Model):
+    model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
+    memory = models.PositiveSmallIntegerField(verbose_name='Объём накопителя')
+    purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
+    image = models.ImageField(upload_to='main/media', blank=True, null=True)
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
+    class Meta:
+        verbose_name = 'Игровая приставка'
+        verbose_name_plural = 'Игровые приставки'
+
+    def __str__(self):
+        return str(f'{self.model}')

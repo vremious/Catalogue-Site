@@ -31,6 +31,7 @@ admin.site.register(Other)
 admin.site.register(Purpose)
 admin.site.register(Service)
 admin.site.register(Speaker)
+admin.site.register(Console)
 
 
 
