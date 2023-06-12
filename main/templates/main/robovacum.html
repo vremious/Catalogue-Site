@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    Пылесосы
+    Устройства для уборки
 {% endblock %}
 <link rel="stylesheet" href="{% static 'test.css' %}" xmlns="http://www.w3.org/1999/html">
 <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
@@ -13,8 +13,8 @@
     <div class="container-md bg-white">
         <div class="row flex-sm-wrap">
             <div class="col-12">
-                <h1 class="mb-2 mt-2 text-center text-lg-start">Пылесосы</h1>
-                <p class="fs-5">На этой странице отображается наличие пылесосов и роботов-пылесосов для продажи во всех сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
+                <h1 class="mb-2 mt-2 text-center text-lg-start">Устройства для уборки</h1>
+                <p class="fs-5">На этой странице отображается наличие устройств для уборки на продажу во всех сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
             </div>
             <!-- ---------------------------------------------------------------------- Раздел с фильтрацией на странице. -->
             <div class="col-lg-2 mb-3">
@@ -53,7 +53,7 @@
                                                         {% endif %}
                                                         <h3>{{i.model.company}}</h3> <p>{{ i.model.model }}</p>
                                                         <hr>
-                                                        <p><b>Тип пылесоса:</b> {{ i.type }}</p>
+                                                        <p><b>Тип:</b> {{ i.type }}</p>
                                                     </div>
                                                     <div class='flip-card-back'>
                                                         <h6>{{ i.model.company}} {{ i.model.model }}</h6>

@@ -118,15 +118,18 @@ class SpeakerFilter(django_filters.FilterSet):
 
 
 class VacuumFilter(django_filters.FilterSet):
-    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='ылесосы').distinct(), empty_label=('Все'))
+    q1 = Company.objects.filter(models__type__contains='ылесос')
+    q2 = Company.objects.filter(models__type__contains='окон')
+    model__company = ModelChoiceFilter(label='Производитель', queryset=(q1|q2).distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
                        )
                        )
-    type = ChoiceFilter(empty_label=('Все'), choices=(
-        ('Робот', "Робот"),
-        ("Вертикальный", "Вертикальный")
+    type = ChoiceFilter(empty_label=('Все'), label='Тип устройства', choices=(
+        ('Робот', "Робот пылесос"),
+        ("Вертикальный", "Вертикальный пылесос"),
+	    ('Мойщик окон', 'Мойщик окон')
     )
                        )
 

@@ -49,7 +49,8 @@ class Models(models.Model):
         ("Электросамокаты", "Электросамокаты"),
         ("Электровелосипеды", "Электровелосипеды"),
         ("Пылесосы", "Пылесосы"),
-        ("Роботы-пылесосы", "Роботы-пылесосы"),
+        ("Роботы-пылесосы", "Роботы пылесосы"),
+        ("Мойщики окон", "Мойщики окон"),
         ("Кофемашины", "Кофемашины"),
         ("Кофеварки", "Кофеварки"),
         ("Кондиционеры", "Кондиционеры"),
@@ -228,10 +229,11 @@ class Watch(models.Model):
 
 class Vacuum(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
-    type = models.CharField(max_length=15, verbose_name='Тип пылесоса', choices=(
-        ('Робот', 'Робот'),
-        ('Вертикальный', 'Вертикальный')
-    ), default='Робот')
+    type = models.CharField(max_length=25, verbose_name='Тип пылесоса', choices=(
+        ('Робот пылесос', 'Робот пылесос'),
+        ('Вертикальный пылесос', 'Вертикальный пылесос'),
+	    ('Мойщик окон', 'Мойщик окон')
+    ), default='Робот пылесос')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
@@ -239,8 +241,8 @@ class Vacuum(models.Model):
         ('Нет', 'Нет')
     ), default='Да')
     class Meta:
-        verbose_name = 'Пылесос'
-        verbose_name_plural = 'Пылесосы'
+        verbose_name = 'Устройство для уборки'
+        verbose_name_plural = 'Устройства для уборки'
 
     def __str__(self):
         return str(f'{self.model}')
