@@ -359,6 +359,26 @@ def console(request):
     return render(request, 'main/console.html', context)
 
 
+def cooking(request):
+    available = Available.objects.all().order_by('service')
+    q1 = Available.objects.filter(model__type__contains='Электрогрили')
+    q2 = Available.objects.filter(model__type__contains='Электрогрили')
+    available_filter = AvailableFilter(request.GET, queryset=q1|q2)
+    testertime = TesterTime.objects.all().order_by('service')
+    cooking = Cooking.objects.all
+    cooking_filter = CookingFilter(request.GET, queryset=Cooking.objects.filter(actual='Да').order_by('model__company__company','model__model'))
+    paginator = Paginator(cooking_filter.qs, 12) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    result = available_filter.qs.values('model').distinct().order_by('model')
+    result1 = cooking_filter.qs.values('model').distinct().order_by('model')
+    final = True
+    for i in result1:
+        if i in result:
+            final = False
+    context = {'page_obj': page_obj, 'testertime': testertime, 'available': available, 'cooking': cooking, 'available_filter': available_filter, 'cooking_filter':cooking_filter, 'result':result, 'result1':result1,'final':final}
+    return render(request, 'main/cooking.html', context)
+
 
 def upu2(request):
     available = Available.objects.all().order_by('service')

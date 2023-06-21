@@ -54,6 +54,7 @@ class Models(models.Model):
         ("Мойщики окон", "Мойщики окон"),
         ("Кофемашины", "Кофемашины"),
         ("Кофеварки", "Кофеварки"),
+        ("Электрогрили","Электрогрили"),
         ("Кондиционеры", "Кондиционеры"),
         ("Умные колонки", "Умные колонки"),
         ("Аудиосистемы", "Аудиосистемы"),
@@ -438,8 +439,26 @@ class Console(models.Model):
         ('Нет', 'Нет')
     ), default='Да')
     class Meta:
-        verbose_name = 'Игровая приставка'
+        verbose_name = 'Игровую приставку'
         verbose_name_plural = 'Игровые приставки'
+    def __str__(self):
+        return str(f'{self.model}')
+
+class Cooking(models.Model):
+    model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
+    type = models.CharField(max_length=25, verbose_name='Вид устройства', choices=(
+        ('Электрогриль', 'Электрогриль'),
+    ))
+    purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
+    image = models.ImageField(upload_to='main/media', blank=True, null=True)
+    actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
+        ('Да', 'Да'),
+        ('Нет', 'Нет')
+    ), default='Да')
+
+    class Meta:
+        verbose_name = "Технику для кухни"
+        verbose_name_plural = 'Техника для кухни'
 
     def __str__(self):
         return str(f'{self.model}')

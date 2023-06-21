@@ -210,3 +210,13 @@ class ConsoleFilter(django_filters.FilterSet):
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
                        )
                        )
+
+class CookingFilter(django_filters.FilterSet):
+    q1 = Company.objects.filter(models__type__contains='грили')
+    q2 = Company.objects.filter(models__type__contains='Электрогрили')
+    model__company = ModelChoiceFilter(label='Производитель', queryset=(q1|q2).distinct(), empty_label=('Все'))
+    model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
+                       widget=TextInput(
+                           attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
+                       )
+                       )

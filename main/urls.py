@@ -16,6 +16,7 @@ urlpatterns = [
     path('smart_home', views.smart_home),
     path('tv', views.tv),
     path('console', views.console),
+    path('cooking', views.cooking),
     path('notebooks', views.notebooks),
     path('pads', views.pads),
     path('scooters', views.scooters),
