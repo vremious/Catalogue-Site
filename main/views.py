@@ -362,8 +362,9 @@ def console(request):
 def cooking(request):
     available = Available.objects.all().order_by('service')
     q1 = Available.objects.filter(model__type__contains='Электрогрили')
-    q2 = Available.objects.filter(model__type__contains='Электрогрили')
-    available_filter = AvailableFilter(request.GET, queryset=q1|q2)
+    q2 = Available.objects.filter(model__type__contains='Сушилки')
+    q3 = Available.objects.filter(model__type__contains='Соковыжималки')
+    available_filter = AvailableFilter(request.GET, queryset=q1|q2|q3)
     testertime = TesterTime.objects.all().order_by('service')
     cooking = Cooking.objects.all
     cooking_filter = CookingFilter(request.GET, queryset=Cooking.objects.filter(actual='Да').order_by('model__company__company','model__model'))

@@ -55,6 +55,8 @@ class Models(models.Model):
         ("Кофемашины", "Кофемашины"),
         ("Кофеварки", "Кофеварки"),
         ("Электрогрили","Электрогрили"),
+        ("Соковыжималки", "Соковыжималки"),
+        ("Сушилки", "Сушилки"),
         ("Кондиционеры", "Кондиционеры"),
         ("Умные колонки", "Умные колонки"),
         ("Аудиосистемы", "Аудиосистемы"),
@@ -448,6 +450,9 @@ class Cooking(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     type = models.CharField(max_length=25, verbose_name='Вид устройства', choices=(
         ('Электрогриль', 'Электрогриль'),
+        ('Соковыжималка', 'Соковыжималка'),
+        ('Сушилка', 'Сушилка'),
+
     ))
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
