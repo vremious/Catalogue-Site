@@ -191,7 +191,9 @@ def notebooks(request):
     notebook = Notebook.objects.all
     testertime = TesterTime.objects.all().order_by('service')
     notebook_filter = NotebookFilter(request.GET, queryset=Notebook.objects.filter(actual='Да').order_by('model__company__company','model__model'))
-    available_filter = AvailableFilter(request.GET, queryset=Available.objects.filter(model__type='Ноутбуки'))
+    q1 = Available.objects.filter(model__type__contains='Ноутбуки')
+    q2 = Available.objects.filter(model__type__contains="Компьютеры")
+    available_filter = AvailableFilter(request.GET, queryset=q1|q2)
     paginator = Paginator(notebook_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -268,7 +270,7 @@ def robovacum(request):
     available_filter = AvailableFilter(request.GET, queryset=q1|q2)
     testertime = TesterTime.objects.all().order_by('service')
     vacuum = Vacuum.objects.all
-    vacuum_filter = VacuumFilter(request.GET, queryset=Vacuum.objects.filter(actual='Да').order_by('model__company__company','model__model'))
+    vacuum_filter = VacuumFilter(request.GET, queryset=Vacuum.objects.filter(actual='Да').order_by('model__type', 'model__company__company','model__model'))
     paginator = Paginator(vacuum_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

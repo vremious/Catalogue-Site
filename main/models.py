@@ -44,6 +44,7 @@ class Models(models.Model):
         ("Смартфоны", "Смартфоны"),
         ("Телевизоры", "Телевизоры"),
         ("Игровые приставки","Игровые приставки"),
+        ("Компьютеры", "Компьютеры"),
         ("Ноутбуки", "Ноутбуки"),
         ("Планшеты", "Планшеты"),
         ("Умные часы", "Умные часы"),
@@ -176,10 +177,14 @@ class Smartphone(models.Model):
 
 class Notebook(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
-    size = models.FloatField(max_length=4, verbose_name="Диагональ экрана")
-    cpu = models.CharField(max_length=20, verbose_name='Модель процессора')
-    ddr = models.PositiveSmallIntegerField(verbose_name='Объём оперативной памяти')
-    memory = models.CharField(max_length=20, verbose_name='Вид и объём накопителя')
+    size = models.FloatField(max_length=4, verbose_name="Диагональ экрана", null=True, blank=True)
+    type = models.CharField(max_length=25, verbose_name='Тип пылесоса', choices=(
+        ('Ноутбук', 'Ноутбук'),
+        ('Системный блок', 'Системный блок')
+    ), default='Ноутбук')
+    # cpu = models.CharField(max_length=20, verbose_name='Модель процессора')
+    # ddr = models.PositiveSmallIntegerField(verbose_name='Объём оперативной памяти')
+    # memory = models.CharField(max_length=20, verbose_name='Вид и объём накопителя')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
@@ -189,8 +194,8 @@ class Notebook(models.Model):
 
 
     class Meta:
-        verbose_name = 'Ноутбук'
-        verbose_name_plural = 'Ноутбуки'
+        verbose_name = 'Ноутбуки и компьютерное оборудование'
+        verbose_name_plural = 'Ноутбуки и компьютерное оборудование'
 
     def __str__(self):
         return str(f' {self.model}')
@@ -254,12 +259,12 @@ class Vacuum(models.Model):
 
 class Scooter(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
-    maxspeed = models.CharField(max_length=50, verbose_name='Максимальная скорость и дистанция')
-    power = models.CharField(max_length=50, verbose_name='Мощность мотора')
-    accumulator = models.CharField(max_length=50, verbose_name='Аккумулятор')
-    maxload = models.CharField(max_length=50, verbose_name='Максимальная нагрузка')
-    weight = models.CharField(max_length=50, verbose_name='Вес')
-    chargetime = models.CharField(max_length=50, verbose_name='Время заряда')
+    # maxspeed = models.CharField(max_length=50, verbose_name='Максимальная скорость и дистанция')
+    # power = models.CharField(max_length=50, verbose_name='Мощность мотора')
+    # accumulator = models.CharField(max_length=50, verbose_name='Аккумулятор')
+    # maxload = models.CharField(max_length=50, verbose_name='Максимальная нагрузка')
+    # weight = models.CharField(max_length=50, verbose_name='Вес')
+    # chargetime = models.CharField(max_length=50, verbose_name='Время заряда')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(

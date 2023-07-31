@@ -92,12 +92,20 @@ class PadFilter(django_filters.FilterSet):
 
 
 class NotebookFilter(django_filters.FilterSet):
-    model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Ноутбуки').distinct(), empty_label=('Все'))
+    q1 = Company.objects.filter(models__type__contains='Ноутбуки')
+    q2 = Company.objects.filter(models__type__contains='Компьютеры')
+    model__company = ModelChoiceFilter(label='Производитель', queryset=(q1 | q2 ).distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
                        )
                        )
+    type = ChoiceFilter(empty_label=('Все'), label='Тип устройства', choices=(
+        ('Ноутбук', 'Ноутбук'),
+        ('Системный блок', 'Системный блок')
+
+    )
+                        )
 
 class SmartSpeakerFilter(django_filters.FilterSet):
     model__company = ModelChoiceFilter(label='Производитель', queryset=Company.objects.filter(models__type__contains='Умные колонки').distinct(), empty_label=('Все'))
@@ -118,17 +126,18 @@ class SpeakerFilter(django_filters.FilterSet):
 
 
 class VacuumFilter(django_filters.FilterSet):
-    q1 = Company.objects.filter(models__type__contains='ылесос')
-    q2 = Company.objects.filter(models__type__contains='окон')
-    model__company = ModelChoiceFilter(label='Производитель', queryset=(q1|q2).distinct(), empty_label=('Все'))
+    q1 = Company.objects.filter(models__type__contains='Робот пылесос')
+    q2 = Company.objects.filter(models__type__contains='Вертикальный пылесос')
+    q3 = Company.objects.filter(models__type__contains='Мойщик окон')
+    model__company = ModelChoiceFilter(label='Производитель', queryset=(q1|q2|q3).distinct(), empty_label=('Все'))
     model = CharFilter(field_name='model__model', label='Поиск по модели', lookup_expr='icontains',
                        widget=TextInput(
                            attrs={'style': 'width: 100%',  'placeholder':'Введите модель'}
                        )
                        )
     type = ChoiceFilter(empty_label=('Все'), label='Тип устройства', choices=(
-        ('Робот', "Робот пылесос"),
-        ("Вертикальный", "Вертикальный пылесос"),
+        ('Робот пылесос', "Робот пылесос"),
+        ("Вертикальный пылесос", "Вертикальный пылесос"),
 	    ('Мойщик окон', 'Мойщик окон')
     )
                        )

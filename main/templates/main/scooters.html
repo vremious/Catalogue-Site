@@ -35,7 +35,7 @@
             <div class="col-lg-10">
                 <div id="loader"></div>
                 <div style="display:none;" id="myDiv" class="animate-bottom">
-                    <div class="card-group justify-content-center justify-content-lg-start">
+                    <div class="card-group">
                         <div class = 'row justify-content-center justify-content-lg-start'>
                             <!-- --------------------------------------------------------------------------------Генерация товара из базы админки на карточках-->
                             {% for i in page_obj%}
@@ -43,7 +43,7 @@
                                 {% for j in available_model %}
                                     {% if i.model == j.grouper %}
                                         <div class="col-auto mb-3 d-flex">
-                                            <div class="flip-card d-flex" style="width:15rem; height:100%">
+                                            <div class="flip-card mb-5 d-flex" style="width:15rem; height:110%">
                                                 <div class="flip-card-inner" >
                                                     <div class="flip-card-front" >
                                                         {% if i.image%}
@@ -51,10 +51,11 @@
                                                         {%  else %}
                                                             <img src="{% static 'scooters.svg'%}" class="card-img-top">
                                                         {% endif %}
-                                                        <p class="card-text"></p> <h3>{{i.model.company}}</h3> <p>{{ i.model.model }}</p>
-                                                        <hr> <p><b>Максимальная скорость и дистанция:</b> {{i.maxspeed }}</p>
-                                                        <p><b>Мощность:</b> {{ i.power }} Вт</p>
-                                                        <p><b>Аккумулятор:</b>  {{ i.accumulator }}</p>
+                                                        <p class="card-text"> <h3>{{i.model.company}}</h3>
+                                                        <p>{{ i.model.model }}</p>
+{#                                                        <hr> <p><b>Максимальная скорость и дистанция:</b> {{i.maxspeed }}</p>#}
+{#                                                        <p><b>Мощность:</b> {{ i.power }} Вт</p>#}
+{#                                                        <p><b>Аккумулятор:</b>  {{ i.accumulator }}</p>#}
                                                     </div>
                                                     <div class='flip-card-back'>
                                                         <h6>{{ i.model.company}} {{ i.model.model }}</h6>
