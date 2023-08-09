@@ -154,7 +154,7 @@ def smart_home(request):
     available = Available.objects.all().order_by('service')
     smart_home = SmartHome.objects.all
     testertime = TesterTime.objects.all().order_by('service')
-    smart_home_filter = SmartHomeFilter(request.GET, queryset=SmartHome.objects.filter(model__type_fk__type='Умный Дом', actual='Да').order_by('type','model__model').distinct())
+    smart_home_filter = SmartHomeFilter(request.GET, queryset=SmartHome.objects.filter(model__type='Умный Дом', actual='Да').order_by('type','model__model').distinct())
     available_filter = AvailableFilter(request.GET, queryset=Available.objects.all())
     paginator = Paginator(smart_home_filter.qs, 12) # Show 25 contacts per page.
     page_number = request.GET.get('page')

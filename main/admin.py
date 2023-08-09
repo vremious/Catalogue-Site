@@ -25,7 +25,7 @@ User = get_user_model()
 admin.site.site_header = "Администрирование оборудования Белтелеком"
 admin.site.site_title = "Панель администрирования"
 admin.site.index_title = "Добро пожаловать!"
-
+admin.site.register(Type)
 admin.site.register(Company)
 admin.site.register(Other)
 admin.site.register(Purpose)
@@ -38,9 +38,10 @@ admin.site.register(Cooking)
 class ModelsAdmin(admin.ModelAdmin):
 
 
-    list_display = ['company', 'model']
+    list_display = ['company', 'model', 'type_fk']
     list_filter = ['company']
     search_fields = ['model']
+    list_editable = ['type_fk']
 
 admin.site.register(Models, ModelsAdmin)
 
@@ -51,6 +52,7 @@ class RouterAdmin(admin.ModelAdmin):
     @admin.display(ordering='model__model', description='Модель')
     def model(self, obj):
         return obj.model.model
+
 
     list_display = ['company', 'model']
     list_filter = ['model__company']
@@ -264,7 +266,7 @@ class AvailableAdmin(ModelAdminTotals):
 
     @admin.display(ordering='model__type', description='Тип')
     def type(self, obj):
-        return obj.model.type
+        return obj.model.type_fk
     @admin.display(ordering='model__company', description='Производитель')
     def company(self, obj):
         return obj.model.company
@@ -318,7 +320,7 @@ class AvailableAdmin(ModelAdminTotals):
         return form
 
 
-    list_filter = ['model__type', 'model__company', 'available', 'service']
+    list_filter = ['model__type_fk', 'model__company', 'available', 'service']
     list_editable = ['available', 'quantity']
     list_display = ['service', 'type', 'company', 'model', 'date', 'available', 'quantity']
     list_totals = [('quantity', Sum)]

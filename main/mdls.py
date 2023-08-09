@@ -18,6 +18,8 @@ class Type(models.Model):
 
     def __str__(self):
         return str(self.type)
+
+
 class Service(models.Model):
     service_centre = models.CharField(max_length=250, verbose_name='Сервисные центры')
     class Meta:
@@ -43,34 +45,35 @@ class Purpose(models.Model):
 class Models(models.Model):
     company = models.ForeignKey(Company, on_delete= models.CASCADE, verbose_name='Производитель')
     model = models.CharField(max_length=50, verbose_name='Модель оборудования')
-    type_fk = models.ForeignKey(Type, on_delete=models.CASCADE, verbose_name='Тип оборудования')
-    # type = models.CharField(max_length=50, verbose_name='Вид оборудования', choices=(
-    #     ("Модемы", "Модемы"),
-    #     ("Роутеры", "Роутеры"),
-    #     ("Zala", "Zala"),
-    #     ("Умный Дом", "Умный Дом"),
-    #     ("Смартфоны", "Смартфоны"),
-    #     ("Телевизоры", "Телевизоры"),
-    #     ("Игровые приставки","Игровые приставки"),
-    #     ("Компьютеры", "Компьютеры"),
-    #     ("Ноутбуки", "Ноутбуки"),
-    #     ("Планшеты", "Планшеты"),
-    #     ("Умные часы", "Умные часы"),
-    #     ("Электросамокаты", "Электросамокаты"),
-    #     ("Электровелосипеды", "Электровелосипеды"),
-    #     ("Пылесосы", "Пылесосы"),
-    #     ("Роботы-пылесосы", "Роботы пылесосы"),
-    #     ("Мойщики окон", "Мойщики окон"),
-    #     ("Кофемашины", "Кофемашины"),
-    #     ("Кофеварки", "Кофеварки"),
-    #     ("Электрогрили","Электрогрили"),
-    #     ("Соковыжималки", "Соковыжималки"),
-    #     ("Сушилки", "Сушилки"),
-    #     ("Кондиционеры", "Кондиционеры"),
-    #     ("Умные колонки", "Умные колонки"),
-    #     ("Аудиосистемы", "Аудиосистемы"),
-    #     ("Прочее оборудование", "Прочее оборудование")
-    # ))
+    type_fk = models.ForeignKey(Type, on_delete=models.DO_NOTHING, verbose_name='Тип оборудования', default=None)
+    type = models.CharField(max_length=50, verbose_name='Вид оборудования', choices=(
+        ("Модемы", "Модемы"),
+        ("Роутеры", "Роутеры"),
+        ("Zala", "Zala"),
+        ("Умный Дом", "Умный Дом"),
+        ("Смартфоны", "Смартфоны"),
+        ("Телевизоры", "Телевизоры"),
+        ("Игровые приставки","Игровые приставки"),
+        ("Компьютеры", "Компьютеры"),
+        ("Ноутбуки", "Ноутбуки"),
+        ("Планшеты", "Планшеты"),
+        ("Умные часы", "Умные часы"),
+        ("Электросамокаты", "Электросамокаты"),
+        ("Электровелосипеды", "Электровелосипеды"),
+        ("Пылесосы", "Пылесосы"),
+        ("Роботы-пылесосы", "Роботы пылесосы"),
+        ("Мойщики окон", "Мойщики окон"),
+        ("Кофемашины", "Кофемашины"),
+        ("Кофеварки", "Кофеварки"),
+        ("Электрогрили","Электрогрили"),
+        ("Соковыжималки", "Соковыжималки"),
+        ("Сушилки", "Сушилки"),
+        ("Кондиционеры", "Кондиционеры"),
+        ("Умные колонки", "Умные колонки"),
+        ("Аудиосистемы", "Аудиосистемы"),
+        ("Прочее оборудование", "Прочее оборудование")
+    ))
+
 
     class Meta:
         verbose_name = 'Оборудование'
@@ -132,7 +135,7 @@ class Zala(models.Model):
 
 class SmartHome(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
-    type = models.CharField(max_length=50, verbose_name="Тип оборудования")
+    # type = models.CharField(max_length=50, verbose_name="Тип оборудования")
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
@@ -145,7 +148,6 @@ class SmartHome(models.Model):
 
     def __str__(self):
         return str(f'{self.model}')
-
 class Tv(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     size = models.FloatField(max_length=4, verbose_name="Диагональ экрана")
@@ -187,10 +189,10 @@ class Smartphone(models.Model):
 class Notebook(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     size = models.FloatField(max_length=4, verbose_name="Диагональ экрана", null=True, blank=True)
-    type = models.CharField(max_length=25, verbose_name='Тип утсройства', choices=(
-        ('Ноутбук', 'Ноутбук'),
-        ('Системный блок', 'Системный блок')
-    ), default='Ноутбук')
+    # type = models.CharField(max_length=25, verbose_name='Тип пылесоса', choices=(
+    #     ('Ноутбук', 'Ноутбук'),
+    #     ('Системный блок', 'Системный блок')
+    # ), default='Ноутбук')
     # cpu = models.CharField(max_length=20, verbose_name='Модель процессора')
     # ddr = models.PositiveSmallIntegerField(verbose_name='Объём оперативной памяти')
     # memory = models.CharField(max_length=20, verbose_name='Вид и объём накопителя')
@@ -247,11 +249,11 @@ class Watch(models.Model):
 
 class Vacuum(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
-    type = models.CharField(max_length=25, verbose_name='Тип пылесоса', choices=(
-        ('Робот пылесос', 'Робот пылесос'),
-        ('Вертикальный пылесос', 'Вертикальный пылесос'),
-	    ('Мойщик окон', 'Мойщик окон')
-    ), default='Робот пылесос')
+    # type = models.CharField(max_length=25, verbose_name='Тип пылесоса', choices=(
+    #     ('Робот пылесос', 'Робот пылесос'),
+    #     ('Вертикальный пылесос', 'Вертикальный пылесос'),
+	#     ('Мойщик окон', 'Мойщик окон')
+    # ), default='Робот пылесос')
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
@@ -289,11 +291,11 @@ class Scooter(models.Model):
 
 
 class Coffee(models.Model):
-    mod = models.CharField(max_length=50, verbose_name='Вид устройства', choices=(
-        ('Кофеварка', "Кофеварка"),
-        ("Кофемашина", "Кофемашина")
-    )
-                           )
+    # mod = models.CharField(max_length=50, verbose_name='Вид устройства', choices=(
+    #     ('Кофеварка', "Кофеварка"),
+    #     ("Кофемашина", "Кофемашина")
+    # )
+    #                        )
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
     pressure = models.PositiveSmallIntegerField(verbose_name='Давление (Бар)')
     capucinator = models.CharField(max_length=50, verbose_name='Тип капучинатора', choices=(
@@ -462,12 +464,12 @@ class Console(models.Model):
 
 class Cooking(models.Model):
     model = models.ForeignKey(Models, on_delete=models.CASCADE, verbose_name='Модель оборудования')
-    type = models.CharField(max_length=25, verbose_name='Вид устройства', choices=(
-        ('Электрогриль', 'Электрогриль'),
-        ('Соковыжималка', 'Соковыжималка'),
-        ('Сушилка', 'Сушилка'),
-
-    ))
+    # type = models.CharField(max_length=25, verbose_name='Вид устройства', choices=(
+    #     ('Электрогриль', 'Электрогриль'),
+    #     ('Соковыжималка', 'Соковыжималка'),
+    #     ('Сушилка', 'Сушилка'),
+    #
+    # ))
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, verbose_name='Назначение')
     image = models.ImageField(upload_to='main/media', blank=True, null=True)
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
