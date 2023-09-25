@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'crispy_bootstrap5',
-    'admin_totals'
+    'admin_totals',
+    'simple_pagination'
+
 
 
 
@@ -125,7 +127,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 import os
-STATICFILES_DIRS = []
+# STATICFILES_DIRS = [
+#     '/var/www/django/main/static',
+#     '/var/www/django/venv/Lib/site-packages/django/contrib/admin/static/admin',
+# ]
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = ''

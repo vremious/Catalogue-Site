@@ -90,6 +90,7 @@
 /*    animation: fadeIn 4s;*/
 /*    ;*/
 /*}*/
+
 .bottomMenu {
     position: fixed;
     bottom: 45px;
@@ -110,7 +111,6 @@
     opacity:1;
 
 }
-
 
 /*.card-img-top{*/
 /*   width: 100%!important;*/

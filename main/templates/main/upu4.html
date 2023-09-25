@@ -1,8 +1,226 @@
 {% extends 'main/base.html' %}
+{#{% load crispy_forms_filters %}#}
 {% load static %}
+{% load paginate %}
+
 {% block title %}
-Искалиева 12
+    {{title}}
 {% endblock %}
+<link rel="stylesheet" href="{% static 'test.css' %}" xmlns="http://www.w3.org/1999/html">
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 
 {% block content %}
+{#    {% load crispy_forms_tags %}#}
+    <div class="container-md bg-white">
+        <div class="row flex-sm-wrap">
+            <div class="col-12">
+                <h1 class="mb-2 mt-2 text-center text-lg-start">{{ title }}</h1>
+                <p class="fs-5">На этой странице отображаются {{ title.lower }} в сервисных центрах РУП "Белтелеком" города Минска. Обратите внимание на дату и время обновления статистики по сервисным центрам.</p>
+            </div>
+            <!-- ---------------------------------------------------------------------- Раздел с фильтрацией на странице. -->
+            <div class="col-lg-2 mb-3">
+                <div class = "container  bg-white shadow-lg rounded-4 py-3">
+                    <form method="get" name="MyForm">
+                            <div class="mb-2 mt-2 ms-2"> Производитель </div>
+                            <select class="form-select mb-2" aria-label="Company" name="Company">
+                            <option selected value="">Все</option>
+                            {% regroup test by company as company_name %}
+                                {% for brand in company_name %}
+                                    <option value={{ brand.grouper}}>{{ brand.grouper}}</option>
+                                {% endfor %}
+                            </select>
+                        <div class="mb-2 mt-2 ms-2"> Модель </div>
+                         <input type="text" class="form-control mb-2" placeholder="Введите модель" aria-label="Model" name="Model" aria-describedby="basic-addon1">
+                        {% regroup test by add_filter_name as test1 %}
+                        {% for i in test1 %}
+                        {% if i.grouper%}
+
+                          <div class="mb-2 mt-2 ms-2"> {{ i.grouper }} </div>
+                           <input type="text" class="form-control mb-2" placeholder="Введите модель" aria-label="Add_filter" name="Add_filter" aria-describedby="basic-addon1">
+                        {% endif %}
+                        {% endfor %}
+                         <div class="mb-2 mt-2 ms-2"> Сервисный центр </div>
+                            <select class="form-select mb-2" aria-label="Service" name="Service">
+                            <option selected value="">Все</option>
+                                {% regroup available_f by service as sc %}
+                                {% for i in sc %}
+                                    <option value={{ i.grouper}}>{{ i.grouper}}</option>
+                                {% endfor %}
+                            </select>
+                         <div class="mb-2 mt-2 ms-2"> Наличие </div>
+                            <select class="form-select mb-2" aria-label="Service" name="Available">
+                            <option selected value="">Все</option>
+                                <option value='+'>Есть</option>
+                                <option value='-'>Нет</option>
+                            </select>
+
+    {#                        {{ filter.form|crispy}}#}
+    {#                        {{ available_filter.form|crispy }}#}
+                            <div class="p-lg-2">
+                                <button type="submit" style= 'width: 100%; padding-left:0; padding-right:0;' class="btn btn-secondary">Применить</button>
+                            </div>
+                    </form>
+                        <div class="p-lg-2">
+                            <button style= 'width: 100%; padding-left:0; padding-right:0;' class="btn btn-outline-secondary" id="flipbtn" >Переворот</button>
+                        </div>
+                </div>
+            </div>
+            <!-- ------------------------------------------------------------------------------Конец фильра, ниже шаблон страницы с товаром, генерируемым из админки-->
+            <div class="col-lg-10">
+                <div id="loader"></div>
+                <div style="display:none;" id="myDiv" class="animate-bottom">
+                    <div class="card-group">
+                        <div class = 'row justify-content-center justify-content-lg-start'>
+                            <!-- --------------------------------------------------------------------------------Генерация товара из базы админки на карточках-->
+{#                            {% for i in models %}#}
+                                {% regroup  models by model as available_model %}
+                                {% paginate 8 available_model %}
+                                {% for i in available_model %}
+
+{#                                    {{ i.list }}#}
+{#                                    {% if j.grouper == i %}#}
+                                            <div class="col-auto mb-3 d-flex">
+                                                <div class="flip-card mb-4 d-flex" style="width:15rem; height:28rem">
+                                                    <div class="flip-card-inner" >
+                                                        <div class="flip-card-front" >
+                                                        {% if i.grouper.image%}
+                                                            <img src="{{ i.grouper.image.url }}" class="card-img-top" style="width:14rem; height:100%">
+                                                        {%  else %}
+                                                            <img src="{% static 'no_photo.svg'%}" class="card-img-top">
+                                                        {% endif %}
+                                                            <h3>{{i.grouper.company}}</h3><p>{{ i.grouper.model }}</p>
+                                                        {% if i.grouper.add_filter %}<hr> <p><b>{{ i.grouper.add_filter_name}}:</b> {{i.grouper.add_filter }}"</p>{% endif %}
+                                                         </div>
+                                                    <div class='flip-card-back'>
+                                                        <h6>{{ i.grouper.company}} {{ i.grouper.model }}</h6>
+                                                        <hr>
+{#                                                        <h5>Наличие:</h5>#}
+                                                        {% for d in available %}
+                                                            {% if i.grouper   == d.model %}
+                                                                {% if d.quantity > 0 %}
+                                                                    <div>{{ d.service }}: <mark>{{ d.quantity }}</mark> </div>
+                                                                    <h6>{{ d.date }}</h6>
+                                                                    <hr>
+                                                                {% else %}
+                                                                    <div>{{ d.service }}: <img src='{% static 'minus.svg' %}' height="12"></div>
+                                                                    <h6> {{ d.date }}</h6>
+                                                                    <hr>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                 <h4 class="display-4">По вашему запросу нет результатов</h4>
+                                 <p class="lead"> Проверьте настройки фильтра и повторите поиск</p>
+                                {% endfor %}
+                                {% show_pages %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+{#        Company={{ request.GET.Company}}&Model={{request.GET.Model}}&Add_filter={{request.GET.Add_filter}}&Service={{ request.GET.Service }}&Available={{ request.GET.Available }}#}
+
+        </div>
+{#    {% if request.GET.Company or request.GET.Model or request.GET.Add_filter or request.GET.Service or request.GET.Available %}#}
+{#        <nav aria-label="Page navigation">#}
+{#            <ul class="pagination justify-content-end py-3">#}
+{#            {% if page_obj.has_previous %}#}
+{#            <li class="page-item">#}
+{#              <a class="page-link" href="?page=1" aria-label="Previous">#}
+{#                <span aria-hidden="true">&laquo;</span>#}
+{#                <span class="sr-only"></span>#}
+{#              </a>#}
+{#            </li>   {% endif %}#}
+{##}
+{#            {% for n in page_obj.paginator.page_range %}#}
+{#              {% if page_obj.number == n %}#}
+{#                <li class="page-item active">#}
+{#                  <span class="page-link">{{ n }}<span class="sr-only"></span></span>#}
+{#                </li>#}
+{#              {% elif n > page_obj.number|add:'-5' and n < page_obj.number|add:'5' %}#}
+{#                <li class="page-item"><a class="page-link" href="{{ request.get_full_path }}&page={{ n }}">{{ n }}</a></li>#}
+{#              {% endif %}#}
+{#            {% endfor %}#}
+{##}
+{#          {% if page_obj.has_next %}#}
+{#              <li class="page-item">#}
+{#                <a class="page-link" href="{{ request.get_full_path }}&page={{ page_obj.paginator.num_pages }}" aria-label="Next">#}
+{#                  <span aria-hidden="true">&raquo;</span>#}
+{#                  <span class="sr-only"></span>#}
+{#                </a>#}
+{#              </li>#}
+{#          {% endif %}#}
+{#            </ul>#}
+{#        </nav>#}
+{#    {% else %}#}
+{#            <nav aria-label="Page navigation">#}
+{#        <ul class="pagination justify-content-end py-3">#}
+{#        {% if page_obj.has_previous %}#}
+{#        <li class="page-item">#}
+{#          <a class="page-link" href="?page=1" aria-label="Previous">#}
+{#            <span aria-hidden="true">&laquo;</span>#}
+{#            <span class="sr-only"></span>#}
+{#          </a>#}
+{#        </li>   {% endif %}#}
+{##}
+{#        {% for n in page_obj.paginator.page_range %}#}
+{#          {% if page_obj.number == n %}#}
+{#            <li class="page-item active">#}
+{#              <span class="page-link">{{ n }}<span class="sr-only"></span></span>#}
+{#            </li>#}
+{#          {% elif n > page_obj.number|add:'-5' and n < page_obj.number|add:'5' %}#}
+{#            <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>#}
+{#          {% endif %}#}
+{#        {% endfor %}#}
+{##}
+{#      {% if page_obj.has_next %}#}
+{#          <li class="page-item">#}
+{#            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">#}
+{#              <span aria-hidden="true">&raquo;</span>#}
+{#              <span class="sr-only"></span>#}
+{#            </a>#}
+{#          </li>#}
+{#      {% endif %}#}
+{#        </ul>#}
+{#    </nav>#}
+{#    {% endif %}#}
+
+{#{{ article_page }}#}
+{#     <nav aria-label="Page navigation">#}
+{#        <ul class="pagination justify-content-end py-3">#}
+{#        {% if pagination_url.has_previous %}#}
+{#        <li class="page-item">#}
+{#          <a class="page-link" href="?page=1" aria-label="Previous">#}
+{#            <span aria-hidden="true">&laquo;</span>#}
+{#            <span class="sr-only"></span>#}
+{#          </a>#}
+{#        </li>   {% endif %}#}
+{##}
+{#        {% for n in pagination_url.paginator.page_range %}#}
+{#          {% if pages.number == n %}#}
+{#            <li class="page-item active">#}
+{#              <span class="page-link">{{ n }}<span class="sr-only"></span></span>#}
+{#            </li>#}
+{#          {% elif n > pages.number|add:'-5' and n < pages.number|add:'5' %}#}
+{#            <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>#}
+{#          {% endif %}#}
+{#        {% endfor %}#}
+{##}
+{#      {% if pages.has_next %}#}
+{#          <li class="page-item">#}
+{#            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">#}
+{#              <span aria-hidden="true">&raquo;</span>#}
+{#              <span class="sr-only"></span>#}
+{#            </a>#}
+{#          </li>#}
+{#      {% endif %}#}
+{#        </ul>#}
+{##}
+{#    </nav>#}
+
+    </div>
+
 {% endblock %}

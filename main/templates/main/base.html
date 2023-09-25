@@ -86,10 +86,13 @@
                             Абонентское оборудование
                         </a>
                         <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href= "routers_rent">Модемы</a></li>
-                            <li><a class="dropdown-item" href= "zala">Zala</a></li>
-                            <li><a class="dropdown-item" href= "smart_home">Умный Дом</a></li>
-                            <li><a class="dropdown-item" href= "other">Прочее оборудование</a></li>
+                        {% regroup typed by type_fk as type %}
+                        {% for i in type%}
+                                {% if i.grouper.purpose.id == 2%}
+                                    <li><a class="dropdown-item" href= "{{ i.grouper.slug }}">{{ i.grouper }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
                         </ul>
                     </li>
 
@@ -99,51 +102,12 @@
                             Оборудование для продажи
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                            <li><a class="dropdown-item" href='routers'>Роутеры</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='tv'>Телевизоры</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='console'>Игровые приставки</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='smartphones'>Смартфоны</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='notebooks'>Ноутбуки и компьютеры</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='pads'>Планшеты</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='smart_watches'>Умные часы и браслеты</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='smart_speaker'>Умные колонки</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='speaker'>Аудиосистемы</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='scooters'>Электросамокаты</a>
-                            </li>
-
-                             <li><a class="dropdown-item" href='bikes'>Электровелосипеды</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='robovacum'>Устройства для уборки</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='coffee'>Кофемашины</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='cooking'>Техника для кухни</a>
-                            </li>
-
-                            <li><a class="dropdown-item" href='conditioners'>Кондиционеры</a>
-                            </li>
+                        {% regroup typed1 by type_fk as type %}
+                        {% for i in type%}
+                                {% if  i.grouper.purpose.id == 1%}
+                                    <li><a class="dropdown-item" href= "{{ i.grouper.slug }}">{{ i.grouper }}</a></li>
+                                {% endif %}
+                            {% endfor %}
 
                         </ul>
                     </li>
