@@ -7,6 +7,7 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from transliterate import translit
+from django.contrib.auth.models import User
 
 
 class Purpose(models.Model):
@@ -504,9 +505,9 @@ class Available(models.Model):
 
     def clean(self):
         cleaned_data = super().clean()
-        if self.available == '-' and self.quantity is not 0:
+        if self.available == '-' and self.quantity != 0:
             raise ValidationError({'available': ['Исправьте значение на "+"']})
-        elif self.available == '+' and self.quantity is 0:
+        elif self.available == '+' and self.quantity == 0:
             raise ValidationError({'available': ['Исправьте значение на "-"']})
 
     class Meta:
@@ -576,3 +577,17 @@ class Cooking(models.Model):
 
     def __str__(self):
         return str(f'{self.model}')
+
+
+class Employee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name='Сервисный центр',
+                                null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Привязка админов к СЦ"
+        verbose_name_plural = 'Привязки админов к СЦ'
+
+
+    def __str__(self):
+        return str(f'{self.user} - {self.service}')

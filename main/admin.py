@@ -42,6 +42,7 @@ admin.site.register(Service)
 # admin.site.register(Console)
 # admin.site.register(Cooking)
 # admin.site.register(Models)
+admin.site.register(Employee)
 
 
 class CompanyAdmin (admin.ModelAdmin):
@@ -305,8 +306,9 @@ class AvailableAdmin(ModelAdminTotals):
         js = ['js/admin_filter.js']
 
     def get_queryset(self, request):
-        if request.user.groups.filter(id=1):
-            return self.model.objects.filter(service=str(request.user.id-1))
+        if Employee.objects.filter(user=request.user.id):
+            var = Employee.objects.filter(user=request.user.id).values_list('service_id', flat=True)
+            return self.model.objects.filter(service=var[0])
         else:
             return self.model.objects.all()
 
@@ -332,11 +334,11 @@ class TesterTimeAdmin(admin.ModelAdmin):
     save_as = True
 
     def get_queryset(self, request):
-        if request.user.id == 1:
-            return self.model.objects.all()
-
+        if Employee.objects.filter(user=request.user.id):
+            var = Employee.objects.filter(user=request.user.id).values_list('service_id', flat=True)
+            return self.model.objects.filter(service=var[0])
         else:
-            return self.model.objects.filter(service=str(request.user.id-1))
+            return self.model.objects.all()
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(TesterTimeAdmin, self).get_form(request, obj, **kwargs)
