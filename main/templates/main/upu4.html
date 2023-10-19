@@ -36,7 +36,7 @@
                         {% if i.grouper%}
 
                           <div class="mb-2 mt-2 ms-2"> {{ i.grouper }} </div>
-                           <input type="text" class="form-control mb-2" placeholder="Введите модель" aria-label="Add_filter" name="Add_filter" aria-describedby="basic-addon1">
+                           <input type="text" class="form-control mb-2" placeholder="" aria-label="Add_filter" name="Add_filter" aria-describedby="basic-addon1">
                         {% endif %}
                         {% endfor %}
                          <div class="mb-2 mt-2 ms-2"> Сервисный центр </div>
@@ -89,7 +89,7 @@
                                                             <img src="{% static 'no_photo.svg'%}" class="card-img-top">
                                                         {% endif %}
                                                             <h3>{{i.grouper.company}}</h3><p>{{ i.grouper.model }}</p>
-                                                        {% if i.grouper.add_filter %}<hr> <p><b>{{ i.grouper.add_filter_name}}:</b> {{i.grouper.add_filter }}"</p>{% endif %}
+                                                        {% if i.grouper.add_filter %}<hr> <p><b>{{ i.grouper.add_filter_name}}:</b> {{i.grouper.add_filter }}</p>{% endif %}
                                                          </div>
                                                     <div class='flip-card-back'>
                                                         <h6>{{ i.grouper.company}} {{ i.grouper.model }}</h6>

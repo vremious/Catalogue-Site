@@ -47,7 +47,7 @@
                                                 <div class="flip-card-inner" >
                                                     <div class="flip-card-front" >
                                                         {% if i.image%}
-                                                            <img src="{{ i.image.url }}" class="card-img-top">
+                                                            <img src="{{ i.image.url }}" class="card-img-top" style="width:15rem; height:100%">
                                                         {%  else %}
                                                             <img src="{% static 'routers.svg'%}" class="card-img-top">
                                                         {% endif %}
