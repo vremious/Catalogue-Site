@@ -190,8 +190,17 @@ class TesterTime(models.Model):
         return str(f'{self.service}---------{self.worktime}----------{self.onduty}')
 
 
+@receiver(post_save, sender=Service)
+def create_new_available_testertime(instance, created, **kwargs):
+    for service_id in Service.objects.values_list('id', flat=True):
+        if not TesterTime.objects.filter(service=instance):
+            TesterTime.objects.create(service=instance, onduty=False)
+        else:
+            pass
+
+
 class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name='Сервисный центр',
                                 null=True, blank=True)
 

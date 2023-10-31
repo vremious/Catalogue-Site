@@ -78,7 +78,7 @@
                                 Абонентское оборудование
                             </a>
                             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                {% regroup typed by type_fk as type %}
+                                {% regroup typed1 by type_fk as type %}
                                 {% for i in type%}
                                     {% if i.grouper.purpose.id == 2%}
                                         <li><a class="dropdown-item" href= "{{ i.grouper.slug }}">{{ i.grouper }}</a></li>

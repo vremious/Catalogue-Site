@@ -88,7 +88,20 @@ class AvailableAdmin(ModelAdminTotals):
     def get_queryset(self, request):
         if Employee.objects.filter(user=request.user.id):
             var = Employee.objects.filter(user=request.user.id).values_list('service_id', flat=True)
-            return self.model.objects.filter(service=var[0])
+            if len(var) == 1:
+                return self.model.objects.filter(service=var[0])
+            elif len(var) == 2:
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1])
+            elif len(var) == 3:
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                    model.objects.filter(service=var[2])
+            elif len(var) == 4:
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                    model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3])
+            elif len(var) == 5:
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                    model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3]) | self.model.\
+                    objects.filter(service=var[4])
         else:
             return self.model.objects.all()
 
@@ -115,7 +128,20 @@ class TesterTimeAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         if Employee.objects.filter(user=request.user.id):
             var = Employee.objects.filter(user=request.user.id).values_list('service_id', flat=True)
-            return self.model.objects.filter(service=var[0])
+            if len(var) == 1:
+                return self.model.objects.filter(service=var[0])
+            elif len(var) == 2:
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1])
+            elif len(var) == 3:
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                    model.objects.filter(service=var[2])
+            elif len(var) == 4:
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                    model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3])
+            elif len(var) == 5:
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                    model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3]) | self.model.\
+                    objects.filter(service=var[4])
         else:
             return self.model.objects.all()
 
