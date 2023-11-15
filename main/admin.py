@@ -70,11 +70,11 @@ class AvailableAdmin(ModelAdminTotals):
     list_max_show_all = 5000
     save_as = True
 
-    @admin.display(ordering='model__type', description='Тип')
+    @admin.display(ordering='model__type_fk__type', description='Тип')
     def type(self, obj):
         return obj.model.type_fk
 
-    @admin.display(ordering='model__company', description='Производитель')
+    @admin.display(ordering='model__company__company', description='Производитель')
     def company(self, obj):
         return obj.model.company
 
@@ -119,7 +119,7 @@ class AvailableAdmin(ModelAdminTotals):
     list_editable = ['available', 'quantity']
     list_display = ['service', 'type', 'company', 'model', 'date', 'available', 'quantity']
     list_totals = [('quantity', Sum)]
-    search_fields = ['model__model']
+    search_fields = ['model__company__company', 'model__model']
 
 
 class TesterTimeAdmin(admin.ModelAdmin):

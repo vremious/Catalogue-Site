@@ -27,6 +27,7 @@ class Company(models.Model):
     class Meta:
         verbose_name = 'Производитель оборудования'
         verbose_name_plural = 'Производитель оборудования'
+        ordering = ['company']
 
     def __str__(self):
         return self.company
@@ -48,6 +49,7 @@ class Type(models.Model):
     class Meta:
         verbose_name = 'Тип оборудования'
         verbose_name_plural = 'Тип оборудования'
+        ordering = ['type']
 
     def __str__(self):
         return str(self.type)
