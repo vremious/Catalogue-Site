@@ -168,7 +168,7 @@ class Available(models.Model):
         return str(f'{self.service}-{self.model}-{self.available}-{self.quantity}')
 
 
-# Ниже автоматизируется создание наличия оборудования по СЦ, при создании нового оборудования
+# Декоратор, который автоматизирует создание "наличие оборудования" на всех СЦ, при создании нового оборудования:
 @receiver(post_save, sender=Models)
 def create_new_available_objects(instance, created, **kwargs):
     for service_id in Service.objects.values_list('id', flat=True):
@@ -192,6 +192,7 @@ class TesterTime(models.Model):
         return str(f'{self.service}---------{self.worktime}----------{self.onduty}')
 
 
+#Декоратор автоматически добавлюящий "Время работы тестировщика" при добавлении нового СЦ:
 @receiver(post_save, sender=Service)
 def create_new_available_testertime(instance, created, **kwargs):
     for service_id in Service.objects.values_list('id', flat=True):
@@ -212,3 +213,14 @@ class Employee(models.Model):
 
     def __str__(self):
         return str(f'{self.user} - {self.service}')
+
+
+#Декоратор добавляющий и убирающий оборудование взависимотси от актуальности:
+@receiver(post_save, sender=Available)
+def change_actual(**kwargs):
+    for m in Models.objects.filter(type_fk__purpose=1).values_list('id', flat=True):
+        if Available.objects.filter(model=m, available='+'):
+            Models.objects.filter(id=m).update(actual='Да')
+        elif Available.objects.filter(model=m, available='-'):
+            Models.objects.filter(id=m).update(actual='Нет')
+

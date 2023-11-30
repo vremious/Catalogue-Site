@@ -1,3 +1,5 @@
+import datetime
+
 from admin_totals.admin import ModelAdminTotals
 from django.contrib import admin
 from django.contrib.auth import get_user_model
@@ -64,6 +66,11 @@ class ModelsAdmin(admin.ModelAdmin):
 admin.site.register(Models, ModelsAdmin)
 
 
+@admin.action(description="Обновить дату и время внесения")
+def update(modeladmin, request, queryset):
+    queryset.update(date=datetime.datetime.now())
+
+
 @admin.register(Available)
 class AvailableAdmin(ModelAdminTotals):
     list_per_page = 20
@@ -120,6 +127,7 @@ class AvailableAdmin(ModelAdminTotals):
     list_display = ['service', 'type', 'company', 'model', 'date', 'available', 'quantity']
     list_totals = [('quantity', Sum)]
     search_fields = ['model__company__company', 'model__model']
+    actions = [update]
 
 
 class TesterTimeAdmin(admin.ModelAdmin):
@@ -163,14 +171,15 @@ def logged_in_message(sender, user, request, **kwargs):
     """
     Add a welcome message when the user logs in
     """
-    messages.info(request, "Добро пожаловать!"
-                  )
-    # messages.info(request, "Категория 'Роботы-пылесосы' переименована в 'Пылесосы', т.к. в будущем планируется
-    # добавление вертикальных пылесосов" ) messages.info(request, "В связи с этим прошу всех администарторов СЦ
-    # вводить актуальную информацию по наличию оборудования, а также проверить рванее введённые данные." )
-    # messages.info(request, "Также есть предложение создать рабочий чат (Телеграмм или Вайбер) для оперативного
-    # решения вопросов связанных с работой портала" ) messages.info(request, "Свои номера отправляйте на почту
-    # Emelyanov_da@mgts.by" )
+    messages.info(request, "Добро пожаловать!")
+    messages.info(request, "Новые функции:")
+    messages.info(request, "1. Автоматизирована логика актуальности оборудования: Если на всех СЦ оно отсутствует, то переводится в статус неактуальных"
+                           "\nи автоматически убирается с сайта. При добавлении одним из СЦ - автоматически появляется на сайте." )
+    messages.info(request, "\n2. Появилась возможность изменять дату обновления оборудования на актуальную без изменения его количества"
+                           '\nДля этого надо проставить чекбоксы (галочки в квадраты слева списка) напротив инетресующего оборудования и в поле "Действие" '
+                           '\n(над шапкой таблицы возле "Сервисный центр") выбрать "Обновить дату и время внесения", после чего нажать на кнопку "Выполнить".'
+                           '\nЭто действие автоматически проставит текущее время на всех выбраных элементах.')
+
 
 
 user_logged_in.connect(logged_in_message)

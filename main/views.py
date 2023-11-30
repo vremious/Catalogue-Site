@@ -1,5 +1,6 @@
 from django.views.generic import ListView
 from .models import *
+import asyncio
 
 
 class MainPage(ListView):
@@ -10,8 +11,10 @@ class MainPage(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context["testertime"] = TesterTime.objects.all().select_related('service').order_by('service')
-        context['typed'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by('type_fk_id')
-        context['typed1'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by('type_fk__type')
+        context['typed'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
+            'type_fk_id')
+        context['typed1'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
+            'type_fk__type')
         context['type'] = Type.objects.all().select_related('purpose')
         context['image'] = Models.objects.values_list('image', 'id').first()
         context['title'] = 'Главная страница'
@@ -24,7 +27,7 @@ class CategoryPage(ListView):
     context_object_name = 'models'
 
     def get_queryset(self):
-        if self.request.GET.get('Company') or self.request.GET.get('Model') or self.request.GET.get('Service') or self.\
+        if self.request.GET.get('Company') or self.request.GET.get('Model') or self.request.GET.get('Service') or self. \
                 request.GET.get('Available') or self.request.GET.get('Add_filter'):
             if self.request.GET.get('Add_filter'):
                 qs1 = Available.objects.select_related('model', 'service', 'model__company',
@@ -35,8 +38,8 @@ class CategoryPage(ListView):
                     service__service_centre__icontains=self.request.GET.get('Service'),
                     available__icontains=self.request.GET.get('Available'),
                     model__add_filter__value__icontains=self.request.GET.get('Add_filter'),
-                    ).order_by('model__company__company', 'model__model',
-                               'model__add_filter__value')
+                ).order_by('model__company__company', 'model__model',
+                           'model__add_filter__value')
             else:
                 qs1 = Available.objects.select_related('model', 'service', 'model__company',
                                                        'model__add_filter_name', 'model__add_filter').filter(
@@ -46,13 +49,13 @@ class CategoryPage(ListView):
                     service__service_centre__icontains=self.request.GET.get('Service'),
                     available__icontains=self.request.GET.get('Available'),
 
-                    ).order_by('model__company__company', 'model__model')
+                ).order_by('model__company__company', 'model__model')
         else:
             qs1 = Available.objects.select_related('model', 'service', 'model__company',
-                                                    'model__add_filter_name', 'model__add_filter').filter(
+                                                   'model__add_filter_name', 'model__add_filter').filter(
                 model__type_fk__slug=self.kwargs['cat_slug'], model__actual='Да',
-                ).order_by('model__company__company', 'model__model',
-                           'service__service_centre')
+            ).order_by('model__company__company', 'model__model',
+                       'service__service_centre')
         return qs1
 
     def get_context_data(self, **kwargs):
@@ -63,7 +66,8 @@ class CategoryPage(ListView):
             model__type_fk__slug=self.kwargs['cat_slug']).order_by(
             'service__id')
         context['typed'] = Models.objects.select_related('type_fk').filter(actual='Да').order_by('type_fk_id')
-        context['typed1'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by('type_fk__type')
+        context['typed1'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
+            'type_fk__type')
         context['test'] = Models.objects.select_related('type_fk', 'add_filter_name', 'company').filter(
             type_fk__slug=self.kwargs['cat_slug'], actual='Да').order_by(
             'company__company')
