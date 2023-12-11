@@ -72,7 +72,7 @@
                             {% paginate 8 available_model %}
                             {% for i in available_model %}
                                 <div class="col-auto mb-3 d-flex">
-                                    <div class="flip-card mb-4 d-flex" style="width:15rem; height:28rem">
+                                    <div class="flip-card mb-4 d-flex" style="width:15rem; height:100%">
                                         <div class="flip-card-inner" >
                                             <div class="flip-card-front" >
                                                 {% if i.grouper.image%}
@@ -82,11 +82,15 @@
                                                 {% endif %}
                                                 <h3>{{i.grouper.company}}</h3><p>{{ i.grouper.model }}</p>
                                                 {% if i.grouper.add_filter %}<hr> <p><b>{{ i.grouper.add_filter_name}}:</b> {{i.grouper.add_filter }}</p>{% endif %}
+                                                <hr>  <p>{% if i.grouper.price %} <p>Цена: {{ i.grouper.price }}р.</p>
+                                                <p>В рассрочку на {{ i.grouper.split_period }} месяцев:</p>
+                                                <p>{{ i.grouper.split_price }}р. в месяц</p>
+                                                {% endif %}
                                             </div>
                                             <div class='flip-card-back'>
                                                 <h6>{{ i.grouper.company}} {{ i.grouper.model }}</h6>
                                                 <hr>
-                                            <div style="overflow-y: scroll; height:22rem">
+                                            <div style="overflow-y: scroll;width: 13rem; height:20rem">
                                                 {% for d in available %}
                                                     {% if i.grouper   == d.model %}
                                                         {% if d.quantity > 0 %}
