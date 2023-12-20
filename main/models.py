@@ -108,14 +108,14 @@ class Models(models.Model):
 
     #
     image = models.ImageField(upload_to=photo_upload, blank=True, null=True)
-    price = models.IntegerField(verbose_name='Стоимость', blank=True, null=True)
+    price = models.FloatField(verbose_name='Стоимость', blank=True, null=True)
     split_period = models.IntegerField(verbose_name='Период рассрочки', blank=True, null=True)
 
     def split_price(self):
         if self.price%self.split_period == 0:
-            return self.price//self.split_period
+            return round(self.price//self.split_period, 0)
         else:
-            return self.price/self.split_period
+            return round(self.price/self.split_period, 2)
 
     #
     # # Функция для создания подкаталогов медиа по типу устройств, для запуска раскоментить,
