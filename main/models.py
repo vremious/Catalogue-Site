@@ -112,7 +112,7 @@ class Models(models.Model):
     split_period = models.IntegerField(verbose_name='Период рассрочки', blank=True, null=True)
 
     def split_price(self):
-        if self.price%self.split_period == 0:
+        if self.price % self.split_period == 0:
             return round(self.price//self.split_period, 0)
         else:
             return round(self.price/self.split_period, 2)

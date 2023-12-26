@@ -55,12 +55,24 @@ admin.site.register(Type, TypeAdmin)
 
 
 class ModelsAdmin(admin.ModelAdmin):
-    list_display = ['company', 'model', 'type_fk', 'actual']
+    list_display = ['company', 'model', 'type_fk', 'price', 'split_period', 'actual']
     list_filter = ['type_fk__type', 'company']
     search_fields = ['model', 'company__company']
     list_per_page = 20
-    list_editable = ['actual']
+    list_editable = ['actual', 'price', 'split_period']
     autocomplete_fields = ['company', 'type_fk']
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(ModelsAdmin, self).get_form(request, obj, **kwargs)
+        latest_object = Models.objects.latest('id')
+        form.base_fields['model'].initial = latest_object.model
+        form.base_fields['company'].initial = latest_object.company
+        form.base_fields['type_fk'].initial = latest_object.type_fk
+        form.base_fields['add_filter'].initial = latest_object.add_filter
+        form.base_fields['add_filter_name'].initial = latest_object.add_filter_name
+        form.base_fields['price'].initial = latest_object.price
+        form.base_fields['split_period'].initial = latest_object.split_period
+        return form
 
 
 admin.site.register(Models, ModelsAdmin)
