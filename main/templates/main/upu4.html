@@ -82,9 +82,10 @@
                                                 {% endif %}
                                                 <h3>{{i.grouper.company}}</h3><p>{{ i.grouper.model }}</p>
                                                 {% if i.grouper.add_filter %}<hr> <p><b>{{ i.grouper.add_filter_name}}:</b> {{i.grouper.add_filter }}</p>{% endif %}
-                                                <hr>  <p>{% if i.grouper.price %} <p>Цена: <b>{{ i.grouper.price|floatformat:2 }}</b> р.</p>
-                                                <p>В рассрочку на <b>{{ i.grouper.split_period }}</b> месяцев:</p>
-                                                <p><b>{{ i.grouper.split_price }}</b> р. в месяц</p>
+                                                <hr>  <p>{% if i.grouper.price %}
+                                                В рассрочку на <b>{{ i.grouper.split_period }}</b> {% if i.grouper.split_period == 24%} месяца{% else %} месяцев {% endif %}:
+                                                <b>{{ i.grouper.split_price }}</b> р. в месяц. (<b>{{ i.grouper.price|floatformat:2 }}</b> р.)
+                                                <p>{% if i.grouper.full_price %}<hr>Стоимость при единовременном платеже: <b>{{ i.grouper.full_price }}</b> р.</p>{% endif %}
                                                 {% endif %}
                                             </div>
                                             <div class='flip-card-back'>

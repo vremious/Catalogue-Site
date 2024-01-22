@@ -108,14 +108,21 @@ class Models(models.Model):
 
     #
     image = models.ImageField(upload_to=photo_upload, blank=True, null=True)
-    price = models.FloatField(verbose_name='Стоимость', blank=True, null=True)
+    price = models.FloatField(verbose_name='Стоимость в рассрочку', blank=True, null=True)
     split_period = models.IntegerField(verbose_name='Период рассрочки', blank=True, null=True)
+    full_price = models.FloatField(verbose_name='Стоимость при единовременной оплате', blank=True, null=True)
+
+    def clean(self):
+        if self.split_period and not self.price:
+            raise ValidationError({'price': ['Укажите цену']})
+        elif not self.split_period and self.price:
+            raise ValidationError({'split_period': ['Укажите срок рассрочки']})
 
     def split_price(self):
         if self.price % self.split_period == 0:
-            return round(self.price//self.split_period, 0)
+            return round(self.price // self.split_period, 0)
         else:
-            return round(self.price/self.split_period, 2)
+            return round(self.price / self.split_period, 2)
 
     #
     # # Функция для создания подкаталогов медиа по типу устройств, для запуска раскоментить,
@@ -200,7 +207,7 @@ class TesterTime(models.Model):
         return str(f'{self.service}---------{self.worktime}----------{self.onduty}')
 
 
-#Декоратор автоматически добавлюящий "Время работы тестировщика" при добавлении нового СЦ:
+# Декоратор автоматически добавлюящий "Время работы тестировщика" при добавлении нового СЦ:
 @receiver(post_save, sender=Service)
 def create_new_available_testertime(instance, created, **kwargs):
     for service_id in Service.objects.values_list('id', flat=True):
@@ -223,7 +230,7 @@ class Employee(models.Model):
         return str(f'{self.user} - {self.service}')
 
 
-#Декоратор добавляющий и убирающий оборудование взависимотси от актуальности:
+# Декоратор добавляющий и убирающий оборудование взависимотси от актуальности:
 @receiver(post_save, sender=Available)
 def change_actual(**kwargs):
     for m in Models.objects.filter(type_fk__purpose=1).values_list('id', flat=True):
@@ -231,4 +238,3 @@ def change_actual(**kwargs):
             Models.objects.filter(id=m).update(actual='Да')
         elif Available.objects.filter(model=m, available='-'):
             Models.objects.filter(id=m).update(actual='Нет')
-

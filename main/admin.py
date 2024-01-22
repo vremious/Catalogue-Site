@@ -55,11 +55,11 @@ admin.site.register(Type, TypeAdmin)
 
 
 class ModelsAdmin(admin.ModelAdmin):
-    list_display = ['company', 'model', 'type_fk', 'price', 'split_period', 'actual']
+    list_display = ['company', 'model', 'type_fk', 'full_price','price', 'split_period', 'actual']
     list_filter = ['type_fk__type', 'company']
     search_fields = ['model', 'company__company']
     list_per_page = 20
-    list_editable = ['actual', 'price', 'split_period']
+    list_editable = ['actual', 'full_price', 'price', 'split_period']
     autocomplete_fields = ['company', 'type_fk']
 
     def get_form(self, request, obj=None, **kwargs):
@@ -73,6 +73,9 @@ class ModelsAdmin(admin.ModelAdmin):
         form.base_fields['price'].initial = latest_object.price
         form.base_fields['split_period'].initial = latest_object.split_period
         return form
+
+    class Media:
+        js = ['js/admin_filter.js']
 
 
 admin.site.register(Models, ModelsAdmin)
@@ -185,11 +188,11 @@ def logged_in_message(sender, user, request, **kwargs):
     """
     messages.info(request, "Добро пожаловать!")
 
-    messages.info(request, 'При необходимости обновления времени ВСЕГО оборудования на участке спуститесь вниз страницы "Наличие оборудования"')
-    messages.info(request, 'Нажмите на "Показать все" рядом с перечнем страниц')
-    messages.info(request, 'Выберите всё оборудование нажатием на самый верхний чекбокс вверху таблицы (Возле шапки "Сервисный центр")')
-    messages.info(request, 'Над шапкой таблицы возле "Сервисный центр" в поле "Действие" выбрать "Обновить дату и время внесения", после чего нажать на кнопку "Выполнить"')
-    messages.info(request, 'Это действие автоматически проставит текущее время на всех выбраных элементах.')
+    # messages.info(request, 'При необходимости обновления времени ВСЕГО оборудования на участке спуститесь вниз страницы "Наличие оборудования"')
+    # messages.info(request, 'Нажмите на "Показать все" рядом с перечнем страниц')
+    # messages.info(request, 'Выберите всё оборудование нажатием на самый верхний чекбокс вверху таблицы (Возле шапки "Сервисный центр")')
+    # messages.info(request, 'Над шапкой таблицы возле "Сервисный центр" в поле "Действие" выбрать "Обновить дату и время внесения", после чего нажать на кнопку "Выполнить"')
+    # messages.info(request, 'Это действие автоматически проставит текущее время на всех выбраных элементах.')
 
 
 
