@@ -26,9 +26,17 @@ class CategoryPage(ListView):
     template_name = "main/upu4.html"
     context_object_name = 'models'
 
+    # def get_paginate_by(self, queryset):
+    #     if self.request.GET.get('quantity'):
+    #         a = int(self.request.GET.get('quantity')) * int(len(Service.objects.select_related()))
+    #         print(a)
+    #         return a
+    #     else:
+    #         print(len(Service.objects.select_related()) * 8)
+    #         return len(Service.objects.select_related()) * 8
     def get_queryset(self):
-        if self.request.GET.get('Company') or self.request.GET.get('Model') or self.request.GET.get('Service') or self. \
-                request.GET.get('Available') or self.request.GET.get('Add_filter'):
+        if self.request.GET.get('Company') or self.request.GET.get('Model') or self.request.GET.get('Service') \
+                or self.request.GET.get('Available') or self.request.GET.get('Add_filter'):
             if self.request.GET.get('Add_filter'):
                 qs1 = Available.objects.select_related('model', 'service', 'model__company',
                                                        'model__add_filter', 'model__add_filter_name').filter(
@@ -38,8 +46,8 @@ class CategoryPage(ListView):
                     service__service_centre__icontains=self.request.GET.get('Service'),
                     available__icontains=self.request.GET.get('Available'),
                     model__add_filter__value__icontains=self.request.GET.get('Add_filter'),
-                ).order_by('model__company__company', 'model__model',
-                           'model__add_filter__value')
+                ).order_by(self.request.GET.get('sort', default='model__company__company'), 'model__model',
+                           'service__service_centre', 'model__add_filter__value')
             else:
                 qs1 = Available.objects.select_related('model', 'service', 'model__company',
                                                        'model__add_filter_name', 'model__add_filter').filter(
@@ -49,12 +57,13 @@ class CategoryPage(ListView):
                     service__service_centre__icontains=self.request.GET.get('Service'),
                     available__icontains=self.request.GET.get('Available'),
 
-                ).order_by('model__company__company', 'model__model')
+                ).order_by(self.request.GET.get('sort', default='model__company__company'), 'model__model',
+                           'service__service_centre')
         else:
             qs1 = Available.objects.select_related('model', 'service', 'model__company',
                                                    'model__add_filter_name', 'model__add_filter').filter(
                 model__type_fk__slug=self.kwargs['cat_slug'], model__actual='Да',
-            ).order_by('model__company__company', 'model__model',
+            ).order_by(self.request.GET.get('sort', default='model__company__company'), 'model__model',
                        'service__service_centre')
         return qs1
 
@@ -72,4 +81,7 @@ class CategoryPage(ListView):
             type_fk__slug=self.kwargs['cat_slug'], actual='Да').order_by(
             'company__company')
         context['title'] = str(context['test'][0].type_fk)
+        context['service'] = Service.objects.all()
+        context['quantity'] = self.request.GET.get('quantity', default=8)
+        context['sort'] = self.request.GET.get('sort', default='model__company__company')
         return context
