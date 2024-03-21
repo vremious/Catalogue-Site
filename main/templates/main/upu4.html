@@ -121,6 +121,7 @@
                                                 В рассрочку на <b>{{ i.grouper.split_period }}</b> {% if i.grouper.split_period == 24%} месяца{% else %} месяцев {% endif %}:
                                                 <b>{{ i.grouper.split_price }}</b> р. в месяц. (<b>{{ i.grouper.price|floatformat:2 }}</b> р.)
                                                 <p>{% if i.grouper.full_price %}<hr>Стоимость при единовременном платеже: <b>{{ i.grouper.full_price }}</b> р.</p>{% endif %}
+                                                <p>{% if i.grouper.warranty %}<hr>Гарантия: <b>{{ i.grouper.warranty }}</b> мес.</p>{% endif %}
                                                 {% endif %}
                                             </div>
                                             <div class='flip-card-back'>
@@ -161,6 +162,11 @@
 {#                            {% endfor %}#}
 {#                            </div>#}
                             {% show_pages %}
+                            <div class="pagination">
+    {% for page in pages %}
+        <li class="page-item"><a href="{{ page.url }}" class="page-link">{{ page.number }}</a></li>
+    {% endfor %}
+</div>
                         </div>
                     </div>
                 </div>
