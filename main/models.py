@@ -111,6 +111,7 @@ class Models(models.Model):
     price = models.FloatField(verbose_name='Стоимость в рассрочку', blank=True, null=True)
     split_period = models.IntegerField(verbose_name='Период рассрочки', blank=True, null=True)
     full_price = models.FloatField(verbose_name='Стоимость при единовременной оплате', blank=True, null=True)
+    warranty = models.PositiveSmallIntegerField(verbose_name='Гарантия', blank=True, null=True)
 
     def clean(self):
         if self.split_period and not self.price:
