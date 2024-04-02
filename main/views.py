@@ -1,6 +1,37 @@
+import django_filters
 from django.views.generic import ListView
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, generics, renderers, request
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from .serializer import ModelsSerializer, CompanySerializer, TypeSerializer
 from .models import *
-import asyncio
+
+
+class TypeViewSet(viewsets.ModelViewSet):
+    queryset = Type.objects.all()
+    serializer_class = TypeSerializer
+    filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['id', 'company']
+
+
+class CompanyViewSet(viewsets.ModelViewSet):
+    queryset = Company.objects.all().order_by('id')
+    serializer_class = CompanySerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'company']
+
+
+class ModViewSet(viewsets.ModelViewSet):
+    queryset = Models.objects.all()
+    serializer_class = ModelsSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'model', 'company', 'type_fk']
+
+
+    # def perform_create(self, serializer):
+    #     serializer.save(company=self.request.company, type_fk=self.request.type_fk)
 
 
 class MainPage(ListView):
