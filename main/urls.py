@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from rest_framework.urlpatterns import format_suffix_patterns
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from .views import *
 
@@ -15,6 +15,9 @@ urlpatterns = [
     path("", include(router.urls)),
     path("home", MainPage.as_view(), name="category_detail"),
     path("<slug:cat_slug>", CategoryPage.as_view(), name='category'),
+    path('api/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
 
 ]

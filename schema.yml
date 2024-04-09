@@ -1,0 +1,818 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/:
+    get:
+      operationId: api_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /company/:
+    get:
+      operationId: company_list
+      parameters:
+      - in: query
+        name: company
+        schema:
+          type: string
+      - in: query
+        name: id
+        schema:
+          type: integer
+      tags:
+      - company
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+          description: ''
+    post:
+      operationId: company_create
+      tags:
+      - company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Company'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Company'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+          description: ''
+  /company/{id}/:
+    get:
+      operationId: company_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Производитель оборудования.
+        required: true
+      tags:
+      - company
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+          description: ''
+    put:
+      operationId: company_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Производитель оборудования.
+        required: true
+      tags:
+      - company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Company'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Company'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+          description: ''
+    patch:
+      operationId: company_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Производитель оборудования.
+        required: true
+      tags:
+      - company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCompany'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCompany'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCompany'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+          description: ''
+    delete:
+      operationId: company_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Производитель оборудования.
+        required: true
+      tags:
+      - company
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /models/:
+    get:
+      operationId: models_list
+      parameters:
+      - in: query
+        name: company__company
+        schema:
+          type: string
+      - in: query
+        name: id
+        schema:
+          type: integer
+      - in: query
+        name: model
+        schema:
+          type: string
+      - in: query
+        name: type_fk__type
+        schema:
+          type: string
+      tags:
+      - models
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Models'
+          description: ''
+    post:
+      operationId: models_create
+      tags:
+      - models
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Models'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Models'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Models'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Models'
+          description: ''
+  /models/{id}/:
+    get:
+      operationId: models_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Оборудование.
+        required: true
+      tags:
+      - models
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Models'
+          description: ''
+    put:
+      operationId: models_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Оборудование.
+        required: true
+      tags:
+      - models
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Models'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Models'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Models'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Models'
+          description: ''
+    patch:
+      operationId: models_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Оборудование.
+        required: true
+      tags:
+      - models
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedModels'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedModels'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedModels'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Models'
+          description: ''
+    delete:
+      operationId: models_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Оборудование.
+        required: true
+      tags:
+      - models
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /type/:
+    get:
+      operationId: type_list
+      tags:
+      - type
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Type'
+          description: ''
+    post:
+      operationId: type_create
+      tags:
+      - type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Type'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Type'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Type'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+          description: ''
+  /type/{id}/:
+    get:
+      operationId: type_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Тип оборудования.
+        required: true
+      tags:
+      - type
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+          description: ''
+    put:
+      operationId: type_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Тип оборудования.
+        required: true
+      tags:
+      - type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Type'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Type'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Type'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+          description: ''
+    patch:
+      operationId: type_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Тип оборудования.
+        required: true
+      tags:
+      - type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedType'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+          description: ''
+    delete:
+      operationId: type_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Тип оборудования.
+        required: true
+      tags:
+      - type
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    ActualEnum:
+      enum:
+      - Да
+      - Нет
+      type: string
+      description: |-
+        * `Да` - Да
+        * `Нет` - Нет
+    Company:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        company:
+          type: string
+          title: Производитель
+          maxLength: 50
+      required:
+      - company
+      - id
+    Models:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        company:
+          $ref: '#/components/schemas/Company'
+        type_fk:
+          type: string
+          title: Тип оборудования
+        model:
+          type: string
+          title: Модель оборудования
+          maxLength: 50
+        actual:
+          allOf:
+          - $ref: '#/components/schemas/ActualEnum'
+          title: Актуально
+        image:
+          type: string
+          format: uri
+          nullable: true
+        price:
+          type: number
+          format: double
+          nullable: true
+          title: Стоимость в рассрочку
+        split_period:
+          type: integer
+          nullable: true
+          title: Период рассрочки
+        full_price:
+          type: number
+          format: double
+          nullable: true
+          title: Стоимость при единовременной оплате
+        warranty:
+          type: integer
+          nullable: true
+          title: Гарантия
+        add_filter_name:
+          type: integer
+          nullable: true
+          title: Название дополнительного фильтра
+        add_filter:
+          type: integer
+          nullable: true
+          title: Значение фильтра
+      required:
+      - company
+      - id
+      - model
+      - type_fk
+    PatchedCompany:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        company:
+          type: string
+          title: Производитель
+          maxLength: 50
+    PatchedModels:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        company:
+          $ref: '#/components/schemas/Company'
+        type_fk:
+          type: string
+          title: Тип оборудования
+        model:
+          type: string
+          title: Модель оборудования
+          maxLength: 50
+        actual:
+          allOf:
+          - $ref: '#/components/schemas/ActualEnum'
+          title: Актуально
+        image:
+          type: string
+          format: uri
+          nullable: true
+        price:
+          type: number
+          format: double
+          nullable: true
+          title: Стоимость в рассрочку
+        split_period:
+          type: integer
+          nullable: true
+          title: Период рассрочки
+        full_price:
+          type: number
+          format: double
+          nullable: true
+          title: Стоимость при единовременной оплате
+        warranty:
+          type: integer
+          nullable: true
+          title: Гарантия
+        add_filter_name:
+          type: integer
+          nullable: true
+          title: Название дополнительного фильтра
+        add_filter:
+          type: integer
+          nullable: true
+          title: Значение фильтра
+    PatchedType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          type: string
+          title: Тип оборудования
+          maxLength: 50
+        slug:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Ссылка
+          pattern: ^[-a-zA-Z0-9_]+$
+        purpose:
+          type: integer
+    Type:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          type: string
+          title: Тип оборудования
+          maxLength: 50
+        slug:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Ссылка
+          pattern: ^[-a-zA-Z0-9_]+$
+        purpose:
+          type: integer
+      required:
+      - id
+      - slug
+      - type
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

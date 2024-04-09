@@ -2,7 +2,10 @@ import django_filters
 from django.views.generic import ListView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, generics, renderers, request
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from .serializer import ModelsSerializer, CompanySerializer, TypeSerializer
@@ -24,14 +27,15 @@ class CompanyViewSet(viewsets.ModelViewSet):
 
 
 class ModViewSet(viewsets.ModelViewSet):
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Models.objects.all()
     serializer_class = ModelsSerializer
+    renderer_classes = [JSONRenderer]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'model', 'company', 'type_fk']
+    filterset_fields = ['id', 'model', 'company__company', 'type_fk__type']
 
 
-    # def perform_create(self, serializer):
-    #     serializer.save(company=self.request.company, type_fk=self.request.type_fk)
 
 
 class MainPage(ListView):
