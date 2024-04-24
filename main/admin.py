@@ -55,11 +55,11 @@ admin.site.register(Type, TypeAdmin)
 
 
 class ModelsAdmin(admin.ModelAdmin):
-    list_display = ['company', 'model', 'type_fk', 'full_price','price', 'split_period', 'actual']
+    list_display = ['company', 'model', 'type_fk','price', 'split_period', 'warranty', 'actual']
     list_filter = ['type_fk__type', 'company']
     search_fields = ['model', 'company__company']
     list_per_page = 20
-    list_editable = ['actual', 'full_price', 'price', 'split_period']
+    list_editable = ['actual', 'price', 'split_period', 'warranty']
     autocomplete_fields = ['company', 'type_fk']
 
     def get_form(self, request, obj=None, **kwargs):

@@ -1,6 +1,40 @@
+import django_filters
+from asgiref.sync import sync_to_async
 from django.views.generic import ListView
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, generics, renderers, request
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+
+from .serializer import ModelsSerializer, CompanySerializer, TypeSerializer
 from .models import *
-import asyncio
+
+
+class TypeViewSet(viewsets.ModelViewSet):
+    queryset = Type.objects.all()
+    serializer_class = TypeSerializer
+    filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['id', 'company']
+
+
+class CompanyViewSet(viewsets.ModelViewSet):
+    queryset = Company.objects.all().order_by('id')
+    serializer_class = CompanySerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'company']
+
+
+class ModViewSet(viewsets.ModelViewSet):
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Models.objects.all()
+    serializer_class = ModelsSerializer
+    renderer_classes = [JSONRenderer]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'model', 'company__company', 'type_fk__type']
 
 
 class MainPage(ListView):
@@ -8,13 +42,14 @@ class MainPage(ListView):
     template_name = "main/category_detail.html"
     context_object_name = 'models'
 
+    # @sync_to_async()
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context["testertime"] = TesterTime.objects.all().select_related('service').order_by('service')
         context['typed'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
-            'type_fk_id')
+            'type_fk_id', 'id')
         context['typed1'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
-            'type_fk__type')
+            'type_fk__type', 'id')
         context['type'] = Type.objects.all().select_related('purpose')
         context['image'] = Models.objects.values_list('image', 'id').first()
         context['title'] = 'Главная страница'
@@ -34,6 +69,8 @@ class CategoryPage(ListView):
     #     else:
     #         print(len(Service.objects.select_related()) * 8)
     #         return len(Service.objects.select_related()) * 8
+
+    # @sync_to_async()
     def get_queryset(self):
         if self.request.GET.get('Company') or self.request.GET.get('Model') or self.request.GET.get('Service') \
                 or self.request.GET.get('Available') or self.request.GET.get('Add_filter'):
@@ -67,6 +104,7 @@ class CategoryPage(ListView):
                        'service__service_centre')
         return qs1
 
+    # @sync_to_async()
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["testertime"] = TesterTime.objects.all().select_related('service').order_by('service')
