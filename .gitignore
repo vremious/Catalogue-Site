@@ -647,3 +647,4 @@ cython_debug/
 #.idea/
 
 static/
+Catalgue/settings.py
