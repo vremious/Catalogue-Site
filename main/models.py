@@ -95,9 +95,9 @@ class Models(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Производитель')
     model = models.CharField(max_length=50, verbose_name='Модель оборудования')
     actual = models.CharField(max_length=3, verbose_name='Актуально', choices=(
-        ('Да', 'Да'),
-        ('Нет', 'Нет')
-    ), default='Да')
+        ('Нет', 'Нет'),
+        ('Да', 'Да')
+    ), default='Нет')
     add_filter_name = models.ForeignKey(AddFilterName1, on_delete=models.CASCADE,
                                         verbose_name='Название дополнительного фильтра', blank=True, null=True)
     add_filter = models.ForeignKey(AddFilter1, on_delete=models.CASCADE, verbose_name='Значение фильтра',
@@ -107,7 +107,7 @@ class Models(models.Model):
         return f'main/media/{self.type_fk.slug}/{filename}'
 
     #
-    image = models.ImageField(upload_to=photo_upload, blank=True, null=True)
+    image = models.ImageField(upload_to=photo_upload, blank=True, null=True, verbose_name='Фото оборудования')
     price = models.FloatField(verbose_name='Стоимость в рассрочку', blank=True, null=True)
     split_period = models.IntegerField(verbose_name='Период рассрочки', blank=True, null=True)
     full_price = models.FloatField(verbose_name='Стоимость при единовременной оплате', blank=True, null=True)
@@ -187,9 +187,10 @@ class Available(models.Model):
 # Декоратор, который автоматизирует создание "наличие оборудования" на всех СЦ, при создании нового оборудования:
 @receiver(post_save, sender=Models)
 def create_new_available_objects(instance, created, **kwargs):
-    for service_id in Service.objects.values_list('id', flat=True):
-        if not Available.objects.filter(model=instance, service_id=service_id):
-            Available.objects.create(model=instance, service_id=service_id, available='-', quantity=0)
+    for service_id in Service.objects.select_related().values_list('id', flat=True):
+        if not Available.objects.select_related().filter(model=instance, service_id=service_id):
+            choices = [Available(model=instance, service_id=service_id, available='-', quantity=0)]
+            Available.objects.bulk_create(choices)
         else:
             pass
 

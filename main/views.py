@@ -1,4 +1,5 @@
 import django_filters
+from asgiref.sync import sync_to_async
 from django.views.generic import ListView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, generics, renderers, request
@@ -36,20 +37,19 @@ class ModViewSet(viewsets.ModelViewSet):
     filterset_fields = ['id', 'model', 'company__company', 'type_fk__type']
 
 
-
-
 class MainPage(ListView):
     model = Models
     template_name = "main/category_detail.html"
     context_object_name = 'models'
 
+    # @sync_to_async()
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context["testertime"] = TesterTime.objects.all().select_related('service').order_by('service')
         context['typed'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
-            'type_fk_id')
+            'type_fk_id', 'id')
         context['typed1'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
-            'type_fk__type')
+            'type_fk__type', 'id')
         context['type'] = Type.objects.all().select_related('purpose')
         context['image'] = Models.objects.values_list('image', 'id').first()
         context['title'] = 'Главная страница'
@@ -69,6 +69,8 @@ class CategoryPage(ListView):
     #     else:
     #         print(len(Service.objects.select_related()) * 8)
     #         return len(Service.objects.select_related()) * 8
+
+    # @sync_to_async()
     def get_queryset(self):
         if self.request.GET.get('Company') or self.request.GET.get('Model') or self.request.GET.get('Service') \
                 or self.request.GET.get('Available') or self.request.GET.get('Add_filter'):
@@ -102,6 +104,7 @@ class CategoryPage(ListView):
                        'service__service_centre')
         return qs1
 
+    # @sync_to_async()
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["testertime"] = TesterTime.objects.all().select_related('service').order_by('service')

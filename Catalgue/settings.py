@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'debug_toolbar',
+    # 'debug_toolbar',
     'main',
     'django_filters',
     'crispy_forms',
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #"debug_toolbar.middleware.DebugToolbarMiddleware"
+    # "debug_toolbar.middleware.DebugToolbarMiddleware"
 ]
 
 ROOT_URLCONF = 'Catalgue.urls'
@@ -86,6 +86,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'postgres',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'admin',
+    #     'HOST': '10.248.38.35',
+    #     'PORT': '5432'
+    # }
 }
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
@@ -107,13 +115,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 REST_FRAMEWORK = {
     # YOUR SETTINGS
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
-            'rest_framework.authentication.BasicAuthentication',
-            'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ]
 }
 
@@ -158,7 +165,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 SESSION_COOKIE_AGE = 7200
 SESSION_SAVE_EVERY_REQUEST = True
-
 
 INTERNAL_IPS = [
     # ...
