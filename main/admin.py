@@ -22,6 +22,21 @@ class LogEntryAdmin(admin.ModelAdmin):
 admin.site.register(LogEntry, LogEntryAdmin)
 
 
+class FilialAdmin(admin.ModelAdmin):
+    list_display = ('filial', 'slug')
+
+
+admin.site.register(Filial, FilialAdmin)
+
+
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('service_centre', 'filial')
+    list_filter = ['filial']
+    search_fields = ['filial__filial', 'service_centre']
+
+admin.site.register(Service, ServiceAdmin)
+
+
 class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'last_login')  # Added last_login
 
@@ -35,7 +50,6 @@ admin.site.index_title = "Добро пожаловать!"
 admin.site.register(AddFilter1)
 admin.site.register(AddFilterName1)
 admin.site.register(Purpose)
-admin.site.register(Service)
 admin.site.register(Employee)
 
 

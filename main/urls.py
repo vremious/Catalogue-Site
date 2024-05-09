@@ -11,10 +11,14 @@ router.register(r'company', CompanyViewSet, basename='company')
 
 urlpatterns = [
 
-    path("", MainPage.as_view(), name="category_detail"),
+    # path("", MainPage.as_view(), name="category_detail"),
+
+    path("", Homing.as_view(), name="homing"),
+    # path("home", Homing.as_view(), name="homing"),
     path("", include(router.urls)),
-    path("home", MainPage.as_view(), name="category_detail"),
-    path("<slug:cat_slug>", CategoryPage.as_view(), name='category'),
+    path("/<slug:slug>", Homing.as_view(), name="homing"),
+    path("/<slug:slug>/", MainPage.as_view(), name="category_detail"),
+    path("/<slug:slug>/<slug:cat_slug>", CategoryPage.as_view(), name='category'),
     path('api/', SpectacularAPIView.as_view(), name='schema'),
     path('api/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),

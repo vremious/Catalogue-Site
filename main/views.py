@@ -37,6 +37,11 @@ class ModViewSet(viewsets.ModelViewSet):
     filterset_fields = ['id', 'model', 'company__company', 'type_fk__type']
 
 
+class Homing(ListView):
+    model = Filial
+    template_name = "main/homing.html"
+
+
 class MainPage(ListView):
     model = Models
     template_name = "main/category_detail.html"
@@ -45,11 +50,18 @@ class MainPage(ListView):
     # @sync_to_async()
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context["testertime"] = TesterTime.objects.all().select_related('service').order_by('service')
-        context['typed'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
-            'type_fk_id', 'id')
-        context['typed1'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
-            'type_fk__type', 'id')
+        context["testertime"] = TesterTime.objects.all().select_related('service').filter(
+            service__filial__slug=self.kwargs['slug']
+        ).order_by('service')
+        context['typed'] = Available.objects.select_related('model__type_fk', 'model__type_fk__purpose',
+                                                            'service__filial').filter(model__actual='Да').order_by(
+            'model__type_fk_id', 'model__id')
+        context['filial'] = Available.objects.select_related().filter(service__filial__slug=self.kwargs['slug'],
+                                                                      quantity__gt=0, model__actual='Да').order_by(
+            'model__type_fk_id', 'model__id')
+        context['typed1'] = Available.objects.select_related().filter(service__filial__slug=self.kwargs['slug'],
+                                                                      model__actual='Да').order_by(
+            'model__type_fk')
         context['type'] = Type.objects.all().select_related('purpose')
         context['image'] = Models.objects.values_list('image', 'id').first()
         context['title'] = 'Главная страница'
@@ -83,6 +95,7 @@ class CategoryPage(ListView):
                     service__service_centre__icontains=self.request.GET.get('Service'),
                     available__icontains=self.request.GET.get('Available'),
                     model__add_filter__value__icontains=self.request.GET.get('Add_filter'),
+                    service__filial__slug=self.kwargs['slug'], available='+'
                 ).order_by(self.request.GET.get('sort', default='model__company__company'), 'model__model',
                            'service__service_centre', 'model__add_filter__value')
             else:
@@ -93,30 +106,41 @@ class CategoryPage(ListView):
                     model__model__icontains=self.request.GET.get('Model'),
                     service__service_centre__icontains=self.request.GET.get('Service'),
                     available__icontains=self.request.GET.get('Available'),
-
+                    service__filial__slug=self.kwargs['slug'], available='+'
                 ).order_by(self.request.GET.get('sort', default='model__company__company'), 'model__model',
                            'service__service_centre')
         else:
             qs1 = Available.objects.select_related('model', 'service', 'model__company',
                                                    'model__add_filter_name', 'model__add_filter').filter(
-                model__type_fk__slug=self.kwargs['cat_slug'], model__actual='Да',
-            ).order_by(self.request.GET.get('sort', default='model__company__company'), 'model__model',
-                       'service__service_centre')
+                model__type_fk__slug=self.kwargs['cat_slug'], service__filial__slug=self.kwargs['slug'],
+                model__actual='Да', available='+').order_by(
+                self.request.GET.get('sort', default='model__company__company'), 'model__model',
+                'service__service_centre')
         return qs1
 
     # @sync_to_async()
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["testertime"] = TesterTime.objects.all().select_related('service').order_by('service')
-        context["available"] = Available.objects.all().select_related('model', 'service').order_by('service__id')
+        context["testertime"] = TesterTime.objects.select_related('service').filter(
+            service__filial__slug=self.kwargs['slug']
+        ).order_by('service')
+        context["available"] = Available.objects.select_related(
+            'model', 'service').filter(service__filial__slug=self.kwargs['slug'], model__actual="Да").order_by(
+            'service__id')
         context["available_f"] = Available.objects.select_related('model', 'service').filter(
-            model__type_fk__slug=self.kwargs['cat_slug']).order_by(
+            model__type_fk__slug=self.kwargs['cat_slug'],
+            service__filial__slug=self.kwargs['slug']).order_by(
             'service__id')
         context['typed'] = Models.objects.select_related('type_fk').filter(actual='Да').order_by('type_fk_id')
-        context['typed1'] = Models.objects.select_related('type_fk', 'type_fk__purpose').filter(actual='Да').order_by(
+        context['typed1'] = Models.objects.select_related('type_fk',
+                                                          'type_fk__purpose'
+                                                          ).filter(actual='Да',
+                                                                   available__service__filial__slug=self.kwargs[
+                                                                       'slug']).order_by(
             'type_fk__type')
         context['test'] = Models.objects.select_related('type_fk', 'add_filter_name', 'company').filter(
-            type_fk__slug=self.kwargs['cat_slug'], actual='Да').order_by(
+            type_fk__slug=self.kwargs['cat_slug'], available__service__filial__slug=self.kwargs['slug'],
+            actual='Да', available__available='+').order_by(
             'company__company')
         context['title'] = str(context['test'][0].type_fk)
         context['service'] = Service.objects.all()
