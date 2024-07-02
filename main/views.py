@@ -62,9 +62,10 @@ class MainPage(ListView):
         context['typed1'] = Available.objects.select_related().filter(service__filial__slug=self.kwargs['slug'],
                                                                       model__actual='Да').order_by(
             'model__type_fk')
-        context['type'] = Type.objects.all().select_related('purpose')
+        context['type'] = Type.objects.select_related('purpose')
         context['image'] = Models.objects.values_list('image', 'id').first()
         context['title'] = 'Главная страница'
+        context['city'] = Filial.objects.select_related().filter(slug__exact=self.kwargs['slug'])[0]
         return context
 
 
@@ -118,7 +119,6 @@ class CategoryPage(ListView):
                 'service__service_centre')
         return qs1
 
-    # @sync_to_async()
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["testertime"] = TesterTime.objects.select_related('service').filter(
@@ -132,18 +132,23 @@ class CategoryPage(ListView):
             service__filial__slug=self.kwargs['slug']).order_by(
             'service__id')
         context['typed'] = Models.objects.select_related('type_fk').filter(actual='Да').order_by('type_fk_id')
-        context['typed1'] = Models.objects.select_related('type_fk',
-                                                          'type_fk__purpose'
-                                                          ).filter(actual='Да',
-                                                                   available__service__filial__slug=self.kwargs[
-                                                                       'slug']).order_by(
-            'type_fk__type')
+        # context['typed1'] = Available.objects.select_related('model', 'service', 'model__company',
+        #                                                      'model__add_filter_name', 'model__add_filter').filter(
+        #     model__type_fk__slug=self.kwargs['cat_slug'], service__filial__slug=self.kwargs['slug'],
+        #     model__actual='Да', available='+')
+        context['typed1'] = Available.objects.select_related().filter(service__filial__slug=self.kwargs['slug'],
+                                                                      model__actual='Да').order_by(
+            'model__type_fk')
         context['test'] = Models.objects.select_related('type_fk', 'add_filter_name', 'company').filter(
             type_fk__slug=self.kwargs['cat_slug'], available__service__filial__slug=self.kwargs['slug'],
             actual='Да', available__available='+').order_by(
             'company__company')
-        context['title'] = str(context['test'][0].type_fk)
+        context['title'] = Type.objects.select_related().filter(slug__exact=self.kwargs['cat_slug'])[0]
         context['service'] = Service.objects.all()
         context['quantity'] = self.request.GET.get('quantity', default=8)
         context['sort'] = self.request.GET.get('sort', default='model__company__company')
+        context['filial'] = Available.objects.select_related().filter(service__filial__slug=self.kwargs['slug'],
+                                                                      quantity__gt=0, model__actual='Да').order_by(
+            'model__type_fk_id', 'model__id')
+        context['city'] = Filial.objects.select_related().filter(slug__exact=self.kwargs['slug'])[0]
         return context

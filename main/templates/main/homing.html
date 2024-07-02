@@ -15,7 +15,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-4">
                         <select class="form-select" aria-label="Default select example" onchange="handleNextView(this)">
-                            <option selected>Выберите филиал</option>
+                            <option selected disabled>Выберите филиал</option>
                             {% for filial in filial_list %}
                                 <option value="{% url 'homing' slug=filial.slug%}/">{{ filial.filial }}</option>
                             {% endfor %}

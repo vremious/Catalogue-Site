@@ -91,7 +91,8 @@
     <div class="header finisher-header pt-5" style="width: 100%;height: auto">
         <nav class="navbar navbar-expand-lg navbar-light bg-transparent pt-5 mt-5 mb-auto">
             <div class="container d-flex flex-wrap justify-content-center">
-                <a class="navbar-brand mb-1 " href="/">Главная</a>
+                <a href="/"><img class ='me-lg-3' src="{% static 'beltelecom1-removebg-preview.png' %}" style="background: transparent" height="40"></a>
+                <a class="navbar-brand mb-1 " href="{{ filial.slug }}">Главная</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -106,7 +107,7 @@
                                 Абонентское оборудование
                             </a>
                             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                {% regroup typed1 by type_fk as type %}
+                                {% regroup typed1 by model.type_fk as type %}
                                 {% for i in type %}
                                     {% if i.grouper.purpose.id == 2 %}
                                         <li><a class="dropdown-item" href="{{ i.grouper.slug }}">{{ i.grouper }}</a>
@@ -122,7 +123,7 @@
                                 Оборудование для продажи
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {% regroup typed1 by type_fk as type %}
+                                {% regroup filial by model.type_fk as type %}
                                 {% for i in type %}
                                     {% if  i.grouper.purpose.id == 1 %}
                                         <li><a class="dropdown-item" href="{{ i.grouper.slug }}">{{ i.grouper }}</a>

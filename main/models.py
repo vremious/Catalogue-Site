@@ -262,3 +262,14 @@ def change_actual(**kwargs):
             Models.objects.filter(id=m).update(actual='Да')
         elif Available.objects.filter(model=m, available='-'):
             Models.objects.filter(id=m).update(actual='Нет')
+
+
+@receiver(post_save, sender=Service)
+def create_devices_for_new_service_centers(instance, **kwargs):
+    for model_id in Models.objects.select_related().values_list('id', flat=True):
+        if not Available.objects.select_related().filter(model_id=model_id, service=instance):
+            choices = [Available(model_id=model_id, service=instance, available='-', quantity=0)]
+            Available.objects.bulk_create(choices)
+        else:
+            pass
+
