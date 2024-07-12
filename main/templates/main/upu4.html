@@ -78,7 +78,7 @@
                     {#            <div class = 'container text-center' style="padding-right: 2.8rem;padding-left:0;">#}
                     {#             <div class = "container  bg-white shadow-lg rounded-4 mb-4 pt-3 pb-2">#}
                     <div class="row mb-3">
-                        <div class="col-sm-4 pr-2"><img src='{% static 'sort.svg' %}' height="40">
+                        <div class="col-sm-5 pr-2"><img src='{% static 'sort.svg' %}' height="40">
                             <select class="form-select-sm" name="sort" onchange="this.form.submit()">
                                 {#                              <option selected value="">------</option>#}
                                 <option value="model__company__company" {% if sort == 'model__company__company' %}
@@ -93,13 +93,10 @@
                                 <option value="-model__price" {% if sort == '-model__price' %} selected {% endif %}>По
                                     цене (выше)
                                 </option>
-                                {#                              <option value="16" {% if quantity == '16' %} selected {% endif %}>По производителю</option>#}
-                                {#                              <option value="20" {% if quantity == '20' %} selected {% endif %}>По модели</option>#}
-                                {#                              <option value="24" {% if quantity == '24' %} selected {% endif %}>24</option>#}
                             </select>
                         </div>
-                        <div class="col-sm-5 p-0"></div>
-                        <div class="col-sm-3 ps-0">Объектов на странице:
+                        <div class="col-sm-5"></div>
+                        <div class="col-sm-2 pl-lg-5"  ><img src='{% static 'objects-svgrepo-com.svg' %}' height="30">
                             <select class="form-select-sm" aria-label="quantity" name="quantity"
                                     onchange="this.form.submit()">
                                 <option value="8" {% if quantity == '8' %} selected {% endif %}>8</option>
@@ -153,7 +150,7 @@
                                 <div class='flip-card-back'>
                                     <h6>{{ i.grouper.company }} {{ i.grouper.model }}</h6>
                                     <hr>
-                                    <div style="overflow-y: scroll; height:20rem; width:33rex">
+                                    <div style="overflow-y: scroll; height:20rem; width:15rem">
                                         {% for d in available %}
                                             {% if i.grouper  == d.model %}
                                                 {% if d.quantity > 0 %}

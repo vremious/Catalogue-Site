@@ -270,6 +270,4 @@ def create_devices_for_new_service_centers(instance, **kwargs):
         if not Available.objects.select_related().filter(model_id=model_id, service=instance):
             choices = [Available(model_id=model_id, service=instance, available='-', quantity=0)]
             Available.objects.bulk_create(choices)
-        else:
-            pass
 
