@@ -55,15 +55,37 @@ class Type(models.Model):
         return str(self.type)
 
 
+class Filial(models.Model):
+    filial = models.CharField(max_length=50, verbose_name="Филиал")
+    slug = models.SlugField(max_length=255, verbose_name='Ссылка', null=True, blank=True, editable=False)
+
+    def my_slugify(self):
+        return slugify(translit(self.filial, 'ru', reversed=True))
+
+    def save(self, *args, **kwargs):
+        if self.slug is None or self.slug == 'slug':
+            self.slug = self.my_slugify()
+        super(Filial, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Филиал'
+        verbose_name_plural = 'Филиалы'
+        ordering = ['filial']
+
+    def __str__(self):
+        return str(self.filial)
+
+
 class Service(models.Model):
     service_centre = models.CharField(max_length=250, verbose_name='Сервисные центры')
+    filial = models.ForeignKey(Filial, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Филиал')
 
     class Meta:
         verbose_name = 'Сервисный центр'
         verbose_name_plural = 'Сервисные центры'
 
     def __str__(self):
-        return self.service_centre
+        return f'{self.service_centre}'
 
 
 class AddFilterName1(models.Model):
@@ -240,3 +262,12 @@ def change_actual(**kwargs):
             Models.objects.filter(id=m).update(actual='Да')
         elif Available.objects.filter(model=m, available='-'):
             Models.objects.filter(id=m).update(actual='Нет')
+
+
+@receiver(post_save, sender=Service)
+def create_devices_for_new_service_centers(instance, **kwargs):
+    for model_id in Models.objects.select_related().values_list('id', flat=True):
+        if not Available.objects.select_related().filter(model_id=model_id, service=instance):
+            choices = [Available(model_id=model_id, service=instance, available='-', quantity=0)]
+            Available.objects.bulk_create(choices)
+

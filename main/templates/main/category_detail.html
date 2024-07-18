@@ -8,24 +8,25 @@
     <div class="container-md bg-white">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="mb-2 mt-2 text-center text-lg-start">Главная страница</h1>
-                <p class="fs-5 col-md-12">Выберите тип оборудования из представленных ниже для получения информации о его наличии в сервисных центрах города Минска.</p>
-                {% for i in image %}
-                {% endfor %}
+                <h1 class="mb-2 mt-2 text-center text-lg-start">{{ city }}</h1>
+                <p class="fs-5 col-md-12">Выберите тип оборудования из представленных ниже для получения информации о
+                    наличии устройств в сервисных центрах.</p>
+{#                {% for i in image %}#}
+{#                {% endfor %}#}
                 <h1 class="mb-4 mt-2 text-center text-lg-start">Арендное оборудование</h1>
                 <div class="card-group">
                     <div class="row row-cols-lg-auto g-2 justify-content-center justify-content-lg-start">
-                        {% regroup typed1 by type_fk as type %}
-                        {% for i in type%}
+                        {% regroup typed1 by model.type_fk as type %}
+                        {% for i in type %}
                             {% if i.grouper.purpose_id == 2 %}
                                 <div class="col-auto mb-3 d-flex">
                                     <div class="card rounded-5 " style="width: 13rem; height: 100%">
-                                        {%for j in i.list%}
-                                            {%if  j == i.list|first%}
-                                                {% if j.image %}
-                                                    <img src="{{ j.image}}" class="card-img-top">
+                                        {% for j in i.list %}
+                                            {% if  j == i.list|first %}
+                                                {% if j.model.image %}
+                                                    <img src="{{ j.model.image.url }}" class="card-img-top">
                                                 {% else %}
-                                                    <img src="{% static 'no_photo.svg'%}" class="card-img-top">
+                                                    <img src="{% static 'no_photo.svg' %}" class="card-img-top">
                                                 {% endif %}
                                             {% endif %}
                                         {% endfor %}
@@ -40,37 +41,40 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <h1 class="mb-4 mt-2 text-center text-lg-start">Оборудование на продажу</h1>
-                    <div class="card-group">
-                        <div class="row row-cols-lg-auto g-2 justify-content-center justify-content-lg-start">
-                            {% regroup typed by type_fk as type %}
-                            {% for i in type%}
-                                {% if i.grouper.purpose_id == 1 %}
-                                    <div class="col-auto mb-3 d-flex">
-                                        <div class="card rounded-5 " style="width: 13rem; height: 100%">
-                                            {%for j in i.list%}
-                                                {%if  j == i.list|first%}
-                                                    {% if j.image %}
-                                                        <img src="{{ j.image}}" class="card-img-top">
-                                                    {% else %}
-                                                        <img src="{% static 'no_photo.svg'%}" class="card-img-top">
-                                                    {% endif %}
+                </div>
+
+                <h1 class="mb-4 mt-2 text-center text-lg-start">Оборудование на продажу</h1>
+                <div class="card-group">
+                    <div class="row row-cols-lg-auto g-2 justify-content-center justify-content-lg-start">
+                        {% regroup filial by model.type_fk as typed2 %}
+                        {% for i in typed2 %}
+                            {#                                {{ i }}#}
+                            {% if i.grouper.purpose_id == 1 %}
+                                <div class="col-auto mb-3 d-flex">
+                                    <div class="card rounded-5 " style="width: 13rem; height: 100%">
+                                        {% for j in i.list %}
+                                            {% if  j == i.list|first %}
+                                                {% if j.model.image %}
+                                                    <img src="{{ j.model.image.url }}" class="card-img-top">
+                                                {% else %}
+                                                    <img src="{% static 'no_photo.svg' %}" class="card-img-top">
                                                 {% endif %}
-                                            {% endfor %}
-                                            <div class="card-body">
-                                                <p class="card-text text-center">{{ i.grouper }}</p>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <a href="{{ i.grouper.slug }}" class="stretched-link"></a>
-                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <div class="card-body">
+                                            <p class="card-text text-center">{{ i.grouper }}</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <a href="{{ i.grouper.slug }}" class="stretched-link"></a>
                                             </div>
                                         </div>
                                     </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}
