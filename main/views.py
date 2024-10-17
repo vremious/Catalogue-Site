@@ -8,45 +8,61 @@ from django.db.models import Q
 from .serializer import ModelsSerializer, CompanySerializer, TypeSerializer
 from .models import *
 
+"""
+Это раздел отображений (views), нужен он для передачи объектов из базы данных и дальнейшего использования их
+на страницах html и в REST запросах.
 
+"""
+
+
+# viewsets нужны для отображения элементов бд в REST составляющей
 class TypeViewSet(viewsets.ModelViewSet):
-    queryset = Type.objects.all()
-    serializer_class = TypeSerializer
-    filter_backends = [DjangoFilterBackend]
+    queryset = Type.objects.all()  # тут выбираем queryset из БД, в данном случае все объекты модели Type
+    serializer_class = TypeSerializer  # тут ссылаемся на класс serializer из файла serializer.py
+    # с которым будет взаимодействовать viewset
+    filter_backends = [DjangoFilterBackend]  # подключаем модуль фильтрации
     # filterset_fields = ['id', 'company']
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
-    queryset = Company.objects.all().order_by('id')
-    serializer_class = CompanySerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'company']
+    queryset = Company.objects.all().order_by('id')  # выборка всех моделей Company, упорядоченная по id
+    serializer_class = CompanySerializer  # ссылаемся на сериализатор для этого viewset
+    filter_backends = [DjangoFilterBackend]  # подключаем модуль фильтрации
+    filterset_fields = ['id', 'company']  # выбираем поля по которым фильтруем
 
 
 class ModViewSet(viewsets.ModelViewSet):
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
-    queryset = Models.objects.all()
-    serializer_class = ModelsSerializer
-    renderer_classes = [JSONRenderer]
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'model', 'company__company', 'type_fk__type']
+    authentication_classes = [BasicAuthentication]  # подключаем аутентефикацию по логину и паролю (как в админке)
+    permission_classes = [IsAuthenticated]  # настройка доступа для только авторизованных пользователей (иначе 400)
+    queryset = Models.objects.all()  # тут выбираем queryset из БД
+    serializer_class = ModelsSerializer  # тут ссылаемся на класс serializer из файла serializer.py
+    renderer_classes = [JSONRenderer]  # определяем рендер страницы (в данном случае JSON)
+    filter_backends = [DjangoFilterBackend]  # подключаем модуль фильтрации
+    filterset_fields = ['id', 'model', 'company__company', 'type_fk__type']  # выбираем поля по которым фильтруем
 
 
+"""
+Ниже идут ListView объекты. Они нужны только для HTML страниц.
+"""
+
+
+# Это view для стартовой страницы (на которой предлагает выбрать филиал)
 class Homing(ListView):
-    model = Filial
-    template_name = "main/homing.html"
+    model = Filial  # выбор модели из котрой будут браться объекты БД
+    template_name = "main/homing.html"  # ссылка на шаблон HTML на котром будут отрисовываться объекты
 
 
+# Главная страница сайта (с типами оборудования)
 class MainPage(ListView):
-    model = Models
-    template_name = "main/category_detail.html"
-    context_object_name = 'models'
+    model = Models  # выбор модели из котрой будут браться объекты БД
+    template_name = "main/category_detail.html"  # ссылка на шаблон HTML на котром будут отрисовываться объекты
+    context_object_name = 'models'  # имя модели вызванной выше для использования в шаблоне HTML
 
+    # функция ниже позволяет создать дополнительные объекты для использования их в HTML шаблоне
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context["testertime"] = TesterTime.objects.all().select_related('service').filter(
-            service__filial__slug=self.kwargs['slug']
+            service__filial__slug=self.kwargs['slug']  # объект вкладки "График работы тестировщиков"
         ).order_by('service')
         context['typed'] = Available.objects.select_related('model__type_fk', 'model__type_fk__purpose',
                                                             'service__filial').filter(model__actual='Да').order_by(
@@ -56,21 +72,23 @@ class MainPage(ListView):
             'model__type_fk_id', 'model__id')
         context['typed1'] = Available.objects.select_related().filter(service__filial__slug=self.kwargs['slug'],
                                                                       model__actual='Да').order_by(
-            'model__type_fk')
+            'model__type_fk', 'model__id')
         context['type'] = Type.objects.select_related('purpose')
         context['image'] = Models.objects.values_list('image', 'id').first()
-        context['city'] = Filial.objects.select_related().filter(slug__exact=self.kwargs['slug'])[0]
+        context['city'] = Filial.objects.select_related().filter(slug__exact=self.kwargs['slug'])[0]  # Название филиала
         context['main_button'] = ''
-        context['city17'] = Filial.objects.select_related().filter(
-            filial__exact=context['city']).values_list('slug', flat=True)[0]
+        context['city17'] = self.kwargs['slug']
         return context
 
 
+# Страница с оборудованием из выбранной категории
 class CategoryPage(ListView):
     model = Models
     template_name = "main/upu4.html"
     context_object_name = 'models'
 
+    # Функция ниже нужна для получения выборки из БД взависимости от значений контекстных фильтров на странице
+    # и последующего формирования отображения моделей. По сути заменяет параметр model выше.
     def get_queryset(self):
         if self.request.GET.get('Company') or self.request.GET.get('Model') or self.request.GET.get('Service') \
                 or self.request.GET.get('Available') or self.request.GET.get('Add_filter'):
@@ -109,9 +127,12 @@ class CategoryPage(ListView):
         else:
             return qs1.filter(available='+')
 
-
+    # функция ниже позволяет создать дополнительные объекты для использования их в HTML шаблоне
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['filter_add'] = Models.objects.select_related().filter(
+            type_fk__slug=self.kwargs['cat_slug'], available__service__filial__slug=self.kwargs['slug'],
+            actual='Да', available__available='+').values_list('add_filter_name__name', flat=True)
         context["testertime"] = TesterTime.objects.select_related('service').filter(
             service__filial__slug=self.kwargs['slug']
         ).order_by('service')
@@ -145,22 +166,27 @@ class CategoryPage(ListView):
         return context
 
 
+# View для результатов  поиска через строчку поиска в верхней части страницы
 class SearchResults(ListView):
     model = Available
     template_name = 'main/searchresults.html'
     context_object_name = 'models'
 
+    # Функция ниже нужна для получения выборки из БД взависимости от значений контекстных фильтров на странице
+    # и последующего формирования отображения моделей. По сути заменяет параметр model выше.
     def get_queryset(self):
         sort = self.request.GET.get('sort', default='model__company__company')
         qs = Available.objects.select_related().filter(Q(model__actual="Да") &
                                                        Q(service__filial__slug=self.kwargs['slug']) &
                                                        Q(model__model__contains=self.request.GET.get('Search')) &
-                                                       Q(available='+')).order_by(sort, 'model__model', 'service__service_centre')
+                                                       Q(available='+')).order_by(sort, 'model__model',
+                                                                                  'service__service_centre')
 
         qs2 = Available.objects.select_related().filter(Q(model__actual="Да") &
-                                                       Q(service__filial__slug=self.kwargs['slug']) &
-                                                       Q(model__model__contains=self.request.GET.get('Search')) &
-                                                       Q(model__type_fk__purpose__purpose='Абонентское')).order_by(sort, 'model__model', 'service__service_centre')
+                                                        Q(service__filial__slug=self.kwargs['slug']) &
+                                                        Q(model__model__contains=self.request.GET.get('Search')) &
+                                                        Q(model__type_fk__purpose__purpose='Абонентское')).order_by(
+            sort, 'model__model', 'service__service_centre')
 
         qs3 = qs | qs2
         company = self.request.GET.get('Company')
@@ -168,10 +194,11 @@ class SearchResults(ListView):
 
         if company or type_filter:
             return qs3.filter(Q(model__company__company__icontains=self.request.GET.get('Company')) &
-                             Q(model__type_fk__type__icontains=type_filter)).order_by(sort, 'model__model',
-                                                                                      'service__service_centre')
+                              Q(model__type_fk__type__icontains=type_filter)).order_by(sort, 'model__model',
+                                                                                       'service__service_centre')
         return qs3
 
+    # функция ниже позволяет создать дополнительные объекты для использования их в HTML шаблоне
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["available"] = Available.objects.select_related(
@@ -199,8 +226,8 @@ class SearchResults(ListView):
         context['company'] = self.request.GET.get('Company')
         context['type_filter'] = self.request.GET.get('Type')
         context['customer_devices_filter'] = Models.objects.select_related().filter(
-                model__contains=self.request.GET.get('Search'), available__service__filial__slug=self.kwargs['slug'],
-                type_fk__purpose__purpose='Абонентское')
+            model__contains=self.request.GET.get('Search'), available__service__filial__slug=self.kwargs['slug'],
+            type_fk__purpose__purpose='Абонентское')
         if context['type_filter']:
             context['company_filter'] = Models.objects.select_related('type_fk', 'add_filter_name', 'company').filter(
                 type_fk__type__icontains=context['type_filter'],
@@ -218,6 +245,3 @@ class SearchResults(ListView):
             actual='Да', available__available='+').order_by(
             'type_fk__type') | context['customer_devices_filter']
         return context
-
-
-

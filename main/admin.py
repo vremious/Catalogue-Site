@@ -1,5 +1,4 @@
 import datetime
-
 from admin_totals.admin import ModelAdminTotals
 from django.contrib import admin
 from django.contrib.auth import get_user_model
@@ -11,7 +10,10 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.contrib.admin.models import LogEntry
 
-
+"""
+Тут регистрируются разделы админки. Первично создаётся модель в разделе models, делается миграция,
+далее регитсрируем тут. Также здесь можно настраивать, что будет уметь та или иная модель в админке.
+"""
 class LogEntryAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'action_time', 'user', 'object_repr')
     list_filter = ('user__username',)
@@ -32,7 +34,9 @@ admin.site.register(Filial, FilialAdmin)
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ('service_centre', 'filial')
     list_filter = ['filial']
+    list_editable = ['filial']
     search_fields = ['filial__filial', 'service_centre']
+
 
 admin.site.register(Service, ServiceAdmin)
 
@@ -69,7 +73,7 @@ admin.site.register(Type, TypeAdmin)
 
 
 class ModelsAdmin(admin.ModelAdmin):
-    list_display = ['company', 'model', 'type_fk','price', 'split_period', 'warranty', 'actual']
+    list_display = ['company', 'model', 'type_fk', 'price', 'split_period', 'warranty', 'actual']
     list_filter = ['type_fk__type', 'company']
     search_fields = ['model', 'company__company']
     list_per_page = 20
@@ -96,7 +100,7 @@ admin.site.register(Models, ModelsAdmin)
 
 
 @admin.action(description="Обновить дату и время внесения")
-def update(modeladmin, request, queryset):
+def update(self, request, queryset):
     queryset.update(date=datetime.datetime.now())
 
 
@@ -129,14 +133,14 @@ class AvailableAdmin(ModelAdminTotals):
             elif len(var) == 2:
                 return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1])
             elif len(var) == 3:
-                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self. \
                     model.objects.filter(service=var[2])
             elif len(var) == 4:
-                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self. \
                     model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3])
             elif len(var) == 5:
-                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
-                    model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3]) | self.model.\
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self. \
+                    model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3]) | self.model. \
                     objects.filter(service=var[4])
         else:
             return self.model.objects.all()
@@ -170,14 +174,14 @@ class TesterTimeAdmin(admin.ModelAdmin):
             elif len(var) == 2:
                 return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1])
             elif len(var) == 3:
-                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self. \
                     model.objects.filter(service=var[2])
             elif len(var) == 4:
-                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self. \
                     model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3])
             elif len(var) == 5:
-                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self.\
-                    model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3]) | self.model.\
+                return self.model.objects.filter(service=var[0]) | self.model.objects.filter(service=var[1]) | self. \
+                    model.objects.filter(service=var[2]) | self.model.objects.filter(service=var[3]) | self.model. \
                     objects.filter(service=var[4])
         else:
             return self.model.objects.all()
@@ -207,7 +211,6 @@ def logged_in_message(sender, user, request, **kwargs):
     # messages.info(request, 'Выберите всё оборудование нажатием на самый верхний чекбокс вверху таблицы (Возле шапки "Сервисный центр")')
     # messages.info(request, 'Над шапкой таблицы возле "Сервисный центр" в поле "Действие" выбрать "Обновить дату и время внесения", после чего нажать на кнопку "Выполнить"')
     # messages.info(request, 'Это действие автоматически проставит текущее время на всех выбраных элементах.')
-
 
 
 user_logged_in.connect(logged_in_message)

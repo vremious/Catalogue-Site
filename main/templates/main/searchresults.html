@@ -118,7 +118,7 @@
                 {% paginate quantity available_model  %}
                 {% for i in available_model %}
                     <div class="col-auto mb-3 d-flex">
-                        <div class="flip-card mb-1 d-flex" style="width:15rem">
+                        <div class="flip-card mb-1 d-flex" style="width:15rem; min-height: 500px">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
                                     {% if i.grouper.image %}
@@ -148,7 +148,7 @@
                                 <div class='flip-card-back'>
                                     <h6>{{ i.grouper.company }} {{ i.grouper.model }}</h6>
                                     <hr>
-                                    <div style="overflow-y: scroll; height:20rem; width:15rem">
+                                    <div style="width:15rem">
                                         {% for d in available %}
                                             {% if i.grouper  == d.model %}
                                                 {% if d.quantity > 0 %}

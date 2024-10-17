@@ -2,6 +2,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from .models import Models, Company, Type
 
+"""
+Тут находятся серилизаторы - 'это компонент Django Rest Framework. Нужны для преобразования информации в JSON' 
+"""
+
 
 class CreatableSlugRelatedField(serializers.SlugRelatedField):
     def to_internal_value(self, data):
@@ -42,5 +46,3 @@ class ModelsSerializer(serializers.ModelSerializer):
         type_instance, created_type = Type.objects.get_or_create(type__iexact=type_name)
         new_model = Models.objects.create(**validated_data, company=company_instance, type_fk=type_instance)
         return new_model
-
-

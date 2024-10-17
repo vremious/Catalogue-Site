@@ -6,6 +6,15 @@ from django.dispatch import receiver
 from transliterate import translit
 from django.contrib.auth.models import User
 
+"""
+Тут прописываются модели ORM. Объявляя модель создаётся новая таблица в БД.
+В случаее создания или изменения в этом разделе обязательно прописывать в терминале комманды:
+python manage.py makemigrations
+python manage.py migrate
+Воизбежании проблем и конфликтов очень советую почитать официальную документацию, а все миграции отрабатывать
+на тестовой БД, предвариельно выбрав её в settings.py
+"""
+
 
 class Purpose(models.Model):
     purpose = models.CharField(max_length=250, verbose_name='Назначение оборудования', choices=(
@@ -264,10 +273,10 @@ def change_actual(**kwargs):
             Models.objects.filter(id=m).update(actual='Нет')
 
 
+# Создание всего списка оборудования для новых СЦ
 @receiver(post_save, sender=Service)
 def create_devices_for_new_service_centers(instance, **kwargs):
     for model_id in Models.objects.select_related().values_list('id', flat=True):
         if not Available.objects.select_related().filter(model_id=model_id, service=instance):
             choices = [Available(model_id=model_id, service=instance, available='-', quantity=0)]
             Available.objects.bulk_create(choices)
-
